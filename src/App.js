@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
+import LayoutContainer from "./components/Layout/LayoutContainer";
 
 function App() {
-  return (
-    <div>Rolls Co - Pedidos</div>
-  );
+  return <LayoutContainer />;
 }
 
 export default App;
