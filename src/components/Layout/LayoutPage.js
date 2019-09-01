@@ -1,20 +1,22 @@
 import React, { Fragment } from "react";
-import styled from "styled-components";
 import Banner from "./Banner";
+import Container from "@material-ui/core/Container";
+import ProductsContainer from "../Products";
+import styled from "styled-components";
+import { CssBaseline } from "@material-ui/core";
 
-const StyledPage = styled.div`
-  padding: 100px;
-  background-color: rgb(70, 70, 70);
+const StyledContainer = styled(Container)`
+  padding: 40px 0;
 `;
 
 const LayoutPage = ({ loading }) => (
-  <Fragment>
+  <CssBaseline>
     <Banner />
-    <StyledPage>
-      <div>Rolls Co - Pedidos</div>
-    </StyledPage>
+    <StyledContainer maxWidth="lg">
+      <ProductsContainer />
+    </StyledContainer>
     <Banner />
-  </Fragment>
+  </CssBaseline>
 );
 
 export default LayoutPage;
