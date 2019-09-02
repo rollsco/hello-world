@@ -1,27 +1,56 @@
 import React, { Fragment } from "react";
-import Product from "../Product/Product";
-import { Grid, Paper } from "@material-ui/core";
 import styled from "styled-components";
+import Product from "../Product/Product";
+import { Grid, Toolbar, IconButton, Typography } from "@material-ui/core";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
-const Title = styled(Paper)`
-  &&  {
-    padding: 8px 16px 8px;
-    font-size: 24px;
-    text-transform: uppercase;
-    background-color: ${props => props.color};
+const Title = styled(Toolbar)`
+  padding: 8px 16px 8px;
+  text-transform: uppercase;
+  background-color: ${props => props.color};
+`;
+
+const StyledIconButton = styled(IconButton)`
+  transform: rotate(${props => (props["aria-expanded"] ? "0deg" : "180deg")});
+  && {
+    transition: transform 0.3s;
   }
 `;
 
-const Section = ({ section, loading }) => (
-  <Fragment>
-    <Grid item xs={12}>
-      <Title color={section.color}>{section.name}</Title>
-    </Grid>
+const Name = styled(Typography)`
+  && {
+    font-weight: bold;
+  }
+`;
 
-    {section.products.map((product, i) => (
-      <Product product={product} key={i} />
-    ))}
-  </Fragment>
-);
+const Section = ({ section, loading }) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  function handleExpandClick() {
+    setExpanded(!expanded);
+  }
+
+  return (
+    <Fragment>
+      <Grid item xs={12}>
+        <Title color={section.color}>
+          <StyledIconButton
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMore />
+          </StyledIconButton>
+          <Name variant="h5">{section.name}</Name>
+        </Title>
+      </Grid>
+
+      {section.products.map(
+        (product, i) =>
+          !expanded && <Product section={section} product={product} key={i} />
+      )}
+    </Fragment>
+  );
+};
 
 export default Section;

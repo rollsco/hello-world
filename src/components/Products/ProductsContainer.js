@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Products from "./Products";
-import { get } from "../../services/rollsApiService";
+import { rollsApiGet } from "../../services/rollsApiService";
 
 class ProductsContainer extends Component {
   state = {
@@ -8,15 +8,17 @@ class ProductsContainer extends Component {
     loading: true
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // TODO create action to put result in Store
-    const sections = get("sections");
+    const sections = await rollsApiGet("sections");
 
     this.setState({ sections, loading: false });
   }
 
   render() {
     const { sections, loading } = this.state;
+
+    if (!sections) return;
 
     return <Products sections={sections} loading={loading} />;
   }

@@ -1,7 +1,7 @@
-#Rolls Co - Pedidos
+# Rolls Co - Pedidos
 
-##Dependencies
+## Dependencies
 - Node.js: https://nodejs.org
 
-##Installation
+## Installation
 - npm install

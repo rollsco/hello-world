@@ -1,11 +1,14 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import { blue, pink } from "@material-ui/core/colors";
 
 export default createMuiTheme({
   palette: {
     type: "dark",
-    primary: blue,
-    secondary: pink
+    primary: {
+      main: "#212121"
+    },
+    secondary: {
+      main: "#f9a825"
+    }
   },
   typography: {
     fontFamily: ["Raleway"].join(",")
