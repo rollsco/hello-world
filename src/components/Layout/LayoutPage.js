@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Banner from "./Banner";
+import Header from "./Header";
 import Container from "@material-ui/core/Container";
 import ProductsContainer from "../Products";
 import styled from "styled-components";
@@ -11,11 +11,10 @@ const StyledContainer = styled(Container)`
 
 const LayoutPage = ({ loading }) => (
   <CssBaseline>
-    <Banner />
+    <Header />
     <StyledContainer maxWidth="lg">
       <ProductsContainer />
     </StyledContainer>
-    <Banner />
   </CssBaseline>
 );
 
