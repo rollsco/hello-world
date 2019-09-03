@@ -10,7 +10,9 @@ class ProductsContainer extends Component {
 
   async componentDidMount() {
     // TODO create action to put result in Store
-    const sections = await rollsApiGet("sections");
+    const sections = await rollsApiGet("sections", {
+      include: ["full-products"]
+    });
 
     this.setState({ sections, loading: false });
   }
