@@ -1,5 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
+import { AddToCart } from "./AddToCart";
 import {
   Grid,
   Card,
@@ -8,18 +9,15 @@ import {
   Typography,
   CardActions,
   IconButton,
-  Collapse,
-  Button
+  Collapse
 } from "@material-ui/core";
-import Favorite from "@material-ui/icons/Favorite";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
-import RemoveShoppingCart from "@material-ui/icons/RemoveShoppingCart";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Favorite from "@material-ui/icons/Favorite";
 
 const StyledCard = styled(Card)`
   margin: 0 auto;
-  -max-width: 80%;
+  x-max-width: 80%;
 `;
 
 const StyledCardHeader = styled(CardHeader)`
@@ -56,23 +54,6 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-const AddButton = () => {
-  const isOnCart = Math.random() * 4 < 1;
-  return (
-    <Button variant={isOnCart ? "contained" : "outlined"}>
-      {isOnCart ? (
-        <Fragment>
-          <RemoveShoppingCart /> Quitar
-        </Fragment>
-      ) : (
-        <Fragment>
-          <AddShoppingCart /> Agregar
-        </Fragment>
-      )}
-    </Button>
-  );
-};
-
 const Product = ({ section, product }) => {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -102,7 +83,7 @@ const Product = ({ section, product }) => {
           <IconButton aria-label="add to favorites">
             <Favorite />
           </IconButton>
-          <AddButton />
+          <AddToCart />
           <StyledIconButton
             onClick={handleExpandClick}
             aria-expanded={expanded}

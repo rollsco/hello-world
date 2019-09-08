@@ -1,20 +1,23 @@
-import React, { Fragment } from "react";
-import Header from "./Header";
-import Container from "@material-ui/core/Container";
-import ProductsContainer from "../Products";
+import React from "react";
 import styled from "styled-components";
-import { CssBaseline } from "@material-ui/core";
+import Header from "./Header";
+import ProductsContainer from "../Products";
+import Footer from "./Footer";
+import { CssBaseline, Container } from "@material-ui/core";
 
-const StyledContainer = styled(Container)`
-  padding: 40px 0;
+const Products = styled(Container)`
+  padding: 96px 0 96px;
 `;
 
 const LayoutPage = ({ loading }) => (
   <CssBaseline>
     <Header />
-    <StyledContainer maxWidth="lg">
+
+    <Products maxWidth="lg">
       <ProductsContainer />
-    </StyledContainer>
+    </Products>
+
+    <Footer />
   </CssBaseline>
 );
 

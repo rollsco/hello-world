@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography, AppBar, Toolbar } from "@material-ui/core";
+import { Typography, AppBar, Toolbar, Button } from "@material-ui/core";
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -16,9 +16,10 @@ const PhoneNumber = styled(Typography)`
 `;
 
 const Header = () => (
-  <AppBar position="static">
+  <AppBar position="fixed">
     <Toolbar>
       <Title variant="h5">Rolls Co</Title>
+
       <WhatsappIcon
         src="img/whatsapp-icon.svg"
         width="26px"
