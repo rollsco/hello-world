@@ -1,9 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography, AppBar, Toolbar, Button } from "@material-ui/core";
+import {
+  Typography,
+  AppBar,
+  Toolbar,
+  Badge,
+  IconButton
+} from "@material-ui/core";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
 const Title = styled(Typography)`
-  flex-grow: 1;
   text-transform: uppercase;
 `;
 
@@ -11,24 +17,30 @@ const WhatsappIcon = styled.img`
   margin-right: 8px;
 `;
 
-const PhoneNumber = styled(Typography)`
-  padding-bottom: 5px;
+const StyledToolbar = styled(Toolbar)`
+  justify-content: space-between;
 `;
 
-const Header = () => (
+const Header = ({ productsNumber }) => (
   <AppBar position="fixed">
-    <Toolbar>
+    <StyledToolbar>
       <Title variant="h5">Rolls Co</Title>
 
-      <WhatsappIcon
-        src="img/whatsapp-icon.svg"
-        width="26px"
-        alt="whatsapp-icon"
-      />
-      <PhoneNumber variant="h5">
+      <IconButton aria-label="cart">
+        <Badge badgeContent={productsNumber} color="secondary">
+          <ShoppingCart />
+        </Badge>
+      </IconButton>
+
+      <Typography variant="h5">
+        <WhatsappIcon
+          src="img/whatsapp-icon.svg"
+          width="26px"
+          alt="whatsapp-icon"
+        />
         {process.env.REACT_APP_SUPPORT_TELEPHONE_NUMBER}
-      </PhoneNumber>
-    </Toolbar>
+      </Typography>
+    </StyledToolbar>
   </AppBar>
 );
 

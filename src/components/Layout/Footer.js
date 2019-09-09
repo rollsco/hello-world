@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { Toolbar, IconButton, Button, Paper } from "@material-ui/core";
+import { IconButton, Button, Paper } from "@material-ui/core";
 import LocalDining from "@material-ui/icons/LocalDining";
 import LocalCafe from "@material-ui/icons/LocalCafe";
 
-const StyledDiv = styled.div`
+const FixedBottom = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
 `;
 
-const BottomToolbar = styled(Paper)`
+const StyledPaper = styled(Paper)`
   display: flex;
   justify-content: center;
   padding: 12px 0;
@@ -19,9 +19,9 @@ const BottomToolbar = styled(Paper)`
   }
 `;
 
-const Footer = () => (
-  <StyledDiv>
-    <BottomToolbar>
+const Footer = ({ handleOpenCart }) => (
+  <FixedBottom>
+    <StyledPaper onClick={handleOpenCart}>
       <IconButton>
         <LocalCafe />
       </IconButton>
@@ -31,8 +31,8 @@ const Footer = () => (
       <IconButton>
         <LocalDining />
       </IconButton>
-    </BottomToolbar>
-  </StyledDiv>
+    </StyledPaper>
+  </FixedBottom>
 );
 
 export default Footer;

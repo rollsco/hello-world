@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Section from "./Section";
+import ShoppingCart from "./ShoppingCart";
 
 class SectionContainer extends Component {
   state = {
@@ -11,12 +11,9 @@ class SectionContainer extends Component {
   }
 
   render() {
-    const { section, addToCart } = this.props;
-    const { loading } = this.state;
+    const { cart, handleCloseCart } = this.props;
 
-    return (
-      <Section addToCart={addToCart} section={section} loading={loading} />
-    );
+    return <ShoppingCart cart={cart} handleCloseCart={handleCloseCart} />;
   }
 }
 
