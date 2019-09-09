@@ -18,11 +18,14 @@ class ProductsContainer extends Component {
   }
 
   render() {
+    const { addToCart } = this.props;
     const { sections, loading } = this.state;
 
     if (!sections) return;
 
-    return <Products sections={sections} loading={loading} />;
+    return (
+      <Products addToCart={addToCart} sections={sections} loading={loading} />
+    );
   }
 }
 

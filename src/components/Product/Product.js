@@ -14,6 +14,7 @@ import {
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Favorite from "@material-ui/icons/Favorite";
+import { currency } from "../../services/formatter";
 
 const StyledCard = styled(Card)`
   margin: 0 auto;
@@ -54,11 +55,15 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-const Product = ({ section, product }) => {
+const Product = ({ section, addToCart, product }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  function handleAddToCart() {
+    addToCart(product);
   }
 
   return (
@@ -72,7 +77,7 @@ const Product = ({ section, product }) => {
               </ColourCircle>
             }
             title={product.name}
-            subheader={`$${product.price}.000`}
+            subheader={currency(product.price)}
           />
           <ProductPhoto
             src={`https://source.unsplash.com/${product.img}/300x150`}
@@ -83,7 +88,7 @@ const Product = ({ section, product }) => {
           <IconButton aria-label="add to favorites">
             <Favorite />
           </IconButton>
-          <AddToCart />
+          <AddToCart handleAddToCart={handleAddToCart} />
           <StyledIconButton
             onClick={handleExpandClick}
             aria-expanded={expanded}

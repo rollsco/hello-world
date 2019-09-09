@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Fragment } from "react";
 import SectionContainer from "../Section";
-import { Grid } from "@material-ui/core";
+import { Grid, LinearProgress } from "@material-ui/core";
 
-const Products = ({ sections, loading }) => {
+const Products = ({ sections, addToCart, loading }) => {
   return (
-    <Grid container spacing={5}>
-      {sections.map((section, i) => (
-        <SectionContainer section={section} key={i} />
-      ))}
-    </Grid>
+    <Fragment>
+      {loading && <LinearProgress variant="query" color="secondary" />}
+      <Grid container spacing={5}>
+        {sections.map((section, i) => (
+          <SectionContainer addToCart={addToCart} section={section} key={i} />
+        ))}
+      </Grid>
+    </Fragment>
   );
 };
 

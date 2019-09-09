@@ -23,7 +23,7 @@ const Name = styled(Typography)`
   }
 `;
 
-const Section = ({ section, loading }) => {
+const Section = ({ section, addToCart, loading }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
@@ -47,7 +47,14 @@ const Section = ({ section, loading }) => {
 
       {section.products.map(
         (product, i) =>
-          !expanded && <Product section={section} product={product} key={i} />
+          !expanded && (
+            <Product
+              addToCart={addToCart}
+              section={section}
+              product={product}
+              key={i}
+            />
+          )
       )}
     </Fragment>
   );
