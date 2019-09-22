@@ -12,14 +12,13 @@ const Products = styled(Container)`
 
 const LayoutPage = ({
   cart,
-  loading,
   addToCart,
   removeFromCart,
   handleOpenCart,
   handleCloseCart,
 }) => (
   <CssBaseline>
-    <Header productsNumber={cart.products.length} />
+    <Header productsNumber={cart.items.length} />
 
     <Products maxWidth="lg">
       <ProductsContainer addToCart={addToCart} />
