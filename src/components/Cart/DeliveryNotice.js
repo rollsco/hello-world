@@ -5,7 +5,6 @@ import {
   TableRow,
   TableCell,
   Typography,
-  IconButton,
   Toolbar,
   TableHead,
 } from "@material-ui/core";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Paper, TableCell } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import Motorcycle from "@material-ui/icons/MotorcycleTwoTone";
 import { golden } from "../../theme";
 
