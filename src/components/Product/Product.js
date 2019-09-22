@@ -4,48 +4,23 @@ import { AddToCart } from "./AddToCart";
 import {
   Grid,
   Card,
-  CardHeader,
   CardContent,
   Typography,
   CardActions,
   IconButton,
-  Collapse
+  Collapse,
 } from "@material-ui/core";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Favorite from "@material-ui/icons/Favorite";
-import { currency } from "../../services/formatter";
+import Content from "./Content";
 
 const StyledCard = styled(Card)`
   margin: 0 auto;
   x-max-width: 80%;
 `;
 
-const StyledCardHeader = styled(CardHeader)`
-  text-transform: capitalize;
-`;
-
-const StyledCardContent = styled(CardContent)`
-  && {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-  }
-`;
-
 const StyledCardActions = styled(CardActions)`
   justify-content: space-between;
-`;
-
-const ProductPhoto = styled.img`
-  margin: 8px 0;
-  width: 100%;
-`;
-
-const ColourCircle = styled(IconButton)`
-  && {
-    background-color: ${props => props.backgroundcolor};
-  }
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -69,20 +44,7 @@ const Product = ({ section, addToCart, product }) => {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <StyledCard>
-        <StyledCardContent>
-          <StyledCardHeader
-            avatar={
-              <ColourCircle backgroundcolor={section.color}>
-                <FiberManualRecord />
-              </ColourCircle>
-            }
-            title={product.name}
-            subheader={currency(product.price)}
-          />
-          <ProductPhoto
-            src={`https://source.unsplash.com/${product.img}/300x150`}
-          />
-        </StyledCardContent>
+        <Content color={section.color} product={product} />
 
         <StyledCardActions disableSpacing>
           <IconButton aria-label="add to favorites">

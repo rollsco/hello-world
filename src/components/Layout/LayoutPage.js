@@ -3,49 +3,36 @@ import styled from "styled-components";
 import Header from "./Header";
 import ProductsContainer from "../Products";
 import Footer from "./Footer";
-import ShoppingCartContainer from "../ShoppingCart";
+import CartContainer from "../Cart";
 import { CssBaseline, Container } from "@material-ui/core";
 
 const Products = styled(Container)`
   padding: 96px 0 96px;
 `;
 
-const initialStateCart = {
-  open: false,
-  products: []
-};
+const LayoutPage = ({
+  cart,
+  loading,
+  addToCart,
+  removeFromCart,
+  handleOpenCart,
+  handleCloseCart,
+}) => (
+  <CssBaseline>
+    <Header productsNumber={cart.products.length} />
 
-const LayoutPage = ({ loading }) => {
-  const [cart, setCart] = React.useState(initialStateCart);
+    <Products maxWidth="lg">
+      <ProductsContainer addToCart={addToCart} />
+    </Products>
 
-  function handleOpenCart() {
-    setCart({ ...cart, open: true });
-  }
+    <Footer handleOpenCart={handleOpenCart} />
 
-  function handleCloseCart() {
-    setCart({ ...cart, open: false });
-  }
-
-  function addToCart(product) {
-    setCart({
-      ...cart,
-      products: [...cart.products, product]
-    });
-  }
-
-  return (
-    <CssBaseline>
-      <Header productsNumber={cart.products.length} />
-
-      <Products maxWidth="lg">
-        <ProductsContainer addToCart={addToCart} />
-      </Products>
-
-      <Footer handleOpenCart={handleOpenCart} />
-
-      <ShoppingCartContainer cart={cart} handleCloseCart={handleCloseCart} />
-    </CssBaseline>
-  );
-};
+    <CartContainer
+      cart={cart}
+      handleCloseCart={handleCloseCart}
+      removeFromCart={removeFromCart}
+    />
+  </CssBaseline>
+);
 
 export default LayoutPage;

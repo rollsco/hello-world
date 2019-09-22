@@ -1,20 +1,45 @@
-import React, { Component } from "react";
+import React from "react";
 import LayoutPage from "./LayoutPage";
 
-class LayoutContainer extends Component {
-  state = {
-    loading: true
-  };
+const initialStateCart = {
+  open: true,
+  products: [],
+};
 
-  componentDidMount() {
-    this.setState({ loading: false });
+const LayoutContainer = () => {
+  const [cart, setCart] = React.useState(initialStateCart);
+
+  function handleOpenCart() {
+    setCart({ ...cart, open: true });
   }
 
-  render() {
-    const { loading } = this.state;
-
-    return <LayoutPage loading={loading} />;
+  function handleCloseCart() {
+    setCart({ ...cart, open: false });
   }
-}
+
+  function addToCart(product) {
+    setCart({
+      ...cart,
+      products: [...cart.products, product],
+    });
+  }
+
+  function removeFromCart(product) {
+    setCart({
+      ...cart,
+      products: [...cart.products, product],
+    });
+  }
+
+  return (
+    <LayoutPage
+      cart={cart}
+      addToCart={addToCart}
+      removeFromCart={removeFromCart}
+      handleOpenCart={handleOpenCart}
+      handleCloseCart={handleCloseCart}
+    />
+  );
+};
 
 export default LayoutContainer;
