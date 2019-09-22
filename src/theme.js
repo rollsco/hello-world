@@ -1,16 +1,20 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
+export const red = "rgb(140,26,0)";
+export const green = "rgb(0,70,10)";
+export const golden = "rgb(249, 168, 37)";
+
 export default createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      main: "#212121"
+      main: "#212121",
     },
     secondary: {
-      main: "#f9a825"
-    }
+      main: "#f9a825",
+    },
   },
   typography: {
-    fontFamily: ["Raleway"].join(",")
-  }
+    fontFamily: ["Raleway"].join(","),
+  },
 });

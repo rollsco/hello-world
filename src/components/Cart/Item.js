@@ -9,16 +9,18 @@ const ProductName = styled(Typography)`
   text-transform: capitalize;
 `;
 
-const Item = ({ product, removeFromCart }) => (
+const Item = ({ item, removeFromCart }) => (
   <TableRow>
     <TableCell>
-      <ProductName variant="subtitle1">{product.name}</ProductName>
+      <ProductName variant="subtitle1">{item.product.name}</ProductName>
     </TableCell>
     <TableCell align="right">
-      <Typography variant="subtitle1">{currency(product.price)}</Typography>
+      <Typography variant="subtitle1">
+        {currency(item.product.price)}
+      </Typography>
     </TableCell>
     <TableCell align="right">
-      <IconButton onClick={removeFromCart(product)}>
+      <IconButton onClick={() => removeFromCart(item)}>
         <Delete />
       </IconButton>
     </TableCell>

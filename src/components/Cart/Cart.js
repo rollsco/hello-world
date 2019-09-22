@@ -11,9 +11,11 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import Header from "./Header";
-import { currency } from "../../services/formatter";
 import Item from "./Item";
+import Header from "./Header";
+import DeliveryNotice from "./DeliveryNotice";
+import { currency } from "../../services/formatter";
+import CustomerInfo from "./CustomerInfo";
 
 const StyledContainer = styled(Container)`
   margin-top: 88px;
@@ -22,6 +24,9 @@ const StyledContainer = styled(Container)`
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const calculateTotalCost = items =>
+  items.reduce((priceSum, item) => priceSum + item.product.price, 0);
 
 const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
   <Dialog
@@ -34,32 +39,29 @@ const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
 
     <StyledContainer maxWidth="sm">
       <Paper>
-        <Table>
+        <Table size="small">
           <TableBody>
-            {cart.products.map((product, index) => (
-              <Item product={product} key={index} removeFromCart={removeFromCart} />
+            {cart.items.map((item, index) => (
+              <Item item={item} key={index} removeFromCart={removeFromCart} />
             ))}
             <TableRow>
               <TableCell>
-                <Typography variant="subtitle1">Subtotal</Typography>
+                <Typography variant="h6">Subtotal</Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="subtitle1">{currency(34000)}</Typography>
-              </TableCell>
-              <TableCell />
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Typography variant="h6">Total</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography variant="h6">{currency(37500)}</Typography>
+                <Typography variant="h6">
+                  {currency(calculateTotalCost(cart.items))}
+                </Typography>
               </TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
         </Table>
       </Paper>
+
+      <CustomerInfo />
+
+      <DeliveryNotice />
     </StyledContainer>
   </Dialog>
 );

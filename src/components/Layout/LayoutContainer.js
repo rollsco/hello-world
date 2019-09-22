@@ -3,7 +3,16 @@ import LayoutPage from "./LayoutPage";
 
 const initialStateCart = {
   open: true,
-  products: [],
+  items: [],
+};
+
+const getNewCartItem = product => {
+  const randomId = Math.floor(Math.random() * 1000000);
+
+  return {
+    id: randomId,
+    product,
+  };
 };
 
 const LayoutContainer = () => {
@@ -20,14 +29,16 @@ const LayoutContainer = () => {
   function addToCart(product) {
     setCart({
       ...cart,
-      products: [...cart.products, product],
+      items: [...cart.items, getNewCartItem(product)],
     });
   }
 
-  function removeFromCart(product) {
+  function removeFromCart(itemToRemove) {
+    const items = cart.items.filter(item => item.id != itemToRemove.id);
+
     setCart({
       ...cart,
-      products: [...cart.products, product],
+      items,
     });
   }
 
