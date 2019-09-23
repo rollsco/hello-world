@@ -15,7 +15,8 @@ import Item from "./Item";
 import Header from "./Header";
 import DeliveryNotice from "./DeliveryNotice";
 import { currency } from "../../services/formatter";
-import CustomerInfo from "./CustomerInfo";
+import UserInfo from "./UserInfo/UserInfo";
+import UserInfoContainer from "./UserInfo/UserInfoContainer";
 
 const StyledContainer = styled(Container)`
   margin-top: 88px;
@@ -59,7 +60,7 @@ const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
         </Table>
       </Paper>
 
-      <CustomerInfo />
+      <UserInfoContainer />
 
       <DeliveryNotice />
     </StyledContainer>

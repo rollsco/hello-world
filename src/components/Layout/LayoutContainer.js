@@ -2,7 +2,7 @@ import React from "react";
 import LayoutPage from "./LayoutPage";
 
 const initialStateCart = {
-  open: true,
+  open: false,
   items: [],
 };
 
@@ -16,7 +16,15 @@ const getNewCartItem = product => {
 };
 
 const LayoutContainer = () => {
-  const [cart, setCart] = React.useState(initialStateCart);
+  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
+  const [cart, setCart] = React.useState(
+    localStorageCart ? localStorageCart : initialStateCart,
+  );
+
+  function updateCart(cart) {
+    setCart(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
   function handleOpenCart() {
     setCart({ ...cart, open: true });
@@ -27,7 +35,7 @@ const LayoutContainer = () => {
   }
 
   function addToCart(product) {
-    setCart({
+    updateCart({
       ...cart,
       items: [...cart.items, getNewCartItem(product)],
     });
@@ -36,7 +44,7 @@ const LayoutContainer = () => {
   function removeFromCart(itemToRemove) {
     const items = cart.items.filter(item => item.id != itemToRemove.id);
 
-    setCart({
+    updateCart({
       ...cart,
       items,
     });
