@@ -5,26 +5,32 @@ import { rollsApiGet } from "../../services/rollsApiService";
 class ProductsContainer extends Component {
   state = {
     sections: [],
-    loading: true
+    loading: true,
   };
 
   async componentDidMount() {
     // TODO create action to put result in Store
     const sections = await rollsApiGet("sections", {
-      include: ["full-products"]
+      include: ["full-products"],
     });
 
     this.setState({ sections, loading: false });
   }
 
   render() {
-    const { addToCart } = this.props;
+    const { cart, addToCart, removeFromCart } = this.props;
     const { sections, loading } = this.state;
 
     if (!sections) return;
 
     return (
-      <Products addToCart={addToCart} sections={sections} loading={loading} />
+      <Products
+        cart={cart}
+        removeFromCart={removeFromCart}
+        addToCart={addToCart}
+        sections={sections}
+        loading={loading}
+      />
     );
   }
 }
