@@ -27,11 +27,11 @@ const LayoutContainer = () => {
   }
 
   function handleOpenCart() {
-    setCart({ ...cart, open: true });
+    updateCart({ ...cart, open: true });
   }
 
   function handleCloseCart() {
-    setCart({ ...cart, open: false });
+    updateCart({ ...cart, open: false });
   }
 
   function addToCart(product) {

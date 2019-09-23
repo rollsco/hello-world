@@ -18,18 +18,25 @@ const LayoutPage = ({
   handleCloseCart,
 }) => (
   <CssBaseline>
-    <Header productsNumber={cart.items.length} />
+    <Header
+      handleOpenCart={handleOpenCart}
+      productsNumber={cart.items.length}
+    />
 
     <Products maxWidth="lg">
-      <ProductsContainer addToCart={addToCart} />
+      <ProductsContainer
+        cart={cart}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
     </Products>
 
     <Footer handleOpenCart={handleOpenCart} />
 
     <CartContainer
       cart={cart}
-      handleCloseCart={handleCloseCart}
       removeFromCart={removeFromCart}
+      handleCloseCart={handleCloseCart}
     />
   </CssBaseline>
 );

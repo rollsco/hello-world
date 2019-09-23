@@ -5,7 +5,7 @@ import {
   AppBar,
   Toolbar,
   Badge,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
@@ -21,12 +21,12 @@ const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-const Header = ({ productsNumber }) => (
+const Header = ({ productsNumber, handleOpenCart }) => (
   <AppBar position="fixed">
     <StyledToolbar>
       <Title variant="h5">Rolls Co</Title>
 
-      <IconButton aria-label="cart">
+      <IconButton onClick={handleOpenCart} aria-label="cart">
         <Badge badgeContent={productsNumber} color="secondary">
           <ShoppingCart />
         </Badge>

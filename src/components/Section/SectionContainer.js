@@ -3,7 +3,7 @@ import Section from "./Section";
 
 class SectionContainer extends Component {
   state = {
-    loading: true
+    loading: true,
   };
 
   componentDidMount() {
@@ -11,11 +11,17 @@ class SectionContainer extends Component {
   }
 
   render() {
-    const { section, addToCart } = this.props;
+    const { section, cart, addToCart, removeFromCart } = this.props;
     const { loading } = this.state;
 
     return (
-      <Section addToCart={addToCart} section={section} loading={loading} />
+      <Section
+        cart={cart}
+        removeFromCart={removeFromCart}
+        addToCart={addToCart}
+        section={section}
+        loading={loading}
+      />
     );
   }
 }

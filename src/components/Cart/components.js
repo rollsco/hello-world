@@ -4,7 +4,7 @@ import Motorcycle from "@material-ui/icons/MotorcycleTwoTone";
 import { golden } from "../../theme";
 
 export const CartPaper = styled(Paper)`
-  margin-top: 64px;
+  margin: 64px 0;
 `;
 
 export const Moto = styled(Motorcycle)`

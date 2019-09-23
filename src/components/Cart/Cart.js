@@ -10,13 +10,14 @@ import {
   Container,
   Paper,
   Typography,
+  Button,
 } from "@material-ui/core";
 import Item from "./Item";
 import Header from "./Header";
 import DeliveryNotice from "./DeliveryNotice";
 import { currency } from "../../services/formatter";
-import UserInfo from "./UserInfo/UserInfo";
 import UserInfoContainer from "./UserInfo/UserInfoContainer";
+import { BottomButtonPaper } from "../components";
 
 const StyledContainer = styled(Container)`
   margin-top: 88px;
@@ -63,6 +64,12 @@ const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
       <UserInfoContainer />
 
       <DeliveryNotice />
+
+      <BottomButtonPaper>
+        <Button variant="contained" color="secondary">
+          Listo: confirmar pedido
+        </Button>
+      </BottomButtonPaper>
     </StyledContainer>
   </Dialog>
 );
