@@ -18,6 +18,7 @@ import DeliveryNotice from "./DeliveryNotice";
 import { currency } from "../../services/formatter";
 import UserInfoContainer from "./UserInfo/UserInfoContainer";
 import { BottomButtonPaper } from "../components";
+import Confirmation from "./Confirmation";
 
 const StyledContainer = styled(Container)`
   margin-top: 88px;
@@ -30,7 +31,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const calculateTotalCost = items =>
   items.reduce((priceSum, item) => priceSum + item.product.price, 0);
 
-const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
+const Cart = ({
+  cart,
+  order,
+  userInfo,
+  acceptOrder,
+  requestOrder,
+  updateUserInfo,
+  removeFromCart,
+  handleCloseCart,
+  userInfoComplete,
+}) => (
   <Dialog
     fullScreen
     open={cart.open}
@@ -61,13 +72,26 @@ const Cart = ({ cart, handleCloseCart, removeFromCart }) => (
         </Table>
       </Paper>
 
-      <UserInfoContainer />
+      <UserInfoContainer userInfo={userInfo} updateUserInfo={updateUserInfo} />
 
       <DeliveryNotice />
 
+      <Confirmation order={order} acceptOrder={acceptOrder} />
+
       <BottomButtonPaper>
-        <Button variant="contained" color="secondary">
-          Listo: confirmar pedido
+        <Button
+          disabled={!userInfoComplete()}
+          color="secondary"
+          variant="contained"
+          onClick={requestOrder}
+        >
+          {userInfoComplete() ? (
+            "Listo: confirmar pedido"
+          ) : (
+            <Typography variant="caption">
+              Por favor llena tus datos en el formulario
+            </Typography>
+          )}
         </Button>
       </BottomButtonPaper>
     </StyledContainer>
