@@ -1,12 +1,22 @@
 import React from "react";
 import LayoutPage from "./LayoutPage";
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from "../../services/localStorage";
 
-const initialStateCart = {
-  open: false,
-  items: [],
+const createIdempotencyToken = () => {
+  let token = "";
+  const length = 24;
+  const characters = "0123456789abcdefghijklmnopqrstuvwxyz";
+  for (var i = length; i > 0; --i) {
+    token += characters[parseInt(Math.random() * characters.length)];
+  }
+
+  return token;
 };
 
-const getNewCartItem = product => {
+const createNewCartItem = product => {
   const randomId = Math.floor(Math.random() * 1000000);
 
   return {
@@ -15,15 +25,20 @@ const getNewCartItem = product => {
   };
 };
 
+const initialStateCart = {
+  items: [],
+  open: false,
+  idempotencyToken: createIdempotencyToken(),
+};
+
 const LayoutContainer = () => {
-  const localStorageCart = JSON.parse(localStorage.getItem("cart"));
   const [cart, setCart] = React.useState(
-    localStorageCart ? localStorageCart : initialStateCart,
+    getLocalStorageItem("cart", initialStateCart),
   );
 
   function updateCart(cart) {
     setCart(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setLocalStorageItem("cart", cart);
   }
 
   function handleOpenCart() {
@@ -37,7 +52,7 @@ const LayoutContainer = () => {
   function addToCart(product) {
     updateCart({
       ...cart,
-      items: [...cart.items, getNewCartItem(product)],
+      items: [...cart.items, createNewCartItem(product)],
     });
   }
 

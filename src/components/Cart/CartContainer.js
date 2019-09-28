@@ -1,5 +1,9 @@
 import React from "react";
 import Cart from "./Cart";
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from "../../services/localStorage";
 
 const initialStateUserInfo = {
   name: "",
@@ -15,15 +19,16 @@ const initialStateOrder = {
 };
 
 const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
-  const localStorageUserInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [userInfo, setUserInfo] = React.useState(
-    localStorageUserInfo ? localStorageUserInfo : initialStateUserInfo,
+    getLocalStorageItem("userInfo", initialStateUserInfo),
   );
-  const [order, setOrder] = React.useState(initialStateOrder);
+  const [order, setOrder] = React.useState(
+    getLocalStorageItem("order", initialStateOrder),
+  );
 
   function updateUserInfo(newUserInfo) {
     setUserInfo(newUserInfo);
-    localStorage.setItem("userInfo", JSON.stringify(newUserInfo));
+    setLocalStorageItem("userInfo", newUserInfo);
   }
 
   function userInfoComplete() {
@@ -34,31 +39,25 @@ const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
     return emptyPropertyKeys.length <= 0;
   }
 
+  function updateOrder(order) {
+    setOrder(order);
+    setLocalStorageItem("order", order);
+  }
+
   function requestOrder() {
-    // TODO call API endpoint to request new Order, with cart and userInfo
     if (!userInfoComplete) {
       return;
     }
 
-    setOrder({
+    // TODO call API endpoint to request new Order, with cart and userInfo
+    updateOrder({
       ...order,
       status: "pending",
     });
-
-    setTimeout(() => {
-      setOrder({
-        ...order,
-        status: "confirmed",
-      });
-    }, 3000);
-
-    const response = true;
-    if (response) {
-    }
   }
 
   function acceptOrder() {
-    setOrder({
+    updateOrder({
       ...order,
       status: "accepted",
     });
