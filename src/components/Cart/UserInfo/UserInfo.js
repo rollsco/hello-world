@@ -34,7 +34,9 @@ const Row = ({ Icon, field, name, note, userInfo, handleChange }) => (
     {note && (
       <TableRow>
         <TableCell colSpan={99} align="center">
-          <Typography variant="caption">{note}</Typography>
+          <Typography variant="caption" color="textSecondary">
+            {note}
+          </Typography>
         </TableCell>
       </TableRow>
     )}
@@ -81,6 +83,14 @@ const UserInfo = ({ userInfo, handleChange }) => (
           Icon={<Phone />}
           field="Celular"
           note="Te avisamos por WhatsApp el estado de tu órden."
+        />
+        <Row
+          userInfo={userInfo}
+          handleChange={handleChange}
+          name="notes"
+          Icon={<Explore />}
+          field="Observaciones"
+          note="¿Algo más para que tomemos en cuenta?"
         />
       </TableBody>
     </Table>
