@@ -4,6 +4,9 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../services/localStorage";
+import { withFirebase } from "../FirebaseContext";
+import { createToken } from "../../services/token";
+import { telegramBot } from "../../services/telegram/service";
 
 const initialStateUserInfo = {
   name: "",
@@ -11,20 +14,58 @@ const initialStateUserInfo = {
   locality: "",
   email: "",
   phone: "",
+  notes: "",
 };
 
 const initialStateOrder = {
   status: "",
   errors: [],
+  idempotencyToken: createToken(),
 };
 
-const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
+const SectionContainer = ({
+  cart,
+  firebase,
+  handleCloseCart,
+  removeFromCart,
+}) => {
   const [userInfo, setUserInfo] = React.useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
+
   const [order, setOrder] = React.useState(
-    getLocalStorageItem("order", initialStateOrder),
+    getLocalStorageItem("order", { ...initialStateOrder }),
   );
+
+  // onMount
+  React.useEffect(() => {
+    // update Order on local and state
+    updateOrder(order);
+
+    // listen for Order on Firebase
+    firebase.onDocument("orders", order.idempotencyToken, {
+      callback: firebaseOrder => {
+        // If there's Order in Firebase, override local
+        // TODO merge(?)
+        if (firebaseOrder) {
+          updateOrder(firebaseOrder);
+
+          if (firebaseOrder.status === "pending") {
+            telegramBot.sendMessage(`${JSON.stringify(order)}`, {
+              onSuccess: confirmOrder,
+              onError: rejectOrder,
+            });
+          }
+        } else if (order.status === "pending") {
+          updateOrder({
+            ...order,
+            status: "failed",
+          });
+        }
+      },
+      errorCallback: () => {},
+    });
+  }, []);
 
   function updateUserInfo(newUserInfo) {
     setUserInfo(newUserInfo);
@@ -33,7 +74,7 @@ const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
 
   function userInfoComplete() {
     const emptyPropertyKeys = Object.keys(userInfo).filter(
-      key => !userInfo[key],
+      key => key !== "notes" && !userInfo[key],
     );
 
     return emptyPropertyKeys.length <= 0;
@@ -49,17 +90,48 @@ const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
       return;
     }
 
-    // TODO call API endpoint to request new Order, with cart and userInfo
-    updateOrder({
-      ...order,
-      status: "pending",
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        cart,
+        userInfo,
+        status: "pending",
+      },
+    });
+  }
+
+  function confirmOrder() {
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        status: "confirmed",
+      },
     });
   }
 
   function acceptOrder() {
-    updateOrder({
-      ...order,
-      status: "accepted",
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        status: "accepted",
+      },
+    });
+  }
+
+  function rejectOrder() {
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        status: "rejected",
+      },
     });
   }
 
@@ -78,4 +150,4 @@ const SectionContainer = ({ cart, handleCloseCart, removeFromCart }) => {
   );
 };
 
-export default SectionContainer;
+export default withFirebase(SectionContainer);

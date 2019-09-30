@@ -5,30 +5,23 @@ import {
   setLocalStorageItem,
 } from "../../services/localStorage";
 
-const createIdempotencyToken = () => {
-  let token = "";
-  const length = 24;
-  const characters = "0123456789abcdefghijklmnopqrstuvwxyz";
-  for (var i = length; i > 0; --i) {
-    token += characters[parseInt(Math.random() * characters.length)];
-  }
-
-  return token;
-};
-
 const createNewCartItem = product => {
   const randomId = Math.floor(Math.random() * 1000000);
+  const newProduct = { ...product };
+
+  delete newProduct.img;
+  delete newProduct.order;
+  delete newProduct.description;
 
   return {
     id: randomId,
-    product,
+    product: newProduct,
   };
 };
 
 const initialStateCart = {
   items: [],
   open: false,
-  idempotencyToken: createIdempotencyToken(),
 };
 
 const LayoutContainer = () => {
@@ -42,7 +35,7 @@ const LayoutContainer = () => {
   }
 
   function handleOpenCart() {
-    updateCart({ ...cart, open: true });
+    updateCart({ ...cart, open: cart.items.length > 0 });
   }
 
   function handleCloseCart() {
@@ -57,11 +50,12 @@ const LayoutContainer = () => {
   }
 
   function removeFromCart(itemToRemove) {
-    const items = cart.items.filter(item => item.id != itemToRemove.id);
+    const items = cart.items.filter(item => item.id !== itemToRemove.id);
 
     updateCart({
       ...cart,
       items,
+      open: items.length > 0,
     });
   }
 

@@ -5,6 +5,7 @@ import {
   Grid,
   Card,
   CardContent,
+  CardMedia,
   Typography,
   CardActions,
   IconButton,
@@ -14,10 +15,10 @@ import {
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Favorite from "@material-ui/icons/Favorite";
 import Content from "./Content";
+import { multiline } from "../../services/formatter";
 
 const StyledCard = styled(Card)`
   margin: 0 auto;
-  x-max-width: 80%;
 `;
 
 const StyledCardActions = styled(CardActions)`
@@ -62,6 +63,12 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
         <StyledCard>
           <Content product={product} />
 
+          <CardMedia
+            component="img"
+            image={`img/products/${product.img}`}
+            title={product.name}
+          />
+
           <StyledCardActions disableSpacing>
             <IconButton aria-label="add to favorites">
               <Favorite />
@@ -83,21 +90,9 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>
-                <Typography variant="subtitle1">
-                  Mucha más información
-                </Typography>
+                <Typography variant="subtitle1">Detalles</Typography>
                 <Typography variant="caption">
-                  Sobre este chuchi de la que podría imaginarse. Lolem ipsum
-                  dolot sid amet in redditans upvotarum. Sed ut perspiciatis
-                  unde omnis iste natus error sit voluptatem accusantium
-                  doloremque laudantium.
-                </Typography>
-                <Typography variant="subtitle1">Otra cosa más:</Typography>
-                <Typography variant="caption">
-                  A que no sabías que lolem ipsum dolot sid amet in redditans
-                  upvotarum. Totam rem aperiam, eaque ipsa quae ab illo
-                  inventore veritatis et quasi architecto beatae vitae dicta
-                  sunt explicabo.
+                  {multiline(product.description)}
                 </Typography>
               </Typography>
             </CardContent>

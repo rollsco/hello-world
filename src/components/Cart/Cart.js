@@ -86,10 +86,10 @@ const Cart = ({
           onClick={requestOrder}
         >
           {userInfoComplete() ? (
-            "Listo: confirmar pedido"
+            "Listo: hacer pedido"
           ) : (
             <Typography variant="caption">
-              Por favor llena tus datos en el formulario
+              ¡Por favor llena tus datos primero!
             </Typography>
           )}
         </Button>
