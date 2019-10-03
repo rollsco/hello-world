@@ -12,6 +12,8 @@ import {
   Collapse,
   Badge,
 } from "@material-ui/core";
+import FiberManualRecordOutlined from "@material-ui/icons/FiberManualRecordOutlined";
+import { OverflowWrapTypography } from "../components";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Favorite from "@material-ui/icons/Favorite";
 import Content from "./Content";
@@ -22,7 +24,10 @@ const StyledCard = styled(Card)`
 `;
 
 const StyledCardActions = styled(CardActions)`
-  justify-content: space-between;
+  && {
+    padding-top: 0;
+  }
+  justify-content: right;
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -58,19 +63,19 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
   }
 
   return (
-    <Grid item xs={6} sm={4} md={3} lg={3}>
+    <Grid item xs={4} sm={3} md={3} lg={2}>
       <Badge color="secondary" badgeContent={numberOnCart}>
         <StyledCard>
-          <Content product={product} />
-
           <CardMedia
             component="img"
             image={`img/products/${product.img}`}
             title={product.name}
           />
 
+          <Content product={product} />
+
           <StyledCardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+            <IconButton size="small" aria-label="add to favorites">
               <Favorite />
             </IconButton>
             <AddToCart
@@ -79,24 +84,30 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
               handleRemoveFromCart={handleRemoveFromCart}
             />
             <StyledIconButton
+              size="small"
               onClick={handleExpandClick}
               aria-expanded={expanded}
               aria-label="show more"
             >
-              <ExpandMore />
+              {(product.description && <ExpandMore />) || (
+                <FiberManualRecordOutlined />
+              )}
             </StyledIconButton>
           </StyledCardActions>
 
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>
-                <Typography variant="subtitle1">Detalles</Typography>
-                <Typography variant="caption">
-                  {multiline(product.description)}
+          {product.description && (
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph>
+                  <Typography variant="subtitle1">Detalles</Typography>
+                  <OverflowWrapTypography variant="caption">
+                    {multiline(product.description)} lolem ipsum
+                    absolutalongitudensimpresionansdemaximapolipalabreililosidat
+                  </OverflowWrapTypography>
                 </Typography>
-              </Typography>
-            </CardContent>
-          </Collapse>
+              </CardContent>
+            </Collapse>
+          )}
         </StyledCard>
       </Badge>
     </Grid>

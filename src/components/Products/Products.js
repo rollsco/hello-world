@@ -6,7 +6,7 @@ const Products = ({ sections, cart, addToCart, removeFromCart, loading }) => {
   return (
     <Fragment>
       {loading && <LinearProgress variant="query" color="secondary" />}
-      <Grid container spacing={5}>
+      <Grid container spacing={3}>
         {sections.map((section, i) => (
           <SectionContainer
             cart={cart}

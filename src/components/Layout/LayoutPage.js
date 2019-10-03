@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import ProductsContainer from "../Products";
@@ -18,20 +18,24 @@ const LayoutPage = ({
   handleCloseCart,
 }) => (
   <CssBaseline>
-    <Header
-      handleOpenCart={handleOpenCart}
-      productsNumber={cart.items.length}
-    />
+    {!cart.open && (
+      <Fragment>
+        <Header
+          handleOpenCart={handleOpenCart}
+          productsNumber={cart.items.length}
+        />
 
-    <Products maxWidth="lg">
-      <ProductsContainer
-        cart={cart}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-      />
-    </Products>
+        <Products maxWidth="lg">
+          <ProductsContainer
+            cart={cart}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart}
+          />
+        </Products>
 
-    <Footer handleOpenCart={handleOpenCart} />
+        {cart.items.length > 0 && <Footer handleOpenCart={handleOpenCart} />}
+      </Fragment>
+    )}
 
     <CartContainer
       cart={cart}

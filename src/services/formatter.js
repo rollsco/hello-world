@@ -8,5 +8,8 @@ export const currency = value =>
     maximumFractionDigits: 0,
   }).format(value);
 
-export const multiline = value =>
-  value.split("\n").map((line, index) => <p key={index}>{line}</p>);
+export const multiline = value => {
+  if (value) {
+    return value.split("\n").map((line, index) => <p key={index}>{line}</p>);
+  }
+};
