@@ -52,10 +52,13 @@ const LayoutContainer = () => {
   function removeFromCart(itemToRemove) {
     const items = cart.items.filter(item => item.id !== itemToRemove.id);
 
+    if (items.length === 0) {
+      cart.open = false;
+    }
+
     updateCart({
       ...cart,
       items,
-      open: items.length > 0,
     });
   }
 

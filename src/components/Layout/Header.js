@@ -9,10 +9,6 @@ import {
 } from "@material-ui/core";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
-const Title = styled(Typography)`
-  text-transform: uppercase;
-`;
-
 const WhatsappIcon = styled.img`
   margin-right: 8px;
 `;
@@ -24,20 +20,16 @@ const StyledToolbar = styled(Toolbar)`
 const Header = ({ productsNumber, handleOpenCart }) => (
   <AppBar position="fixed">
     <StyledToolbar>
-      <Title variant="h5">Rolls Co</Title>
+      <img src="img/logo-rolls-small.png" />
 
       <IconButton onClick={handleOpenCart} aria-label="cart">
-        <Badge badgeContent={productsNumber} color="secondary">
+        <Badge badgeContent={productsNumber} color="se E condary">
           <ShoppingCart />
         </Badge>
       </IconButton>
 
       <Typography variant="h5">
-        <WhatsappIcon
-          src="img/whatsapp-icon.svg"
-          width="26px"
-          alt="whatsapp-icon"
-        />
+        <WhatsappIcon src="img/whatsapp-logo.svg" width="32px" alt="WhatsApp" />
         {process.env.REACT_APP_SUPPORT_TELEPHONE_NUMBER}
       </Typography>
     </StyledToolbar>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Products from "./Products";
-import { rollsApiGet } from "../../services/rollsApiService";
 import { withFirebase } from "../FirebaseContext";
 import {
   getLocalStorageItem,

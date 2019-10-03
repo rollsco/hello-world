@@ -19,7 +19,7 @@ const initialStateUserInfo = {
 
 const initialStateOrder = {
   status: "",
-  errors: [],
+  errors: null,
   idempotencyToken: createToken(),
 };
 
@@ -40,7 +40,7 @@ const SectionContainer = ({
   // onMount
   React.useEffect(() => {
     // update Order on local and state
-    updateOrder(order);
+    // updateOrder(order);
 
     // listen for Order on Firebase
     firebase.onDocument("orders", order.idempotencyToken, {
@@ -51,10 +51,13 @@ const SectionContainer = ({
           updateOrder(firebaseOrder);
 
           if (firebaseOrder.status === "pending") {
-            telegramBot.sendMessage(`${JSON.stringify(order)}`, {
-              onSuccess: confirmOrder,
-              onError: rejectOrder,
-            });
+            telegramBot.sendMessage(
+              telegramBot.createOrderMessage(firebaseOrder),
+              {
+                onSuccess: confirmOrder,
+                onError: rejectOrder,
+              },
+            );
           }
         } else if (order.status === "pending") {
           updateOrder({
@@ -63,7 +66,10 @@ const SectionContainer = ({
           });
         }
       },
-      errorCallback: () => {},
+      errorCallback: (response, body) => {
+        console.log("--response", response);
+        console.log("--body", body);
+      },
     });
   }, []);
 

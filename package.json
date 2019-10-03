@@ -14,6 +14,9 @@
     "request": "^2.88.0",
     "styled-components": "^4.3.2"
   },
+  "devDependencies": {
+    "compress-images": "^1.5.8"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
