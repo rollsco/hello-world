@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import ProductsContainer from "../Products";
 import Footer from "./Footer";
 import CartContainer from "../Cart";
+import ProductsContainer from "../Products";
 import { CssBaseline, Container } from "@material-ui/core";
 
 const Products = styled(Container)`
@@ -13,6 +13,7 @@ const Products = styled(Container)`
 const LayoutPage = ({
   cart,
   addToCart,
+  clearCart,
   removeFromCart,
   handleOpenCart,
   handleCloseCart,
@@ -39,6 +40,7 @@ const LayoutPage = ({
 
     <CartContainer
       cart={cart}
+      clearCart={clearCart}
       removeFromCart={removeFromCart}
       handleCloseCart={handleCloseCart}
     />

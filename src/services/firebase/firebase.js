@@ -19,15 +19,27 @@ class Firebase {
     this.db = app.firestore();
   }
 
+  logError = (response, body) => {
+    console.log("--There was an Error on Firebase");
+    console.log("--response", response);
+    console.log("--body", body);
+  };
+
+  // Listen for changes on a whole collection
   onCollection = (path, { callback, errorCallback }) => {
     this.db.collection(path).onSnapshot(callback, errorCallback);
   };
 
-  onDocument = (path, document, { callback, errorCallback }) => {
+  // Listen for changes on a particular document
+  onDocument = (path, document, { onSnapshot, onError, onCompletion }) => {
     this.db
       .collection(path)
       .doc(document)
-      .onSnapshot(doc => callback(getDocWithId(doc)), errorCallback);
+      .onSnapshot(
+        doc => onSnapshot(getDocWithId(doc)),
+        this.logError,
+        onCompletion,
+      );
   };
 
   set = async ({ path, doc, data, replace }) =>

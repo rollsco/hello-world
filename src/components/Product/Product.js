@@ -101,8 +101,7 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
                 <Typography paragraph>
                   <Typography variant="subtitle1">Detalles</Typography>
                   <OverflowWrapTypography variant="caption">
-                    {multiline(product.description)} lolem ipsum
-                    absolutalongitudensimpresionansdemaximapolipalabreililosidat
+                    {multiline(product.description)}
                   </OverflowWrapTypography>
                 </Typography>
               </CardContent>

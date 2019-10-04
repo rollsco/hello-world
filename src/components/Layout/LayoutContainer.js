@@ -62,10 +62,15 @@ const LayoutContainer = () => {
     });
   }
 
+  function clearCart() {
+    updateCart(initialStateCart);
+  }
+
   return (
     <LayoutPage
       cart={cart}
       addToCart={addToCart}
+      clearCart={clearCart}
       removeFromCart={removeFromCart}
       handleOpenCart={handleOpenCart}
       handleCloseCart={handleCloseCart}

@@ -17,59 +17,53 @@ const initialStateUserInfo = {
   notes: "",
 };
 
-const initialStateOrder = {
-  status: "",
+const getInitialStateOrder = () => ({
+  status: null,
   errors: null,
   idempotencyToken: createToken(),
-};
+});
 
-const SectionContainer = ({
+const CartContainer = ({
   cart,
   firebase,
-  handleCloseCart,
+  clearCart,
   removeFromCart,
+  handleCloseCart,
 }) => {
   const [userInfo, setUserInfo] = React.useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
 
   const [order, setOrder] = React.useState(
-    getLocalStorageItem("order", { ...initialStateOrder }),
+    getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
+
+  const processOrderEditedOnFirebase = firebaseOrder => {
+    // If there's Order in Firebase, override local
+    // TODO merge(?)
+    if (firebaseOrder) {
+      updateOrder(firebaseOrder);
+
+      if (firebaseOrder.status === "pending") {
+        telegramBot.sendMessage(telegramBot.createOrderMessage(firebaseOrder), {
+          onSuccess: confirmOrder,
+          onError: rejectOrder,
+        });
+      }
+      // Order with same Idempotency token not fonud on Firebase, and local order Pending
+    } else if (order.status === "pending") {
+      updateOrder({
+        ...order,
+        status: "failed",
+      });
+    }
+  };
 
   // onMount
   React.useEffect(() => {
-    // update Order on local and state
-    // updateOrder(order);
-
     // listen for Order on Firebase
     firebase.onDocument("orders", order.idempotencyToken, {
-      callback: firebaseOrder => {
-        // If there's Order in Firebase, override local
-        // TODO merge(?)
-        if (firebaseOrder) {
-          updateOrder(firebaseOrder);
-
-          if (firebaseOrder.status === "pending") {
-            telegramBot.sendMessage(
-              telegramBot.createOrderMessage(firebaseOrder),
-              {
-                onSuccess: confirmOrder,
-                onError: rejectOrder,
-              },
-            );
-          }
-        } else if (order.status === "pending") {
-          updateOrder({
-            ...order,
-            status: "failed",
-          });
-        }
-      },
-      errorCallback: (response, body) => {
-        console.log("--response", response);
-        console.log("--body", body);
-      },
+      onSnapshot: processOrderEditedOnFirebase,
     });
   }, []);
 
@@ -92,7 +86,7 @@ const SectionContainer = ({
   }
 
   function requestOrder() {
-    if (!userInfoComplete) {
+    if (!userInfoComplete()) {
       return;
     }
 
@@ -109,25 +103,16 @@ const SectionContainer = ({
   }
 
   function confirmOrder() {
-    firebase.set({
-      path: "orders",
-      doc: order.idempotencyToken,
-      data: {
-        ...order,
-        status: "confirmed",
-      },
-    });
-  }
-
-  function acceptOrder() {
-    firebase.set({
-      path: "orders",
-      doc: order.idempotencyToken,
-      data: {
-        ...order,
-        status: "accepted",
-      },
-    });
+    setTimeout(() => {
+      firebase.set({
+        path: "orders",
+        doc: order.idempotencyToken,
+        data: {
+          ...order,
+          status: "confirmed",
+        },
+      });
+    }, 2000);
   }
 
   function rejectOrder() {
@@ -141,13 +126,18 @@ const SectionContainer = ({
     });
   }
 
+  function placeNewOrder() {
+    clearCart();
+    updateOrder(getInitialStateOrder());
+  }
+
   return (
     <Cart
       cart={cart}
       order={order}
       userInfo={userInfo}
-      acceptOrder={acceptOrder}
       requestOrder={requestOrder}
+      placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
       removeFromCart={removeFromCart}
       handleCloseCart={handleCloseCart}
@@ -156,4 +146,4 @@ const SectionContainer = ({
   );
 };
 
-export default withFirebase(SectionContainer);
+export default withFirebase(CartContainer);

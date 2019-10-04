@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Dialog,
   DialogTitle,
   LinearProgress,
   DialogActions,
@@ -8,6 +7,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@material-ui/core";
+import { CartPaper } from "./components";
 
 const messagesMap = {
   failed: {
@@ -30,7 +30,7 @@ const messagesMap = {
   },
 };
 
-const Confirmation = ({ order, acceptOrder }) => {
+const ConfirmationNotice = ({ order, acceptOrder }) => {
   const { status } = order;
 
   if (!messagesMap[status]) {
@@ -38,7 +38,7 @@ const Confirmation = ({ order, acceptOrder }) => {
   }
 
   return (
-    <Dialog open>
+    <CartPaper>
       {["pending"].includes(status) && (
         <LinearProgress variant="query" color="secondary" />
       )}
@@ -46,15 +46,17 @@ const Confirmation = ({ order, acceptOrder }) => {
       <DialogTitle>{`${messagesMap[status].title}`}</DialogTitle>
 
       <DialogContent>
-        <DialogContentText color="error">
+        <DialogContentText>
           {`${messagesMap[status].content}`}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={acceptOrder}>OK</Button>
-      </DialogActions>
-    </Dialog>
+      {!["pending", "confirmed"].includes(status) && (
+        <DialogActions>
+          <Button onClick={acceptOrder}>OK</Button>
+        </DialogActions>
+      )}
+    </CartPaper>
   );
 };
 
-export default Confirmation;
+export default ConfirmationNotice;

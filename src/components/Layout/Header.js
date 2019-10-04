@@ -23,7 +23,7 @@ const Header = ({ productsNumber, handleOpenCart }) => (
       <img src="img/logo-rolls-small.png" />
 
       <IconButton onClick={handleOpenCart} aria-label="cart">
-        <Badge badgeContent={productsNumber} color="se E condary">
+        <Badge badgeContent={productsNumber} color="secondary">
           <ShoppingCart />
         </Badge>
       </IconButton>
