@@ -7,14 +7,16 @@ const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-const Header = ({ handleCloseCart }) => (
+const Header = ({ order, handleCloseCart }) => (
   <AppBar>
     <StyledToolbar>
       <Typography variant="h5">Tu pedido:</Typography>
 
-      <IconButton onClick={handleCloseCart} aria-label="close">
-        <Close />
-      </IconButton>
+      {!order.status && (
+        <IconButton onClick={handleCloseCart} aria-label="close">
+          <Close />
+        </IconButton>
+      )}
     </StyledToolbar>
   </AppBar>
 );
