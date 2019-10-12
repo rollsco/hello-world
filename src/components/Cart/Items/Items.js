@@ -1,7 +1,6 @@
 import React from "react";
 import Item from "./Item";
 import {
-  Paper,
   Table,
   TableBody,
   TableRow,
@@ -9,12 +8,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { currency } from "../../../services/formatter";
+import { CartPaper } from "../components";
 
 const calculateTotalCost = items =>
   items.reduce((priceSum, item) => priceSum + item.product.price, 0);
 
 const Items = ({ order, items, removeFromCart }) => (
-  <Paper>
+  <CartPaper>
     <Table size="small">
       <TableBody>
         {items.map((item, index) => (
@@ -38,7 +38,7 @@ const Items = ({ order, items, removeFromCart }) => (
         </TableRow>
       </TableBody>
     </Table>
-  </Paper>
+  </CartPaper>
 );
 
 export default Items;

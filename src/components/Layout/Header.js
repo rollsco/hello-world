@@ -20,7 +20,7 @@ const StyledToolbar = styled(Toolbar)`
 const Header = ({ productsNumber, handleOpenCart }) => (
   <AppBar position="fixed">
     <StyledToolbar>
-      <img src="img/logo-rolls-small.png" />
+      <img src="img/logo-rolls-small.png" alt="Rolls.co logo" />
 
       <IconButton onClick={handleOpenCart} aria-label="cart">
         <Badge badgeContent={productsNumber} color="secondary">

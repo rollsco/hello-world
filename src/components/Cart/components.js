@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Paper } from "@material-ui/core";
+import { Paper, Box } from "@material-ui/core";
 import Motorcycle from "@material-ui/icons/MotorcycleTwoTone";
 import { golden } from "../../theme";
 
 export const CartPaper = styled(Paper)`
-  margin: 64px 0;
+  margin: 36px 0;
 `;
 
 export const Moto = styled(Motorcycle)`
@@ -18,4 +18,10 @@ export const Moto = styled(Motorcycle)`
 export const InputIconBox = styled.div`
   margin-left: 12px;
   color: ${golden};
+`;
+
+export const CartButtonBox = styled(Box)`
+  display: flex;
+  justify-content: center;
+  margin: 36px 0;
 `;

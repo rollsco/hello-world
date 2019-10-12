@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Typography,
   CardActions,
   IconButton,
   Collapse,
@@ -15,7 +14,6 @@ import {
 import FiberManualRecordOutlined from "@material-ui/icons/FiberManualRecordOutlined";
 import { OverflowWrapTypography } from "../components";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import Favorite from "@material-ui/icons/Favorite";
 import Content from "./Content";
 import { multiline } from "../../services/formatter";
 
@@ -63,7 +61,7 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
   }
 
   return (
-    <Grid item xs={4} sm={3} md={3} lg={2}>
+    <Grid item xs={6} sm={4} md={3} lg={2}>
       <Badge color="secondary" badgeContent={numberOnCart}>
         <StyledCard>
           <CardMedia
@@ -75,9 +73,6 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
           <Content product={product} />
 
           <StyledCardActions disableSpacing>
-            <IconButton size="small" aria-label="add to favorites">
-              <Favorite />
-            </IconButton>
             <AddToCart
               numberOnCart={numberOnCart}
               handleAddToCart={handleAddToCart}
@@ -98,12 +93,9 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
           {product.description && (
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                <Typography paragraph>
-                  <Typography variant="subtitle1">Detalles</Typography>
-                  <OverflowWrapTypography variant="caption">
-                    {multiline(product.description)}
-                  </OverflowWrapTypography>
-                </Typography>
+                <OverflowWrapTypography variant="caption">
+                  {multiline(product.description)}
+                </OverflowWrapTypography>
               </CardContent>
             </Collapse>
           )}
