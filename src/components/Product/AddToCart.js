@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import { Fab, IconButton } from "@material-ui/core";
-import Add from "@material-ui/icons/Add";
+import { IconButton } from "@material-ui/core";
+import Add from "@material-ui/icons/ShoppingCart";
 import Remove from "@material-ui/icons/Remove";
 
 export const AddToCart = ({
@@ -9,15 +9,7 @@ export const AddToCart = ({
   handleRemoveFromCart,
 }) => (
   <Fragment>
-    <IconButton
-      size="small"
-      onClick={handleAddToCart}
-      aria-label="Agregar al pedido"
-      color="secondary"
-    >
-      <Add />
-    </IconButton>
-    {numberOnCart > 0 && false && (
+    {numberOnCart > 0 && (
       <IconButton
         size="small"
         onClick={handleRemoveFromCart}
@@ -26,5 +18,13 @@ export const AddToCart = ({
         <Remove />
       </IconButton>
     )}
+    <IconButton
+      size="small"
+      onClick={handleAddToCart}
+      aria-label="Agregar al pedido"
+      color="secondary"
+    >
+      <Add />
+    </IconButton>
   </Fragment>
 );

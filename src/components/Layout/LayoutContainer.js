@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LayoutPage from "./LayoutPage";
 import {
   getLocalStorageItem,
@@ -25,7 +25,7 @@ const initialStateCart = {
 };
 
 const LayoutContainer = () => {
-  const [cart, setCart] = React.useState(
+  const [cart, setCart] = useState(
     getLocalStorageItem("cart", initialStateCart),
   );
 

@@ -10,7 +10,7 @@ const StyledToolbar = styled(Toolbar)`
 const Header = ({ order, handleCloseCart }) => (
   <AppBar>
     <StyledToolbar>
-      <Typography variant="h5">Tu pedido:</Typography>
+      <Typography variant="h5">Tu pedido</Typography>
 
       {!order.status && (
         <IconButton onClick={handleCloseCart} aria-label="close">

@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { CartButtonBox } from "./components";
 
 const PlaceNewOrderButton = ({ order, placeNewOrder }) => {
   if (!order.status) {
@@ -7,9 +8,11 @@ const PlaceNewOrderButton = ({ order, placeNewOrder }) => {
   }
 
   return (
-    <Button color="secondary" variant="contained" onClick={placeNewOrder}>
-      Hacer otro pedido
-    </Button>
+    <CartButtonBox>
+      <Button color="secondary" variant="contained" onClick={placeNewOrder}>
+        Volver a la carta
+      </Button>
+    </CartButtonBox>
   );
 };
 

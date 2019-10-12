@@ -1,17 +1,16 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import { Dialog, Slide, Container } from "@material-ui/core";
 import Header from "./Header";
-import DeliveryNotice from "./DeliveryNotice";
 import UserInfoContainer from "./UserInfo/UserInfoContainer";
-import { BottomButtonPaper } from "../components";
 import ConfirmationNotice from "./ConfirmationNotice";
 import Items from "./Items/Items";
 import ConfirmationButton from "./ConfirmationButton";
 import PlaceNewOrderButton from "./PlaceNewOrderButton";
+import DeliveryNotices from "./DeliveryNotices/DeliveryNotices";
 
 const StyledContainer = styled(Container)`
-  margin-top: 88px;
+  margin-top: 56px;
 `;
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -28,41 +27,51 @@ const Cart = ({
   removeFromCart,
   handleCloseCart,
   userInfoComplete,
-}) => (
-  <Dialog
-    fullScreen
-    open={cart.open}
-    onClose={!order.status && handleCloseCart}
-    TransitionComponent={Transition}
-  >
-    <Header order={order} handleCloseCart={handleCloseCart} />
+}) => {
+  const [isOpenDeliveryNotice, setIsOpenDeliveryNotice] = useState(false);
 
-    <StyledContainer maxWidth="sm">
-      <Items order={order} items={cart.items} removeFromCart={removeFromCart} />
+  return (
+    <Dialog
+      fullScreen
+      open={cart.open}
+      TransitionComponent={Transition}
+      onClose={(!order.status && handleCloseCart) || null}
+    >
+      <Header order={order} handleCloseCart={handleCloseCart} />
 
-      {!order.status && (
-        <Fragment>
-          <UserInfoContainer
-            userInfo={userInfo}
-            updateUserInfo={updateUserInfo}
-          />
+      <StyledContainer maxWidth="sm">
+        <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
 
-          <DeliveryNotice />
-        </Fragment>
-      )}
+        <ConfirmationNotice order={order} />
 
-      <ConfirmationNotice order={order} />
+        <Items
+          order={order}
+          items={cart.items}
+          removeFromCart={removeFromCart}
+        />
 
-      <BottomButtonPaper>
+        {!order.status && (
+          <Fragment>
+            <UserInfoContainer
+              userInfo={userInfo}
+              updateUserInfo={updateUserInfo}
+            />
+
+            <DeliveryNotices
+              isOpenDeliveryNotice={isOpenDeliveryNotice}
+              requestOrder={requestOrder}
+            />
+          </Fragment>
+        )}
+
         <ConfirmationButton
           order={order}
-          requestOrder={requestOrder}
           userInfoComplete={userInfoComplete}
+          setIsOpenDeliveryNotice={setIsOpenDeliveryNotice}
         />
-        <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
-      </BottomButtonPaper>
-    </StyledContainer>
-  </Dialog>
-);
+      </StyledContainer>
+    </Dialog>
+  );
+};
 
 export default Cart;
