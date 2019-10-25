@@ -131,11 +131,35 @@ const CartContainer = ({
     updateOrder(getInitialStateOrder());
   }
 
+  function rateOrder(rating) {
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        rating,
+      },
+    });
+  }
+
+  function commentOrder(comments) {
+    firebase.set({
+      path: "orders",
+      doc: order.idempotencyToken,
+      data: {
+        ...order,
+        comments,
+      },
+    });
+  }
+
   return (
     <Cart
       cart={cart}
       order={order}
       userInfo={userInfo}
+      rateOrder={rateOrder}
+      commentOrder={commentOrder}
       requestOrder={requestOrder}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}

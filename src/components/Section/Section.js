@@ -32,13 +32,9 @@ const Section = ({ section, cart, addToCart, removeFromCart }) => {
 
   return (
     <Fragment>
-      <Grid item xs={12}>
+      <Grid item xs={12} onClick={handleExpandClick}>
         <Title color={section.color}>
-          <StyledIconButton
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
+          <StyledIconButton aria-expanded={expanded} aria-label="show more">
             <ExpandMore />
           </StyledIconButton>
           <Name variant="h5">{section.name}</Name>
@@ -47,7 +43,7 @@ const Section = ({ section, cart, addToCart, removeFromCart }) => {
 
       {section.products.map(
         (product, i) =>
-          !expanded && (
+          expanded && (
             <Product
               key={i}
               cart={cart}
