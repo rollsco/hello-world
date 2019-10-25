@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  DialogTitle,
   LinearProgress,
   DialogActions,
   Button,
   DialogContent,
   DialogContentText,
 } from "@material-ui/core";
-import { CartPaper } from "./components";
+import { CartPaper, DialogTitleCenter } from "./components";
 
 const messagesMap = {
   failed: {
@@ -43,7 +42,7 @@ const ConfirmationNotice = ({ order, acceptOrder }) => {
         <LinearProgress variant="query" color="secondary" />
       )}
 
-      <DialogTitle>{`${messagesMap[status].title}`}</DialogTitle>
+      <DialogTitleCenter>{`${messagesMap[status].title}`}</DialogTitleCenter>
 
       <DialogContent>
         <DialogContentText>

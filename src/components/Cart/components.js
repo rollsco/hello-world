@@ -1,7 +1,15 @@
 import styled from "styled-components";
-import { Paper, Box } from "@material-ui/core";
+import { Paper, Box, DialogTitle, DialogContent } from "@material-ui/core";
 import Motorcycle from "@material-ui/icons/MotorcycleTwoTone";
 import { golden } from "../../theme";
+
+export const DialogTitleCenter = styled(DialogTitle)`
+  text-align: center;
+`;
+
+export const DialogContentCenter = styled(DialogContent)`
+  text-align: center;
+`;
 
 export const CartPaper = styled(Paper)`
   margin: 36px 0;
