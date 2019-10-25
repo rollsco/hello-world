@@ -19,12 +19,6 @@ class Firebase {
     this.db = app.firestore();
   }
 
-  logError = (response, body) => {
-    console.log("--There was an Error on Firebase");
-    console.log("--response", response);
-    console.log("--body", body);
-  };
-
   // Listen for changes on a whole collection
   onCollection = (path, { callback, errorCallback }) => {
     this.db.collection(path).onSnapshot(callback, errorCallback);
@@ -46,7 +40,7 @@ class Firebase {
     this.db
       .collection(path)
       .doc(doc)
-      .set(data, { merge: !replace });
+      .set(this.getDataWithDefaultFields(data), { merge: !replace });
 
   get = async (path, { include }) => {
     const querySnapshot = await this.db
@@ -83,6 +77,18 @@ class Firebase {
     }
 
     return subcollections;
+  };
+
+  getDataWithDefaultFields = data => ({
+    ...data,
+    created: data.created ? data.created : app.firestore.Timestamp.now(),
+    modified: app.firestore.Timestamp.now(),
+  });
+
+  logError = (response, body) => {
+    console.log("--There was an Error on Firebase");
+    console.log("--response", response);
+    console.log("--body", body);
   };
 }
 
