@@ -45,10 +45,11 @@ const CartContainer = ({
       updateOrder(firebaseOrder);
 
       if (firebaseOrder.status === "pending") {
-        telegramBot.sendMessage(telegramBot.createOrderMessage(firebaseOrder), {
-          onSuccess: confirmOrder,
-          onError: rejectOrder,
-        });
+        // telegramBot.sendMessage(telegramBot.createOrderMessage(firebaseOrder), {
+        //   onSuccess: confirmOrder,
+        //   onError: rejectOrder,
+        // });
+        confirmOrder();
       }
       // Order with same Idempotency token not fonud on Firebase, and local order Pending
     } else if (order.status === "pending") {

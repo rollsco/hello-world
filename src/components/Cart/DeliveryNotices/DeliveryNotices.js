@@ -1,13 +1,7 @@
 import React, { Fragment } from "react";
-import { CartPaper } from "../components";
+import { CartPaper, DialogTitleCenter } from "../components";
 import DeliveryNotice from "./DeliveryNotice";
-import {
-  Dialog,
-  DialogTitle,
-  Typography,
-  DialogActions,
-  Button,
-} from "@material-ui/core";
+import { Dialog, Button, DialogActions } from "@material-ui/core";
 
 const DeliveryNotices = ({ requestOrder, isOpenDeliveryNotice }) => (
   <Fragment>
@@ -15,11 +9,8 @@ const DeliveryNotices = ({ requestOrder, isOpenDeliveryNotice }) => (
       <DeliveryNotice />
     </CartPaper>
     <Dialog open={isOpenDeliveryNotice}>
-      <DialogTitle>
-        <Typography variant="subtitle1" align="center">
-          Recuerda
-        </Typography>
-      </DialogTitle>
+      <DialogTitleCenter>Recuerda</DialogTitleCenter>
+
       <DeliveryNotice />
       <DialogActions>
         <Button variant="contained" onClick={requestOrder}>

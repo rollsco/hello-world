@@ -17,9 +17,9 @@ const Row = ({ location, minimumPrice, maximumPrice }) => (
       <Typography variant="body2">{location}</Typography>
     </TableCell>
     <TableCell align="right">
-      <Typography variant="body2">{`${currency(minimumPrice)} a ${currency(
-        maximumPrice,
-      )}`}</Typography>
+      <Typography variant="body2">
+        {`${currency(minimumPrice)} a ${currency(maximumPrice)}`}
+      </Typography>
     </TableCell>
   </TableRow>
 );
