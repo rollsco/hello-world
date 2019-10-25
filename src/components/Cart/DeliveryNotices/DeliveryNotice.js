@@ -42,8 +42,9 @@ const DeliveryNotice = () => (
     </TableHead>
     <TableBody>
       <Row location="Bucaramanga" minimumPrice={4000} maximumPrice={6000} />
-      <Row location="Floridablenca" minimumPrice={6000} maximumPrice={8000} />
+      <Row location="Floridablanca" minimumPrice={6000} maximumPrice={8000} />
       <Row location="Girón" minimumPrice={8000} maximumPrice={9000} />
+      <Row location="Piedecuesta" minimumPrice={9000} maximumPrice={16000} />
     </TableBody>
   </Table>
   // </CartPaper>
