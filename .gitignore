@@ -5,11 +5,11 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
+# backups
+*.backup
 
 # img assets
-assets
+uncompressed/img
 public/img
 
 # production

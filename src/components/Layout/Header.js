@@ -1,17 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  Typography,
-  AppBar,
-  Toolbar,
-  Badge,
-  IconButton,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Badge, IconButton } from "@material-ui/core";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
-
-const WhatsappIcon = styled.img`
-  margin-right: 8px;
-`;
 
 const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
@@ -28,10 +18,7 @@ const Header = ({ productsNumber, handleOpenCart }) => (
         </Badge>
       </IconButton>
 
-      <Typography variant="h5">
-        <WhatsappIcon src="img/whatsapp-logo.svg" width="32px" alt="WhatsApp" />
-        {process.env.REACT_APP_SUPPORT_TELEPHONE_NUMBER}
-      </Typography>
+      <img src="img/contacto-whatsapp-small.png" alt="Contacto whatsapp" />
     </StyledToolbar>
   </AppBar>
 );
