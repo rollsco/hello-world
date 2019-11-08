@@ -38,12 +38,14 @@ const LayoutPage = ({
       </Fragment>
     )}
 
-    <CartContainer
-      cart={cart}
-      clearCart={clearCart}
-      removeFromCart={removeFromCart}
-      handleCloseCart={handleCloseCart}
-    />
+    {cart.open && (
+      <CartContainer
+        cart={cart}
+        clearCart={clearCart}
+        removeFromCart={removeFromCart}
+        handleCloseCart={handleCloseCart}
+      />
+    )}
   </CssBaseline>
 );
 

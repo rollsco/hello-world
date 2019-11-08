@@ -1,8 +1,22 @@
 import request from "request";
 import { orderTemplate } from "./orderTemplate";
 
-const sendMessage = (text, { onSuccess, onError }) => {
+const createOrderMessage = order => {
+  const { items } = order.cart;
+  const total = items.reduce((sum, item) => (sum += item.product.price), 0);
+
+  return orderTemplate(order, items, total);
+};
+
+const sendMessage = (orderOnFirebase, { onSuccess, onError }) => {
   const method = "sendMessage";
+  const text = createOrderMessage(orderOnFirebase);
+
+  // TODO remove when staging ENV ready
+  if (orderOnFirebase.userInfo.notes === "--test") {
+    onSuccess();
+    return;
+  }
 
   request(
     {
@@ -25,14 +39,6 @@ const sendMessage = (text, { onSuccess, onError }) => {
   return;
 };
 
-const createOrderMessage = order => {
-  const { items } = order.cart;
-  const total = items.reduce((sum, item) => (sum += item.product.price), 0);
-
-  return orderTemplate(order, items, total);
-};
-
 export const telegramBot = {
   sendMessage,
-  createOrderMessage,
 };

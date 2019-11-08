@@ -26,7 +26,7 @@ class Firebase {
 
   // Listen for changes on a particular document
   onDocument = (path, document, { onSnapshot, onError, onCompletion }) => {
-    this.db
+    return this.db
       .collection(path)
       .doc(document)
       .onSnapshot(
