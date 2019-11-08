@@ -51,7 +51,7 @@ const SwitchRows = ({ userInfo, handleChange, inputs }) =>
         <Typography>{label}</Typography>
       </TableCell>
       <TableCell padding="none">
-        <Switch name={name} value={userInfo[name]} onChange={handleChange} />
+        <Switch name={name} checked={userInfo[name]} onChange={handleChange} />
       </TableCell>
     </TableRow>
   ));
@@ -104,7 +104,8 @@ const UserInfo = ({ userInfo, handleChange }) => (
             userInfo={userInfo}
             handleChange={handleChange}
             inputs={[
-              { name: "addChopsticks", label: "Enviar palillos" },
+              { name: "addChopsticks", label: "Enviar Palillos" },
+              { name: "addTeriyaki", label: "Enviar Teriyaki" },
               { name: "addWasabi", label: "Enviar Wasabi" },
               { name: "addSoy", label: "Enviar Soya" },
             ]}
