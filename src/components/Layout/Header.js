@@ -18,7 +18,12 @@ const Header = ({ productsNumber, handleOpenCart }) => (
         </Badge>
       </IconButton>
 
-      <img src="img/contacto-whatsapp-small.png" alt="Contacto whatsapp" />
+      <a
+        href="http://api.whatsapp.com/send?phone=573174122919"
+        target="__blank"
+      >
+        <img src="img/contacto-whatsapp-small.png" alt="Contacto whatsapp" />
+      </a>
     </StyledToolbar>
   </AppBar>
 );
