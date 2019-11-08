@@ -7,9 +7,10 @@ export const initialStateUserInfo = {
   email: "",
   phone: "",
   notes: "",
-  addChopsticks: true,
-  addWasabi: true,
-  addSoy: true,
+  addChopsticks: false,
+  addTeriyaki: false,
+  addWasabi: false,
+  addSoy: false,
 };
 
 export const requiredUserInfoFields = [
