@@ -11,18 +11,18 @@ const createOrderMessage = order => {
 const sendMessage = (orderOnFirebase, { onSuccess, onError }) => {
   const method = "sendMessage";
   const text = createOrderMessage(orderOnFirebase);
+  let chatId = process.env.REACT_APP_TELEGRAM_GROUP_ID;
 
   // TODO remove when staging ENV ready
   if (orderOnFirebase.userInfo.notes === "--test") {
-    onSuccess();
-    return;
+    chatId = process.env.REACT_APP_TELEGRAM_DEVELOPMENT_ID;
   }
 
   request(
     {
       uri: `${process.env.REACT_APP_TELEGRAM_BOT_URL}/${method}`,
       qs: {
-        chat_id: process.env.REACT_APP_TELEGRAM_GROUP_ID,
+        chat_id: chatId,
         text,
         parse_mode: "Markdown",
       },
