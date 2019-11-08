@@ -3,11 +3,11 @@ import UserInfo from "./UserInfo";
 
 const UserInfoContainer = ({ userInfo, updateUserInfo }) => {
   function handleChange({ target }) {
-    const { name, value } = target;
+    const { name, value, checked } = target;
 
     updateUserInfo({
       ...userInfo,
-      [name]: value,
+      [name]: target.type == "text" ? value : checked,
     });
   }
 
