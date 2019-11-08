@@ -29,7 +29,6 @@ const Cart = ({
   updateUserInfo,
   removeFromCart,
   handleCloseCart,
-  userInfoComplete,
 }) => {
   const [isOpenDeliveryNotice, setIsOpenDeliveryNotice] = useState(false);
 
@@ -72,14 +71,14 @@ const Cart = ({
               isOpenDeliveryNotice={isOpenDeliveryNotice}
               requestOrder={requestOrder}
             />
+
+            <ConfirmationButton
+              order={order}
+              userInfo={userInfo}
+              setIsOpenDeliveryNotice={setIsOpenDeliveryNotice}
+            />
           </Fragment>
         )}
-
-        <ConfirmationButton
-          order={order}
-          userInfoComplete={userInfoComplete}
-          setIsOpenDeliveryNotice={setIsOpenDeliveryNotice}
-        />
       </StyledContainer>
     </Dialog>
   );

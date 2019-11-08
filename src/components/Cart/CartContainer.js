@@ -5,23 +5,8 @@ import {
   setLocalStorageItem,
 } from "../../services/localStorage";
 import { withFirebase } from "../FirebaseContext";
-import { createToken } from "../../services/token";
 import { telegramBot } from "../../services/telegram/service";
-
-const initialStateUserInfo = {
-  name: "",
-  address: "",
-  locality: "",
-  email: "",
-  phone: "",
-  notes: "",
-};
-
-const getInitialStateOrder = () => ({
-  status: null,
-  errors: null,
-  idempotencyToken: createToken(),
-});
+import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 
 const CartContainer = ({
   cart,
@@ -81,24 +66,12 @@ const CartContainer = ({
     setLocalStorageItem("userInfo", newUserInfo);
   }
 
-  function userInfoComplete() {
-    const emptyPropertyKeys = Object.keys(userInfo).filter(
-      key => key !== "notes" && !userInfo[key],
-    );
-
-    return emptyPropertyKeys.length <= 0;
-  }
-
   function updateOrder(order) {
     setOrder(order);
     setLocalStorageItem("order", order);
   }
 
   function requestOrder() {
-    if (!userInfoComplete()) {
-      return;
-    }
-
     firebase.set({
       path: "orders",
       doc: order.idempotencyToken,
@@ -174,7 +147,6 @@ const CartContainer = ({
       updateUserInfo={updateUserInfo}
       removeFromCart={removeFromCart}
       handleCloseCart={handleCloseCart}
-      userInfoComplete={userInfoComplete}
     />
   );
 };
