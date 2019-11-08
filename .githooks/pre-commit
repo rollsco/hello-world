@@ -21,7 +21,7 @@ if [[ "$BRANCH" == "master" || "$BRANCH" == "develop" ]]; then
 fi
 
 echo "> Running formatter"
-bin/format-staged
+.githooks/format-staged
 code=$?
 if [ "$code" != "0" ]; then
   echo "============================="

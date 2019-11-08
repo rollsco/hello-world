@@ -38,35 +38,43 @@ const CartContainer = ({
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
 
-  const processOrderEditedOnFirebase = firebaseOrder => {
-    // If there's Order in Firebase, override local
-    // TODO merge(?)
-    if (firebaseOrder) {
-      updateOrder(firebaseOrder);
+  // onMount
+  React.useEffect(() => {
+    // listen for Order on Firebase
+    const unsubscribeToListener = firebase.onDocument(
+      "orders",
+      order.idempotencyToken,
+      {
+        onSnapshot: processOrderEditedOnFirebase,
+      },
+    );
 
-      if (firebaseOrder.status === "pending") {
-        telegramBot.sendMessage(telegramBot.createOrderMessage(firebaseOrder), {
-          onSuccess: confirmOrder,
-          onError: rejectOrder,
-        });
-        // confirmOrder();
+    return () => unsubscribeToListener();
+  }, []);
+
+  function processOrderEditedOnFirebase(orderOnFirebase) {
+    // If there's Order in Firebase, override local
+    if (orderOnFirebase) {
+      updateOrder(orderOnFirebase);
+
+      if (orderOnFirebase.status === "pending") {
+        sendToTelegram(orderOnFirebase);
       }
-      // Order with same Idempotency token not fonud on Firebase, and local order Pending
     } else if (order.status === "pending") {
+      // NO Order on Firebase with same idempotencytoken, but local order Pending
       updateOrder({
         ...order,
         status: "failed",
       });
     }
-  };
+  }
 
-  // onMount
-  React.useEffect(() => {
-    // listen for Order on Firebase
-    firebase.onDocument("orders", order.idempotencyToken, {
-      onSnapshot: processOrderEditedOnFirebase,
+  function sendToTelegram(orderOnFirebase) {
+    telegramBot.sendMessage(orderOnFirebase, {
+      onSuccess: confirmOrder,
+      onError: rejectOrder,
     });
-  }, []);
+  }
 
   function updateUserInfo(newUserInfo) {
     setUserInfo(newUserInfo);
