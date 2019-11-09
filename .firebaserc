@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pedidos-client"
+    "default": "pedidos-client",
+    "staging": "pedidos-staging"
   }
 }

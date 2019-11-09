@@ -1,14 +1,20 @@
 const version = process.env.REACT_APP_VERSION;
 
 export const getLocalStorageItem = (name, defaultValue) => {
-  const value = JSON.parse(localStorage.getItem(name));
-  const valueVersion = localStorage.getItem(`${name}_version`);
+  const value = localStorage.getItem(name);
 
-  if (value && version === valueVersion) {
-    return value;
-  } else {
+  if (["undefined"].includes(value)) {
     return defaultValue;
   }
+
+  const parsedValue = JSON.parse(value);
+  const valueVersion = localStorage.getItem(`${name}_version`);
+
+  if (parsedValue && version === valueVersion) {
+    return parsedValue;
+  }
+
+  return defaultValue;
 };
 
 export const setLocalStorageItem = (name, value) => {

@@ -14,6 +14,7 @@ import Mail from "@material-ui/icons/Mail";
 import Phone from "@material-ui/icons/Phone";
 import Person from "@material-ui/icons/Person";
 import Explore from "@material-ui/icons/Explore";
+import ChatBubble from "@material-ui/icons/ChatBubble";
 
 const TextFieldRows = ({ userInfo, handleChange, inputs }) =>
   inputs.map(({ icon, label, name, note }) => (
@@ -47,7 +48,7 @@ const SwitchRows = ({ userInfo, handleChange, inputs }) =>
   inputs.map(({ label, name }) => (
     <TableRow key={name}>
       <TableCell padding="default">
-        <Typography>{label}</Typography>
+        <Typography variant="body2">{label}</Typography>
       </TableCell>
       <TableCell padding="none">
         <Switch name={name} checked={userInfo[name]} onChange={handleChange} />
@@ -75,18 +76,17 @@ const UserInfo = ({ userInfo, handleChange }) => (
                 name: "email",
                 icon: <Mail />,
                 label: "Email",
-                note:
-                  "No te enviamos Spam, ni compartimos tu correo con terceros.",
+                note: "No enviamos Spam ni damos tu correo a terceros.",
               },
               {
                 name: "phone",
                 icon: <Phone />,
                 label: "Celular",
-                note: "Te avisamos por WhatsApp el estado de tu órden.",
+                note: "Te avisaremos por WhatsApp sobre el estado de tu órden.",
               },
               {
                 name: "notes",
-                icon: <Explore />,
+                icon: <ChatBubble />,
                 label: "Observaciones",
                 note: "¿Algo más para que tomemos en cuenta?",
               },
@@ -104,8 +104,8 @@ const UserInfo = ({ userInfo, handleChange }) => (
             handleChange={handleChange}
             inputs={[
               { name: "addChopsticks", label: "Enviar Palillos" },
+              { name: "addWasabiAndGinger", label: "Enviar Wasabi y Jengibre" },
               { name: "addTeriyaki", label: "Enviar Teriyaki" },
-              { name: "addWasabi", label: "Enviar Wasabi" },
               { name: "addSoy", label: "Enviar Soya" },
             ]}
           />
