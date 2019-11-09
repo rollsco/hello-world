@@ -1,29 +1,34 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Section from "./Section";
 
-class SectionContainer extends Component {
-  state = {
-    loading: true,
-  };
+const SectionContainer = ({
+  section,
+  index,
+  value,
+  cart,
+  addToCart,
+  removeFromCart,
+}) => {
+  const [loading, setLoading] = useState(true);
 
-  componentDidMount() {
-    this.setState({ loading: false });
+  // onMount
+  React.useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  if (index !== value) {
+    return null;
   }
 
-  render() {
-    const { section, cart, addToCart, removeFromCart } = this.props;
-    const { loading } = this.state;
-
-    return (
-      <Section
-        cart={cart}
-        removeFromCart={removeFromCart}
-        addToCart={addToCart}
-        section={section}
-        loading={loading}
-      />
-    );
-  }
-}
+  return (
+    <Section
+      cart={cart}
+      section={section}
+      loading={loading}
+      addToCart={addToCart}
+      removeFromCart={removeFromCart}
+    />
+  );
+};
 
 export default SectionContainer;
