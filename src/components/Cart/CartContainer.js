@@ -5,7 +5,6 @@ import {
   setLocalStorageItem,
 } from "../../services/localStorage";
 import { withFirebase } from "../FirebaseContext";
-import { telegramBot } from "../../services/telegram/service";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 
 const CartContainer = ({
@@ -41,24 +40,7 @@ const CartContainer = ({
     // If there's Order in Firebase, override local
     if (orderOnFirebase) {
       updateOrder(orderOnFirebase);
-
-      if (orderOnFirebase.status === "pending") {
-        sendToTelegram(orderOnFirebase);
-      }
-    } else if (order.status === "pending") {
-      // NO Order on Firebase with same idempotencytoken, but local order Pending
-      updateOrder({
-        ...order,
-        status: "failed",
-      });
     }
-  }
-
-  function sendToTelegram(orderOnFirebase) {
-    telegramBot.sendMessage(orderOnFirebase, {
-      onSuccess: confirmOrder,
-      onError: rejectOrder,
-    });
   }
 
   function updateUserInfo(newUserInfo) {
@@ -72,40 +54,23 @@ const CartContainer = ({
   }
 
   function requestOrder() {
-    firebase.set({
-      path: "orders",
-      doc: order.idempotencyToken,
-      data: {
-        ...order,
-        cart,
-        userInfo,
-        status: "pending",
-      },
-    });
-  }
+    const number = `2019-10-01-${parseInt(Math.random() * 10000) + 1000}`;
 
-  function confirmOrder() {
+    updateOrder({ ...order, status: "pending" });
+
     setTimeout(() => {
       firebase.set({
         path: "orders",
         doc: order.idempotencyToken,
         data: {
           ...order,
-          status: "confirmed",
+          cart,
+          number,
+          userInfo,
+          status: "requested",
         },
       });
-    }, 2000);
-  }
-
-  function rejectOrder() {
-    firebase.set({
-      path: "orders",
-      doc: order.idempotencyToken,
-      data: {
-        ...order,
-        status: "rejected",
-      },
-    });
+    }, 3000);
   }
 
   function placeNewOrder() {

@@ -47,9 +47,6 @@ const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
             removeFromCart={removeFromCart}
           />
         ))}
-        {/* <Box value={value} index={0}>
-          Item One
-        </Box> */}
       </SwipeableViews>
     </StyledSections>
   );

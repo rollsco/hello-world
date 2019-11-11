@@ -82,7 +82,7 @@ const UserInfo = ({ userInfo, handleChange }) => (
                 name: "phone",
                 icon: <Phone />,
                 label: "Celular",
-                note: "Te avisaremos por WhatsApp sobre el estado de tu órden.",
+                note: "Te avisamos por WhatsApp sobre el estado de tu órden.",
               },
               {
                 name: "notes",

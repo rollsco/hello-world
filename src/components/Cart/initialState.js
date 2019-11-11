@@ -7,8 +7,8 @@ export const initialStateUserInfo = {
   email: "",
   phone: "",
   notes: "",
-  addWasabiAndGinger: false,
   addChopsticks: false,
+  addWasabiAndGinger: false,
   addTeriyaki: false,
   addSoy: false,
 };
