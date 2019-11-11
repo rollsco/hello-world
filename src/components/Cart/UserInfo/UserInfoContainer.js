@@ -7,7 +7,7 @@ const UserInfoContainer = ({ userInfo, updateUserInfo }) => {
 
     updateUserInfo({
       ...userInfo,
-      [name]: target.type == "text" ? value : checked,
+      [name]: target.type === "text" ? value : checked,
     });
   }
 
