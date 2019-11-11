@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
 import { LinearProgress, Tabs, Tab } from "@material-ui/core";
@@ -25,10 +25,10 @@ const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
 
       <Tabs
         value={value}
-        onChange={handleChange}
-        indicatorColor="secondary"
         variant="scrollable"
         scrollButtons="auto"
+        onChange={handleChange}
+        indicatorColor="secondary"
       >
         {sections.map(section => (
           <Tab label={section.menuName} key={section.menuName} />

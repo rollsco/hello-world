@@ -51,7 +51,12 @@ const SwitchRows = ({ userInfo, handleChange, inputs }) =>
         <Typography variant="body2">{label}</Typography>
       </TableCell>
       <TableCell padding="none">
-        <Switch name={name} checked={userInfo[name]} onChange={handleChange} />
+        <Switch
+          name={name}
+          size="small"
+          checked={userInfo[name]}
+          onChange={handleChange}
+        />
       </TableCell>
     </TableRow>
   ));
@@ -97,15 +102,16 @@ const UserInfo = ({ userInfo, handleChange }) => (
     </CartPaper>
 
     <CartPaper>
-      <Table>
+      <Table size="small">
         <TableBody>
           <SwitchRows
             userInfo={userInfo}
             handleChange={handleChange}
             inputs={[
               { name: "addChopsticks", label: "Enviar Palillos" },
-              { name: "addWasabiAndGinger", label: "Enviar Wasabi y Jengibre" },
               { name: "addTeriyaki", label: "Enviar Teriyaki" },
+              { name: "addWasabi", label: "Enviar Jengibre" },
+              { name: "addGinger", label: "Enviar Wasabi" },
               { name: "addSoy", label: "Enviar Soya" },
             ]}
           />
