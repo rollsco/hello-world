@@ -1,8 +1,6 @@
 import React from "react";
 import {
   LinearProgress,
-  DialogActions,
-  Button,
   DialogContent,
   DialogContentText,
 } from "@material-ui/core";
@@ -11,21 +9,24 @@ import { CartPaper, DialogTitleCenter } from "./components";
 const messagesMap = {
   failed: {
     title: "Hubo un problema con tu pedido : (",
-    content:
-      "La aplicación no pudo enviar la órden a través de nuestro robot. Pero no todo está perdido: puedes hacer tu pedido por WhatsApp.",
-  },
-  rejected: {
-    title: "Hubo un problema con tu pedido : (",
-    content:
-      "La aplicación no pudo enviar la órden a través de nuestro robot. Pero no todo está perdido: puedes hacer tu pedido por WhatsApp.",
+    content: "¡Pero no todo está perdido! puedes hacer tu pedido por WhatsApp.",
   },
   pending: {
     title: "Haciendo tu pedido",
     content: "",
   },
-  confirmed: {
+  requested: {
+    title: "Pedido enviado.",
+    content: "En breve empezaremos a cocinarlo.",
+  },
+  accepted: {
     title: "¡Tu pedido fue recibido!",
-    content: "Te avisaremos por WhatsApp cuando salga para tu casa.",
+    content:
+      "Lo estamos preparando y pronto saldrá para tu casa. Este mensaje te avisará cuando salga.",
+  },
+  dispatched: {
+    title: "¡Tu pedido está en camino!",
+    content: "Ya salió de nuestra cocina y va directo hacia tí.",
   },
 };
 
@@ -49,11 +50,6 @@ const ConfirmationNotice = ({ order, acceptOrder }) => {
           {`${messagesMap[status].content}`}
         </DialogContentText>
       </DialogContent>
-      {!["pending", "confirmed"].includes(status) && (
-        <DialogActions>
-          <Button onClick={acceptOrder}>OK</Button>
-        </DialogActions>
-      )}
     </CartPaper>
   );
 };

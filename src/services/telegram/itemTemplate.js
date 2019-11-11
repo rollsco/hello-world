@@ -1,2 +1,3 @@
 export const itemTemplate = item =>
-  `${item.product.name} - ${item.product.price}`;
+  `${item.product.name}: ${item.product.price}
+`;
