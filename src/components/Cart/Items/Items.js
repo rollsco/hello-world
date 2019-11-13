@@ -9,9 +9,40 @@ import {
 } from "@material-ui/core";
 import { currency } from "../../../services/formatter";
 import { CartPaper } from "../components";
+import { applyDiscountPercentage } from "../../../transformer";
+
+const discountPercentage = process.env.REACT_APP_DISCOUNT_PERCENTAGE;
 
 const calculateTotalCost = items =>
   items.reduce((priceSum, item) => priceSum + item.product.price, 0);
+
+const Discount = ({ totalCost }) => {
+  if (!discountPercentage) {
+    return null;
+  }
+
+  const discounedPrice = applyDiscountPercentage(totalCost, discountPercentage);
+
+  return (
+    <TableRow>
+      <TableCell>
+        <Typography variant="h6" color="secondary">
+          Descuento
+        </Typography>
+      </TableCell>
+      <TableCell align="right">
+        <Typography variant="h6" color="secondary">
+          {currency(discounedPrice)}
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <Typography variant="h6" color="secondary">
+          (-{discountPercentage}%)
+        </Typography>
+      </TableCell>
+    </TableRow>
+  );
+};
 
 const Items = ({ order, items, removeFromCart }) => (
   <CartPaper>
@@ -36,6 +67,8 @@ const Items = ({ order, items, removeFromCart }) => (
           </TableCell>
           <TableCell />
         </TableRow>
+
+        <Discount totalCost={calculateTotalCost(items)} />
       </TableBody>
     </Table>
   </CartPaper>
