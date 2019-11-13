@@ -7,12 +7,12 @@ const StyledToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-const Header = ({ productsNumber, handleOpenCart }) => (
+const Header = ({ productsNumber, openCart }) => (
   <AppBar position="fixed">
     <StyledToolbar>
       <img src="img/logo-rolls-small.png" alt="Rolls.co logo" />
 
-      <IconButton onClick={handleOpenCart} aria-label="cart">
+      <IconButton onClick={openCart}>
         <Badge badgeContent={productsNumber} color="secondary">
           <ShoppingCart />
         </Badge>

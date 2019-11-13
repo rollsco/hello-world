@@ -17,9 +17,9 @@ export const BottomButtonPaper = styled(Paper)`
   }
 `;
 
-const Footer = ({ handleOpenCart }) => (
+const Footer = ({ openCart }) => (
   <FixedBottom>
-    <BottomButtonPaper onClick={handleOpenCart}>
+    <BottomButtonPaper onClick={openCart}>
       <Button variant="contained" color="secondary">
         ¡Haz tu pedido!
       </Button>

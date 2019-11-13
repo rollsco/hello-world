@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Paper, Box, DialogTitle, DialogContent } from "@material-ui/core";
 import Motorcycle from "@material-ui/icons/MotorcycleTwoTone";
+import WatchLater from "@material-ui/icons/WatchLater";
 import { golden } from "../../theme";
 
 export const DialogTitleCenter = styled(DialogTitle)`
@@ -17,6 +18,13 @@ export const CartPaper = styled(Paper)`
 
 export const Moto = styled(Motorcycle)`
   margin-right: 16px;
+  color: ${golden};
+  && {
+    font-size: 48px;
+  }
+`;
+
+export const StyledWatchLater = styled(WatchLater)`
   color: ${golden};
   && {
     font-size: 48px;

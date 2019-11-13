@@ -19,6 +19,8 @@ class Firebase {
     this.db = app.firestore();
   }
 
+  getCurrentDate = () => app.firestore.Timestamp.now().toDate();
+
   // Listen for changes on a whole collection
   onCollection = (path, { callback, errorCallback }) => {
     this.db.collection(path).onSnapshot(callback, errorCallback);

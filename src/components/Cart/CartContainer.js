@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Cart from "./Cart";
 import {
   getLocalStorageItem,
@@ -6,24 +6,51 @@ import {
 } from "../../services/localStorage";
 import { withFirebase } from "../FirebaseContext";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
+import { utcDate } from "../../services/formatter";
+
+const isStoreOpen = (date = new Date()) => {
+  const isOpenDay = [2, 3, 4, 5, 6, 7].includes(date.getUTCDay());
+  const isLongHoursDay = [5, 6, 7].includes(date.getUTCDay());
+  const openHour = isLongHoursDay ? 1700 : 2100;
+  const hour = date.getUTCHours() * 100 + date.getUTCMinutes();
+  const isOpenHour = hour >= openHour || hour < 230;
+
+  console.log("--isStoreOpen", isOpenDay && isOpenHour);
+
+  return isOpenDay && isOpenHour;
+};
 
 const CartContainer = ({
   cart,
   firebase,
+  closeCart,
   clearCart,
   removeFromCart,
-  handleCloseCart,
 }) => {
-  const [userInfo, setUserInfo] = React.useState(
+  const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
 
-  const [order, setOrder] = React.useState(
+  const [order, setOrder] = useState(
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
 
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
+
+  /** @type Date */
+  const firebaseDate = firebase.getCurrentDate();
+
+  const makeOrder = () => {
+    if (isStoreOpen(firebaseDate)) {
+      setDeliveryNoticeOpen(true);
+    } else {
+      setScheduleOpen(true);
+    }
+  };
+
   // onMount
-  React.useEffect(() => {
+  useEffect(() => {
     // listen for Order on Firebase
     const unsubscribeToListener = firebase.onDocument(
       "orders",
@@ -54,7 +81,9 @@ const CartContainer = ({
   }
 
   function requestOrder() {
-    const number = `2019-10-01-${parseInt(Math.random() * 10000) + 1000}`;
+    const number = `${utcDate(firebaseDate, true, false)}-${parseInt(
+      Math.random() * 10000,
+    ) + 1000}`;
 
     updateOrder({ ...order, status: "pending" });
 
@@ -106,12 +135,15 @@ const CartContainer = ({
       order={order}
       userInfo={userInfo}
       rateOrder={rateOrder}
+      closeCart={closeCart}
+      makeOrder={makeOrder}
+      scheduleOpen={scheduleOpen}
       commentOrder={commentOrder}
       requestOrder={requestOrder}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
       removeFromCart={removeFromCart}
-      handleCloseCart={handleCloseCart}
+      deliveryNoticeOpen={deliveryNoticeOpen}
     />
   );
 };

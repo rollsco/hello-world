@@ -7,19 +7,16 @@ import { CssBaseline } from "@material-ui/core";
 
 const LayoutPage = ({
   cart,
+  openCart,
+  closeCart,
   addToCart,
   clearCart,
   removeFromCart,
-  handleOpenCart,
-  handleCloseCart,
 }) => (
   <CssBaseline>
     {!cart.open && (
       <Fragment>
-        <Header
-          handleOpenCart={handleOpenCart}
-          productsNumber={cart.items.length}
-        />
+        <Header openCart={openCart} productsNumber={cart.items.length} />
 
         <SectionsContainer
           cart={cart}
@@ -27,16 +24,16 @@ const LayoutPage = ({
           removeFromCart={removeFromCart}
         />
 
-        {cart.items.length > 0 && <Footer handleOpenCart={handleOpenCart} />}
+        {cart.items.length > 0 && <Footer openCart={openCart} />}
       </Fragment>
     )}
 
     {cart.open && (
       <CartContainer
         cart={cart}
+        closeCart={closeCart}
         clearCart={clearCart}
         removeFromCart={removeFromCart}
-        handleCloseCart={handleCloseCart}
       />
     )}
   </CssBaseline>

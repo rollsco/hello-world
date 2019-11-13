@@ -34,11 +34,11 @@ const LayoutContainer = () => {
     setLocalStorageItem("cart", cart);
   }
 
-  function handleOpenCart() {
+  function openCart() {
     updateCart({ ...cart, open: cart.items.length > 0 });
   }
 
-  function handleCloseCart() {
+  function closeCart() {
     updateCart({ ...cart, open: false });
   }
 
@@ -69,11 +69,11 @@ const LayoutContainer = () => {
   return (
     <LayoutPage
       cart={cart}
+      openCart={openCart}
+      closeCart={closeCart}
       addToCart={addToCart}
       clearCart={clearCart}
       removeFromCart={removeFromCart}
-      handleOpenCart={handleOpenCart}
-      handleCloseCart={handleCloseCart}
     />
   );
 };
