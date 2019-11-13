@@ -46,7 +46,6 @@ const DeliveryNotice = () => (
       <Row location="Piedecuesta" minimumPrice={9000} maximumPrice={16000} />
     </TableBody>
   </Table>
-  // </CartPaper>
 );
 
 export default DeliveryNotice;

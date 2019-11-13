@@ -3,7 +3,7 @@ import { Button, Typography } from "@material-ui/core";
 import { CartButtonBox } from "./components";
 import { requiredUserInfoFields } from "./initialState";
 
-const ConfirmationButton = ({ setIsOpenDeliveryNotice, userInfo }) => {
+const ConfirmationButton = ({ makeOrder, userInfo }) => {
   function userInfoComplete() {
     const emptyPropertyKeys = Object.keys(userInfo).filter(
       key => requiredUserInfoFields.includes(key) && !userInfo[key],
@@ -17,8 +17,8 @@ const ConfirmationButton = ({ setIsOpenDeliveryNotice, userInfo }) => {
       <Button
         color="secondary"
         variant="contained"
+        onClick={makeOrder}
         disabled={!userInfoComplete()}
-        onClick={() => setIsOpenDeliveryNotice(true)}
       >
         {userInfoComplete() ? (
           "Listo: hacer pedido"

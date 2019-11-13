@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import { Dialog, Slide, Container } from "@material-ui/core";
 import Header from "./Header";
@@ -9,6 +9,7 @@ import ConfirmationButton from "./ConfirmationButton";
 import PlaceNewOrderButton from "./PlaceNewOrderButton";
 import UserInfoContainer from "./UserInfo/UserInfoContainer";
 import DeliveryNotices from "./DeliveryNotices/DeliveryNotices";
+import ClosedNotice from "./ClosedNotice/ClosedNotice";
 
 const StyledContainer = styled(Container)`
   margin-top: 56px;
@@ -23,65 +24,62 @@ const Cart = ({
   order,
   userInfo,
   rateOrder,
+  closeCart,
+  makeOrder,
+  scheduleOpen,
   commentOrder,
   requestOrder,
   placeNewOrder,
   updateUserInfo,
   removeFromCart,
-  handleCloseCart,
-}) => {
-  const [isOpenDeliveryNotice, setIsOpenDeliveryNotice] = useState(false);
+  deliveryNoticeOpen,
+}) => (
+  <Dialog
+    fullScreen
+    open={cart.open}
+    TransitionComponent={Transition}
+    onClose={(!order.status && closeCart) || null}
+  >
+    <Header order={order} closeCart={closeCart} />
 
-  return (
-    <Dialog
-      fullScreen
-      open={cart.open}
-      TransitionComponent={Transition}
-      onClose={(!order.status && handleCloseCart) || null}
-    >
-      <Header order={order} handleCloseCart={handleCloseCart} />
+    <StyledContainer maxWidth="sm">
+      <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
 
-      <StyledContainer maxWidth="sm">
-        <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
+      <ConfirmationNotice order={order} />
 
-        <ConfirmationNotice order={order} />
+      <Items order={order} items={cart.items} removeFromCart={removeFromCart} />
 
-        <Items
-          order={order}
-          items={cart.items}
-          removeFromCart={removeFromCart}
-        />
+      <Feedback
+        order={order}
+        rateOrder={rateOrder}
+        commentOrder={commentOrder}
+      />
 
-        <Feedback
-          order={order}
-          rateOrder={rateOrder}
-          commentOrder={commentOrder}
-        />
+      <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
 
-        <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
+      {!order.status && (
+        <Fragment>
+          <UserInfoContainer
+            userInfo={userInfo}
+            updateUserInfo={updateUserInfo}
+          />
 
-        {!order.status && (
-          <Fragment>
-            <UserInfoContainer
-              userInfo={userInfo}
-              updateUserInfo={updateUserInfo}
-            />
+          <DeliveryNotices
+            requestOrder={requestOrder}
+            isOpenDeliveryNotice={deliveryNoticeOpen}
+          />
 
-            <DeliveryNotices
-              isOpenDeliveryNotice={isOpenDeliveryNotice}
-              requestOrder={requestOrder}
-            />
+          <ClosedNotice scheduleOpen={scheduleOpen} closeCart={closeCart} />
 
-            <ConfirmationButton
-              order={order}
-              userInfo={userInfo}
-              setIsOpenDeliveryNotice={setIsOpenDeliveryNotice}
-            />
-          </Fragment>
-        )}
-      </StyledContainer>
-    </Dialog>
-  );
-};
+          <ConfirmationButton
+            order={order}
+            userInfo={userInfo}
+            makeOrder={makeOrder}
+          />
+        </Fragment>
+      )}
+    </StyledContainer>
+  </Dialog>
+);
 
 export default Cart;
