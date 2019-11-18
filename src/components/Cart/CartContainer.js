@@ -7,18 +7,7 @@ import {
 import { withFirebase } from "../FirebaseContext";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 import { utcDate } from "../../services/formatter";
-
-const isStoreOpen = (date = new Date()) => {
-  const isOpenDay = [2, 3, 4, 5, 6, 7].includes(date.getUTCDay());
-  const isLongHoursDay = [5, 6, 7].includes(date.getUTCDay());
-  const openHour = isLongHoursDay ? 1700 : 2100;
-  const hour = date.getUTCHours() * 100 + date.getUTCMinutes();
-  const isOpenHour = hour >= openHour || hour < 230;
-
-  console.log("--isStoreOpen", isOpenDay && isOpenHour);
-
-  return isOpenDay && isOpenHour;
-};
+import { isStoreOpen } from "./utils";
 
 const CartContainer = ({
   cart,
@@ -38,11 +27,12 @@ const CartContainer = ({
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
 
-  /** @type Date */
-  const firebaseDate = firebase.getCurrentDate();
+  const getCurrentDate = async () => {
+    return await firebase.getCurrentDate();
+  };
 
-  const makeOrder = () => {
-    if (isStoreOpen(firebaseDate)) {
+  const makeOrder = async () => {
+    if (isStoreOpen(await getCurrentDate())) {
       setDeliveryNoticeOpen(true);
     } else {
       setScheduleOpen(true);
@@ -70,9 +60,9 @@ const CartContainer = ({
     }
   }
 
-  function updateUserInfo(newUserInfo) {
-    setUserInfo(newUserInfo);
-    setLocalStorageItem("userInfo", newUserInfo);
+  function updateUserInfo(userInfo) {
+    setUserInfo(userInfo);
+    setLocalStorageItem("userInfo", userInfo);
   }
 
   function updateOrder(order) {
@@ -80,8 +70,8 @@ const CartContainer = ({
     setLocalStorageItem("order", order);
   }
 
-  function requestOrder() {
-    const number = `${utcDate(firebaseDate, true, false)}-${parseInt(
+  async function requestOrder() {
+    const number = `${utcDate(await getCurrentDate(), true, false)}-${parseInt(
       Math.random() * 10000,
     ) + 1000}`;
 
@@ -90,7 +80,7 @@ const CartContainer = ({
     setTimeout(() => {
       firebase.set({
         path: "orders",
-        doc: order.idempotencyToken,
+        document: order.idempotencyToken,
         data: {
           ...order,
           cart,
@@ -99,18 +89,22 @@ const CartContainer = ({
           status: "requested",
         },
       });
+
+      firebase.setAnalyticsEvent("request-order");
     }, 3000);
   }
 
   function placeNewOrder() {
     clearCart();
     updateOrder(getInitialStateOrder());
+
+    firebase.setAnalyticsEvent("new-order");
   }
 
   function rateOrder(rating) {
     firebase.set({
       path: "orders",
-      doc: order.idempotencyToken,
+      document: order.idempotencyToken,
       data: {
         ...order,
         rating,
@@ -121,7 +115,7 @@ const CartContainer = ({
   function commentOrder(comments) {
     firebase.set({
       path: "orders",
-      doc: order.idempotencyToken,
+      document: order.idempotencyToken,
       data: {
         ...order,
         comments,

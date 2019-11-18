@@ -16,7 +16,8 @@ const SectionsContainer = ({ cart, addToCart, removeFromCart, firebase }) => {
       let sections = getLocalStorageItem("sections");
 
       if (!sections || sections.length <= 0) {
-        sections = await firebase.get("sections", {
+        sections = await firebase.getList({
+          path: "sections",
           include: ["full-products"],
         });
       }
