@@ -6,7 +6,8 @@
 .pnp.js
 
 # environments
-.env*
+.env
+env.*
 
 # backups
 *.backup
