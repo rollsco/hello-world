@@ -18,6 +18,7 @@ const SectionsContainer = ({ cart, addToCart, removeFromCart, firebase }) => {
       if (!sections || sections.length <= 0) {
         sections = await firebase.getList({
           path: "sections",
+          limit: 999,
           include: ["full-products"],
         });
       }
