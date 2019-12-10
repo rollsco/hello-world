@@ -1,6 +1,20 @@
+rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == 'jxt3hdw';
+    }
+    match /reports/{document=**} {
+      allow read, write;
+    }
+    match /sections/{document=**} {
+      allow read, write;
+    }
+    match /.info/server {
+      allow read, write;
+    }
+    match /orders/{document=**} {
       allow read, write;
     }
   }

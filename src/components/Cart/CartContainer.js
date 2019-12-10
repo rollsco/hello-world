@@ -89,16 +89,16 @@ const CartContainer = ({
           status: "requested",
         },
       });
-
-      firebase.setAnalyticsEvent("request-order");
     }, 3000);
+
+    firebase.setAnalyticsEvent("back-to-menu");
   }
 
   function placeNewOrder() {
     clearCart();
     updateOrder(getInitialStateOrder());
 
-    firebase.setAnalyticsEvent("new-order");
+    firebase.setAnalyticsEvent("back-to-menu");
   }
 
   function rateOrder(rating) {

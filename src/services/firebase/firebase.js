@@ -82,12 +82,12 @@ class Firebase {
 
   getList = async ({ path, include, orderBy, limit }) => {
     const reference = this.prepareListQuery({ path, orderBy, limit });
-    const querySnapshot = await reference.get();
+    const listQuerySnapshot = await reference.get();
 
     const entities = await Promise.all(
-      querySnapshot.docs.map(async doc => ({
-        ...getDocWithId(doc),
-        ...(await this.getSubcollections(doc, include || [])),
+      listQuerySnapshot.docs.map(async querySnapshot => ({
+        ...getDocWithId(querySnapshot),
+        ...(await this.getSubcollections({ querySnapshot, include, limit })),
       })),
     );
 
@@ -102,11 +102,11 @@ class Firebase {
 
     return {
       ...getDocWithId(querySnapshot),
-      ...(await this.getSubcollections(querySnapshot, include || [])),
+      ...(await this.getSubcollections({ querySnapshot, include })),
     };
   };
 
-  getSubcollections = async (querySnapshot, include) => {
+  getSubcollections = async ({ querySnapshot, include, limit }) => {
     const subcollections = {};
 
     if (include) {
@@ -116,6 +116,7 @@ class Firebase {
           const [detailLevel, entity] = detailLevelEntityPair.split("-");
           const entities = await this.getList({
             path: `${querySnapshot.ref.path}/${entity}`,
+            limit,
             include,
           });
 
