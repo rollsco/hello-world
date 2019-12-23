@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { CartButtonBox } from "./components";
+import { CartButtonBox } from "../components";
 
 const PlaceNewOrderButton = ({ order, placeNewOrder }) => {
   if (!order.status) {

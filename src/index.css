@@ -18,3 +18,46 @@ summary {
   vertical-align: baseline;
   background: transparent;
 }
+
+@keyframes slidein {
+  from {
+    margin-left: 85%;
+  }
+  to {
+    margin-left: -85%;
+  }
+}
+
+@keyframes motoOut {
+  0% {
+    margin-left: -85%;
+  }
+  75% {
+    margin-left: 45%;
+    transform: rotate(0deg);
+  }
+  100% {
+    margin-left: 85%;
+    transform: rotate(-18deg);
+  }
+}
+
+@keyframes cookingHandLeft {
+  from {
+    transform: rotate(16deg);
+  }
+  to {
+    margin-right: -16px;
+    transform: rotate(-16deg);
+  }
+}
+
+@keyframes cookingHandRight {
+  from {
+    margin-left: -16px;
+    transform: rotate(-10deg) scaleX(-1);
+  }
+  to {
+    transform: rotate(21deg) scaleX(-1);
+  }
+}
