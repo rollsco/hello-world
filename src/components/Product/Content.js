@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { CardContent, Typography } from "@material-ui/core";
 import { OverflowWrapTypography } from "../components";
-import { currency } from "../../services/formatter";
+import { currency } from "../../services/formatter/formatter";
 
 const Name = styled(OverflowWrapTypography)`
   && {

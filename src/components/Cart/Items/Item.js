@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IconButton, TableRow, TableCell } from "@material-ui/core";
 import { OverflowWrapTypography } from "../../components";
 import Delete from "@material-ui/icons/Delete";
-import { currency } from "../../../services/formatter";
+import { currency } from "../../../services/formatter/formatter";
 
 // TODO make global
 const ProductName = styled(OverflowWrapTypography)`

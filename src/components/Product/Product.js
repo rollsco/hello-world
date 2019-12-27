@@ -15,7 +15,7 @@ import FiberManualRecordOutlined from "@material-ui/icons/FiberManualRecordOutli
 import { OverflowWrapTypography } from "../components";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Content from "./Content";
-import { multiline } from "../../services/formatter";
+import { multiline } from "../../services/formatter/formatter";
 
 const StyledCard = styled(Card)`
   margin: 0 auto;

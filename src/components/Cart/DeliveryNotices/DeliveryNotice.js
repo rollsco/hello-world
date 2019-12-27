@@ -9,7 +9,7 @@ import {
   TableHead,
 } from "@material-ui/core";
 import { Moto } from "../components";
-import { currency } from "../../../services/formatter";
+import { currency } from "../../../services/formatter/formatter";
 
 const Row = ({ location, minimumPrice, maximumPrice }) => (
   <TableRow>

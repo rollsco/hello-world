@@ -3,7 +3,7 @@ import Sections from "./Sections";
 import {
   getLocalStorageItem,
   setLocalStorageItem,
-} from "../../services/localStorage";
+} from "../../services/localStorage/localStorage";
 import { withFirebase } from "../FirebaseContext";
 
 const SectionsContainer = ({ cart, addToCart, removeFromCart, firebase }) => {
