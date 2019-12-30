@@ -3,10 +3,10 @@ import Cart from "./Cart";
 import {
   getLocalStorageItem,
   setLocalStorageItem,
-} from "../../services/localStorage";
+} from "../../services/localStorage/localStorage";
 import { withFirebase } from "../FirebaseContext";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
-import { utcDate } from "../../services/formatter";
+import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
 
 const CartContainer = ({

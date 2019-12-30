@@ -3,7 +3,7 @@ import LayoutPage from "./LayoutPage";
 import {
   getLocalStorageItem,
   setLocalStorageItem,
-} from "../../services/localStorage";
+} from "../../services/localStorage/localStorage";
 
 const createNewCartItem = product => {
   const randomId = Math.floor(Math.random() * 1000000);

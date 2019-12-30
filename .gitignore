@@ -1,5 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Link to Services repo. More info: https://github.com/rollsco/services
+src/services
+
+# Frontend data, params, config directory
+src/data
+
 # dependencies
 /node_modules
 /.pnp

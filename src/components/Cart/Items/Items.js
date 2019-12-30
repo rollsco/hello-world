@@ -7,7 +7,7 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
-import { currency } from "../../../services/formatter";
+import { currency } from "../../../services/formatter/formatter";
 import { CartPaper } from "../components";
 import { applyDiscountPercentage } from "../../../transformer";
 
