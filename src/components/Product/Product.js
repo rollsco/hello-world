@@ -66,7 +66,7 @@ const Product = ({ cart, addToCart, removeFromCart, product }) => {
         <StyledCard>
           <CardMedia
             component="img"
-            image={`img/products/${product.img}`}
+            image={`img/data/${product.image && product.image[0].filename}`}
             title={product.name}
           />
 

@@ -1,48 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import Sections from "./Sections";
-import {
-  getLocalStorageItem,
-  setLocalStorageItem,
-} from "../../services/localStorage/localStorage";
-import { withFirebase } from "../FirebaseContext";
+import { sections } from "../../data/sections";
 
-const SectionsContainer = ({ cart, addToCart, removeFromCart, firebase }) => {
-  const [loading, setLoading] = useState(true);
-  const [sections, setSections] = useState(getLocalStorageItem("sections", []));
+const SectionsContainer = ({ cart, addToCart, removeFromCart }) => (
+  <Sections
+    cart={cart}
+    sections={sections}
+    addToCart={addToCart}
+    removeFromCart={removeFromCart}
+  />
+);
 
-  // onMount
-  React.useEffect(() => {
-    async function effect() {
-      let sections = getLocalStorageItem("sections");
-
-      if (!sections || sections.length <= 0) {
-        sections = await firebase.getList({
-          path: "sections",
-          limit: 999,
-          include: ["full-products"],
-        });
-      }
-
-      updateSections(sections);
-    }
-    effect();
-  }, []);
-
-  function updateSections(sections) {
-    setLoading(false);
-    setSections(sections);
-    setLocalStorageItem("sections", sections);
-  }
-
-  return (
-    <Sections
-      cart={cart}
-      loading={loading}
-      sections={sections}
-      addToCart={addToCart}
-      removeFromCart={removeFromCart}
-    />
-  );
-};
-
-export default withFirebase(SectionsContainer);
+export default SectionsContainer;
