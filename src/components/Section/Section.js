@@ -9,13 +9,12 @@ const MuiContainer = styled(Container)`
 `;
 
 const Section = ({ section, cart, addToCart, removeFromCart }) => (
-  <MuiContainer maxWidth="lg">
-    <Grid container spacing={3}>
+  <MuiContainer maxWidth="md">
+    <Grid container justify="center" spacing={4}>
       {section.products &&
         section.products.map((productId, i) => (
           <Product
             key={i}
-            cart={cart}
             product={products[productId]}
             addToCart={addToCart}
             removeFromCart={removeFromCart}
