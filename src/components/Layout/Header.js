@@ -1,11 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { AppBar, Toolbar, Badge, IconButton } from "@material-ui/core";
+import { AppBar, Badge, IconButton } from "@material-ui/core";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
-
-const StyledToolbar = styled(Toolbar)`
-  justify-content: space-between;
-`;
+import { StyledToolbar, ImageLink, ImageInLink } from "./components";
 
 const Header = ({ productsNumber, openCart }) => (
   <AppBar position="fixed">
@@ -18,12 +14,15 @@ const Header = ({ productsNumber, openCart }) => (
         </Badge>
       </IconButton>
 
-      <a
+      <ImageLink
         href="http://api.whatsapp.com/send?phone=573174122919"
         target="__blank"
       >
-        <img src="img/contacto-whatsapp-small.png" alt="Contacto whatsapp" />
-      </a>
+        <ImageInLink
+          src="img/contacto-whatsapp-small.png"
+          alt="Contacto whatsapp"
+        />
+      </ImageLink>
     </StyledToolbar>
   </AppBar>
 );
