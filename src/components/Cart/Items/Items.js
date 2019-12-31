@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { currency } from "../../../services/formatter/formatter";
-import { CartPaper } from "../components";
 import { applyDiscountPercentage } from "../../../transformer";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
 const discountPercentage = process.env.REACT_APP_DISCOUNT_PERCENTAGE;
 
@@ -45,7 +45,7 @@ const Discount = ({ totalCost }) => {
 };
 
 const Items = ({ order, items, removeFromCart }) => (
-  <CartPaper>
+  <DialogPaper>
     <Table size="small">
       <TableBody>
         {items.map((item, index) => (
@@ -71,7 +71,7 @@ const Items = ({ order, items, removeFromCart }) => (
         <Discount totalCost={calculateTotalCost(items)} />
       </TableBody>
     </Table>
-  </CartPaper>
+  </DialogPaper>
 );
 
 export default Items;

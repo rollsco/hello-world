@@ -1,13 +1,15 @@
 import React, { Fragment } from "react";
-import { CartPaper, DialogTitleCenter } from "../components";
+import { DialogTitleCenter } from "../components";
 import DeliveryNotice from "./DeliveryNotice";
 import { Dialog, Button, DialogActions } from "@material-ui/core";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
 const DeliveryNotices = ({ requestOrder, isOpenDeliveryNotice }) => (
   <Fragment>
-    <CartPaper>
+    <DialogPaper>
       <DeliveryNotice />
-    </CartPaper>
+    </DialogPaper>
+
     <Dialog open={isOpenDeliveryNotice}>
       <DialogTitleCenter>Recuerda</DialogTitleCenter>
 

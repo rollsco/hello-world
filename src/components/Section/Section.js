@@ -8,7 +8,7 @@ const MuiContainer = styled(Container)`
   padding: 16px 0 80px;
 `;
 
-const Section = ({ section, cart, addToCart, removeFromCart }) => (
+const Section = ({ section, addToCart, removeFromCart }) => (
   <MuiContainer maxWidth="md">
     <Grid container justify="center" spacing={4}>
       {section.products &&

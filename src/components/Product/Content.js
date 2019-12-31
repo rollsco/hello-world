@@ -1,5 +1,4 @@
 import React from "react";
-import { Typography, Divider } from "@material-ui/core";
 import { currency, multiline } from "../../services/formatter/formatter";
 import { AddToCart } from "./AddToCart";
 import {
