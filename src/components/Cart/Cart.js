@@ -19,12 +19,12 @@ const Cart = ({
   rateOrder,
   closeCart,
   makeOrder,
+  updateCart,
   scheduleOpen,
   commentOrder,
   requestOrder,
   placeNewOrder,
   updateUserInfo,
-  removeFromCart,
   deliveryNoticeOpen,
 }) => (
   <Dialog
@@ -44,7 +44,12 @@ const Cart = ({
 
       <ConfirmationNotice order={order} />
 
-      <Items order={order} items={cart.items} removeFromCart={removeFromCart} />
+      <Items
+        order={order}
+        items={cart.items}
+        cart={cart}
+        updateCart={updateCart}
+      />
 
       <Feedback
         order={order}

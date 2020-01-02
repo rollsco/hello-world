@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
 import { LinearProgress, Tabs, Tab } from "@material-ui/core";
-import SectionContainer from "../Section/SectionContainer";
 import { sections } from "../../data/sections";
+import Section from "../Section/Section";
 
 const StyledSections = styled.div`
   padding-top: 60px;
@@ -38,14 +38,7 @@ const Sections = ({ loading, variantIds, setVariantIds }) => {
 
       <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
         {sections.map((section, i) => (
-          <SectionContainer
-            key={i}
-            index={i}
-            value={value}
-            section={section}
-            variantIds={variantIds}
-            setVariantIds={setVariantIds}
-          />
+          <Section key={i} section={section} setVariantIds={setVariantIds} />
         ))}
       </SwipeableViews>
     </StyledSections>

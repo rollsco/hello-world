@@ -44,14 +44,15 @@ const Discount = ({ totalCost }) => {
   );
 };
 
-const Items = ({ order, items, removeFromCart }) => (
+const Items = ({ order, items, cart, updateCart }) => (
   <Fragment>
     {items.map((item, index) => (
       <Item
-        order={order}
         item={item}
         key={index}
-        removeFromCart={removeFromCart}
+        cart={cart}
+        order={order}
+        updateCart={updateCart}
       />
     ))}
 

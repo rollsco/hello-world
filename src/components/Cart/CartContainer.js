@@ -10,7 +10,7 @@ import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
 import { getNewCart } from "../../entities/Cart";
 
-const CartContainer = ({ cart, firebase, updateCart }) => {
+const CartContainer = ({ cart, updateCart, firebase }) => {
   const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
@@ -18,6 +18,7 @@ const CartContainer = ({ cart, firebase, updateCart }) => {
   const [order, setOrder] = useState(
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
+  const [currentDate, setCurrentDate] = useState(null);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
 
@@ -25,37 +26,24 @@ const CartContainer = ({ cart, firebase, updateCart }) => {
     updateCart({ ...cart, open: false });
   };
 
-  const removeFromCart = itemToRemove => {
-    const items = cart.items.filter(item => item.id !== itemToRemove.id);
-
-    if (items.length === 0) {
-      cart.open = false;
-    }
-
-    updateCart({
-      ...cart,
-      items,
-    });
-  };
-
   const clearCart = () => {
     updateCart(getNewCart());
   };
 
-  const getCurrentDate = async () => {
-    return await firebase.getCurrentDate();
-  };
-
   const makeOrder = async () => {
-    if (isStoreOpen(await getCurrentDate())) {
+    if (isStoreOpen(currentDate)) {
       setDeliveryNoticeOpen(true);
     } else {
       setScheduleOpen(true);
     }
   };
 
+  const setCurrentDateAsync = async () => {
+    setCurrentDate(await firebase.getCurrentDate());
+  };
+
   useEffect(() => {
-    // listen for Order on Firebase
+    // Listen for Order on Firebase
     const unsubscribeToListener = firebase.onDocument(
       "orders",
       order.idempotencyToken,
@@ -63,6 +51,7 @@ const CartContainer = ({ cart, firebase, updateCart }) => {
         onSnapshot: processOrderEditedOnFirebase,
       },
     );
+    setCurrentDateAsync();
 
     return () => unsubscribeToListener();
   }, []);
@@ -85,7 +74,7 @@ const CartContainer = ({ cart, firebase, updateCart }) => {
   }
 
   async function requestOrder() {
-    const number = `${utcDate(await getCurrentDate(), true, false)}-${parseInt(
+    const number = `${utcDate(currentDate, true, false)}-${parseInt(
       Math.random() * 10000,
     ) + 1000}`;
 
@@ -145,12 +134,12 @@ const CartContainer = ({ cart, firebase, updateCart }) => {
       rateOrder={rateOrder}
       closeCart={closeCart}
       makeOrder={makeOrder}
+      updateCart={updateCart}
       scheduleOpen={scheduleOpen}
       commentOrder={commentOrder}
       requestOrder={requestOrder}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
-      removeFromCart={removeFromCart}
       deliveryNoticeOpen={deliveryNoticeOpen}
     />
   );
