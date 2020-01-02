@@ -2,15 +2,18 @@ import React, { Fragment } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CartContainer from "../Cart";
-import SectionsContainer from "../Sections";
+import Sections from "../Sections/Sections";
 import { CssBaseline } from "@material-ui/core";
+import CustomizeDialog from "../Product/CustomizeDialog/CustomizeDialog";
 
 const LayoutPage = ({
   cart,
+  setCart,
   openCart,
   closeCart,
-  addToCart,
   clearCart,
+  variantIds,
+  setVariantIds,
   removeFromCart,
 }) => (
   <CssBaseline>
@@ -18,9 +21,11 @@ const LayoutPage = ({
       <Fragment>
         <Header openCart={openCart} productsNumber={cart.items.length} />
 
-        <SectionsContainer
+        <Sections
           cart={cart}
-          addToCart={addToCart}
+          // setCart={setCart}
+          variantIds={variantIds}
+          setVariantIds={setVariantIds}
           removeFromCart={removeFromCart}
         />
 
@@ -34,6 +39,15 @@ const LayoutPage = ({
         closeCart={closeCart}
         clearCart={clearCart}
         removeFromCart={removeFromCart}
+      />
+    )}
+
+    {variantIds && (
+      <CustomizeDialog
+        cart={cart}
+        setCart={setCart}
+        variantIds={variantIds}
+        setVariantIds={setVariantIds}
       />
     )}
   </CssBaseline>

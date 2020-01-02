@@ -6,6 +6,8 @@ const SectionContainer = ({
   index,
   value,
   cart,
+  variantIds,
+  setVariantIds,
   addToCart,
   removeFromCart,
 }) => {
@@ -25,6 +27,8 @@ const SectionContainer = ({
       cart={cart}
       section={section}
       loading={loading}
+      variantIds={variantIds}
+      setVariantIds={setVariantIds}
       addToCart={addToCart}
       removeFromCart={removeFromCart}
     />

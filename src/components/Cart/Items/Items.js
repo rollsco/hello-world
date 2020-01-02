@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Item from "./Item";
 import {
   Table,
@@ -45,33 +45,38 @@ const Discount = ({ totalCost }) => {
 };
 
 const Items = ({ order, items, removeFromCart }) => (
-  <DialogPaper>
-    <Table size="small">
-      <TableBody>
-        {items.map((item, index) => (
-          <Item
-            order={order}
-            item={item}
-            key={index}
-            removeFromCart={removeFromCart}
-          />
-        ))}
-        <TableRow>
-          <TableCell>
-            <Typography variant="h6">Subtotal</Typography>
-          </TableCell>
-          <TableCell align="right">
-            <Typography variant="h6">
-              {currency(calculateTotalCost(items))}
-            </Typography>
-          </TableCell>
-          <TableCell />
-        </TableRow>
+  <Fragment>
+    {items.map((item, index) => (
+      <Item
+        order={order}
+        item={item}
+        key={index}
+        removeFromCart={removeFromCart}
+      />
+    ))}
 
-        <Discount totalCost={calculateTotalCost(items)} />
-      </TableBody>
-    </Table>
-  </DialogPaper>
+    <DialogPaper>
+      <Table size="small">
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Typography variant="h6">Total pedido</Typography>
+            </TableCell>
+
+            <TableCell align="right">
+              <Typography variant="h6">
+                {currency(calculateTotalCost(items))}
+              </Typography>
+            </TableCell>
+
+            <TableCell />
+          </TableRow>
+
+          <Discount totalCost={calculateTotalCost(items)} />
+        </TableBody>
+      </Table>
+    </DialogPaper>
+  </Fragment>
 );
 
 export default Items;

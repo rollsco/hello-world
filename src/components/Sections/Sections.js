@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
 import { LinearProgress, Tabs, Tab } from "@material-ui/core";
 import SectionContainer from "../Section/SectionContainer";
+import { sections } from "../../data/sections";
 
 const StyledSections = styled.div`
   padding-top: 60px;
 `;
 
-const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
-  const [value, setValue] = React.useState(0);
+const Sections = ({
+  loading,
+  cart,
+  addToCart,
+  removeFromCart,
+  variantIds,
+  setVariantIds,
+}) => {
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, value) => {
     setValue(value);
@@ -44,6 +52,8 @@ const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
             value={value}
             section={section}
             addToCart={addToCart}
+            variantIds={variantIds}
+            setVariantIds={setVariantIds}
             removeFromCart={removeFromCart}
           />
         ))}

@@ -20,6 +20,9 @@ import SelectSize from "./SelectSize";
 import { variants } from "../../../data/variants";
 import { multiline, currency } from "../../../services/formatter/formatter";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import { setLocalStorageItem } from "../../../services/localStorage/localStorage";
+import { getNewCartItem } from "../../../entities/CartItem";
+import { products } from "../../../data/products";
 
 const getProductImagePathname = ({ product, variantId }) => {
   const imagesPath = "img/data";
@@ -32,59 +35,77 @@ const getProductImagePathname = ({ product, variantId }) => {
   }
 };
 
-const CustomizeDialog = ({
-  open,
-  handleClose,
-  product,
-  variantIds,
-  handleAddToCart,
-  handleChangeMain,
-}) => (
-  <Dialog fullScreen open={open} TransitionComponent={DialogTransition}>
-    <Header
-      title={`Agregar ${product.name.toUpperCase()}`}
-      onCloseButtonClick={handleClose}
-    />
+const CustomizeDialog = ({ cart, setCart, variantIds, setVariantIds }) => {
+  const productId = variants[variantIds.main].product;
+  const product = products[productId];
+  const handleClose = () => {
+    setVariantIds(null);
+  };
 
-    <Content maxWidth="xs">
-      <Card>
-        <VariantMedia
-          component="img"
-          image={getProductImagePathname({
-            product,
-            variantId: variantIds.main,
-          })}
-        />
+  const handleChangeMain = event => {
+    setVariantIds({ ...variantIds, main: event.target.value });
+  };
 
-        <CardContent>
-          <Typography variant="h6" color="secondary">
-            {currency(variants[variantIds.main].price)}
-          </Typography>
+  const updateCart = cart => {
+    setCart(cart);
+    setLocalStorageItem("cart", cart);
+  };
 
-          {multiline(variants[variantIds.main].description)}
-        </CardContent>
-      </Card>
+  const handleAddToCart = () => {
+    updateCart({
+      ...cart,
+      items: [...cart.items, getNewCartItem(variantIds)],
+    });
+    setVariantIds(null);
+  };
 
-      <Sections>
-        <SectionName color="secondary" variant="h6">
-          Tamaño
-        </SectionName>
+  return (
+    <Dialog fullScreen open={variantIds} TransitionComponent={DialogTransition}>
+      <Header
+        title={`Agregar ${product.name.toUpperCase()}`}
+        onCloseButtonClick={handleClose}
+      />
 
-        <SelectSize
-          value={variantIds.main}
-          variantIds={product.variants}
-          handleChange={handleChangeMain}
-        />
-      </Sections>
+      <Content maxWidth="xs">
+        <Card>
+          <VariantMedia
+            component="img"
+            image={getProductImagePathname({
+              product,
+              variantId: variantIds.main,
+            })}
+          />
 
-      <Actions>
-        <Button color="secondary" onClick={handleAddToCart}>
-          Agregar &nbsp;
-          <ShoppingCart />
-        </Button>
-      </Actions>
-    </Content>
-  </Dialog>
-);
+          <CardContent>
+            <Typography variant="h6" color="secondary">
+              {currency(variants[variantIds.main].price)}
+            </Typography>
+
+            {multiline(variants[variantIds.main].description)}
+          </CardContent>
+        </Card>
+
+        <Sections>
+          <SectionName color="secondary" variant="h6">
+            Tamaño
+          </SectionName>
+
+          <SelectSize
+            value={variantIds.main}
+            variantIds={product.variants}
+            handleChange={handleChangeMain}
+          />
+        </Sections>
+
+        <Actions>
+          <Button color="secondary" onClick={handleAddToCart}>
+            Agregar &nbsp;
+            <ShoppingCart />
+          </Button>
+        </Actions>
+      </Content>
+    </Dialog>
+  );
+};
 
 export default CustomizeDialog;
