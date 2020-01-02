@@ -8,44 +8,28 @@ import CustomizeDialog from "../Product/CustomizeDialog/CustomizeDialog";
 
 const LayoutPage = ({
   cart,
-  setCart,
   openCart,
-  closeCart,
-  clearCart,
   variantIds,
+  updateCart,
   setVariantIds,
-  removeFromCart,
 }) => (
   <CssBaseline>
     {!cart.open && (
       <Fragment>
         <Header openCart={openCart} productsNumber={cart.items.length} />
 
-        <Sections
-          cart={cart}
-          // setCart={setCart}
-          variantIds={variantIds}
-          setVariantIds={setVariantIds}
-          removeFromCart={removeFromCart}
-        />
+        <Sections variantIds={variantIds} setVariantIds={setVariantIds} />
 
         {cart.items.length > 0 && <Footer openCart={openCart} />}
       </Fragment>
     )}
 
-    {cart.open && (
-      <CartContainer
-        cart={cart}
-        closeCart={closeCart}
-        clearCart={clearCart}
-        removeFromCart={removeFromCart}
-      />
-    )}
+    {cart.open && <CartContainer cart={cart} updateCart={updateCart} />}
 
     {variantIds && (
       <CustomizeDialog
         cart={cart}
-        setCart={setCart}
+        updateCart={updateCart}
         variantIds={variantIds}
         setVariantIds={setVariantIds}
       />

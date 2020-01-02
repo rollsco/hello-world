@@ -9,13 +9,7 @@ import {
 } from "@material-ui/core";
 import { DialogTransition } from "../../components";
 import Content from "../../UI/FullscreenDialog/Content";
-import {
-  VariantMedia,
-  Sections,
-  SectionDivider,
-  SectionName,
-  Actions,
-} from "./components";
+import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import SelectSize from "./SelectSize";
 import { variants } from "../../../data/variants";
 import { multiline, currency } from "../../../services/formatter/formatter";
@@ -35,20 +29,16 @@ const getProductImagePathname = ({ product, variantId }) => {
   }
 };
 
-const CustomizeDialog = ({ cart, setCart, variantIds, setVariantIds }) => {
+const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;
   const product = products[productId];
+
   const handleClose = () => {
     setVariantIds(null);
   };
 
   const handleChangeMain = event => {
     setVariantIds({ ...variantIds, main: event.target.value });
-  };
-
-  const updateCart = cart => {
-    setCart(cart);
-    setLocalStorageItem("cart", cart);
   };
 
   const handleAddToCart = () => {

@@ -4,16 +4,10 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../services/localStorage/localStorage";
-
-const initialStateCart = {
-  items: [],
-  open: false,
-};
+import { getNewCart } from "../../entities/Cart";
 
 const LayoutContainer = () => {
-  const [cart, setCart] = useState(
-    getLocalStorageItem("cart", initialStateCart),
-  );
+  const [cart, setCart] = useState(getLocalStorageItem("cart", getNewCart()));
   const [variantIds, setVariantIds] = useState(null);
 
   function updateCart(cart) {
@@ -25,37 +19,13 @@ const LayoutContainer = () => {
     updateCart({ ...cart, open: cart.items.length > 0 });
   }
 
-  function closeCart() {
-    updateCart({ ...cart, open: false });
-  }
-
-  function removeFromCart(itemToRemove) {
-    const items = cart.items.filter(item => item.id !== itemToRemove.id);
-
-    if (items.length === 0) {
-      cart.open = false;
-    }
-
-    updateCart({
-      ...cart,
-      items,
-    });
-  }
-
-  function clearCart() {
-    updateCart(initialStateCart);
-  }
-
   return (
     <LayoutPage
       cart={cart}
-      setCart={setCart}
       openCart={openCart}
-      closeCart={closeCart}
-      clearCart={clearCart}
+      updateCart={updateCart}
       variantIds={variantIds}
       setVariantIds={setVariantIds}
-      removeFromCart={removeFromCart}
     />
   );
 };

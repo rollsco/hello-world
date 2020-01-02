@@ -9,14 +9,7 @@ const StyledSections = styled.div`
   padding-top: 60px;
 `;
 
-const Sections = ({
-  loading,
-  cart,
-  addToCart,
-  removeFromCart,
-  variantIds,
-  setVariantIds,
-}) => {
+const Sections = ({ loading, variantIds, setVariantIds }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, value) => {
@@ -48,13 +41,10 @@ const Sections = ({
           <SectionContainer
             key={i}
             index={i}
-            cart={cart}
             value={value}
             section={section}
-            addToCart={addToCart}
             variantIds={variantIds}
             setVariantIds={setVariantIds}
-            removeFromCart={removeFromCart}
           />
         ))}
       </SwipeableViews>

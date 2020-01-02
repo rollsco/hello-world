@@ -8,14 +8,9 @@ import { withFirebase } from "../FirebaseContext";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
+import { getNewCart } from "../../entities/Cart";
 
-const CartContainer = ({
-  cart,
-  firebase,
-  closeCart,
-  clearCart,
-  removeFromCart,
-}) => {
+const CartContainer = ({ cart, firebase, updateCart }) => {
   const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
@@ -23,9 +18,29 @@ const CartContainer = ({
   const [order, setOrder] = useState(
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
-
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
+
+  const closeCart = () => {
+    updateCart({ ...cart, open: false });
+  };
+
+  const removeFromCart = itemToRemove => {
+    const items = cart.items.filter(item => item.id !== itemToRemove.id);
+
+    if (items.length === 0) {
+      cart.open = false;
+    }
+
+    updateCart({
+      ...cart,
+      items,
+    });
+  };
+
+  const clearCart = () => {
+    updateCart(getNewCart());
+  };
 
   const getCurrentDate = async () => {
     return await firebase.getCurrentDate();
@@ -39,7 +54,6 @@ const CartContainer = ({
     }
   };
 
-  // onMount
   useEffect(() => {
     // listen for Order on Firebase
     const unsubscribeToListener = firebase.onDocument(
