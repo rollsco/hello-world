@@ -5,10 +5,20 @@ import { ProductCard, Media } from "./components";
 import CustomizeDialog from "./CustomizeDialog/CustomizeDialog";
 
 const Product = ({ addToCart, product }) => {
+  const initialStateVariantIds = {
+    main: product.variants[0],
+    drink: null,
+    extras: [],
+  };
   const [open, setOpen] = useState(false);
+  const [variantIds, setVariantIds] = useState(initialStateVariantIds);
+
+  const handleChangeMain = event => {
+    setVariantIds({ ...variantIds, main: event.target.value });
+  };
 
   function handleAddToCart() {
-    addToCart(product);
+    addToCart(variantIds);
     setOpen(false);
   }
 
@@ -27,8 +37,10 @@ const Product = ({ addToCart, product }) => {
         <CustomizeDialog
           open={open}
           product={product}
+          variantIds={variantIds}
           handleClose={() => setOpen(false)}
           handleAddToCart={handleAddToCart}
+          handleChangeMain={handleChangeMain}
         />
       )}
     </Grid>

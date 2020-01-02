@@ -4,20 +4,16 @@ import { IconButton, TableRow, TableCell } from "@material-ui/core";
 import { OverflowWrapTypography } from "../../components";
 import Delete from "@material-ui/icons/Delete";
 import { currency } from "../../../services/formatter/formatter";
-
-// TODO make global
-const ProductName = styled(OverflowWrapTypography)`
-  text-transform: capitalize;
-`;
+import { Name } from "../../Product/components";
 
 const Item = ({ order, item, removeFromCart }) => (
   <TableRow>
     <TableCell>
-      <ProductName variant="subtitle1">{item.product.name}</ProductName>
+      <Name variant="caption">{item.main.name}</Name>
     </TableCell>
     <TableCell align="right">
       <OverflowWrapTypography variant="subtitle1">
-        {currency(item.product.price)}
+        {currency(item.main.price)}
       </OverflowWrapTypography>
     </TableCell>
     <TableCell align="right">

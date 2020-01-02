@@ -14,7 +14,7 @@ import { DialogPaper } from "../../UI/FullscreenDialog/components";
 const discountPercentage = process.env.REACT_APP_DISCOUNT_PERCENTAGE;
 
 const calculateTotalCost = items =>
-  items.reduce((priceSum, item) => priceSum + item.product.price, 0);
+  items.reduce((priceSum, item) => priceSum + item.totalPrice, 0);
 
 const Discount = ({ totalCost }) => {
   if (!discountPercentage) {

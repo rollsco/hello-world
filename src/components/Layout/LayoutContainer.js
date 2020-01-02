@@ -4,20 +4,7 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../services/localStorage/localStorage";
-
-const createNewCartItem = product => {
-  const randomId = Math.floor(Math.random() * 1000000);
-  const newProduct = { ...product };
-
-  delete newProduct.img;
-  delete newProduct.order;
-  delete newProduct.description;
-
-  return {
-    id: randomId,
-    product: newProduct,
-  };
-};
+import { getNewCartItem } from "../../entities/CartItem";
 
 const initialStateCart = {
   items: [],
@@ -28,6 +15,7 @@ const LayoutContainer = () => {
   const [cart, setCart] = useState(
     getLocalStorageItem("cart", initialStateCart),
   );
+  console.log("--cart", cart);
 
   function updateCart(cart) {
     setCart(cart);
@@ -42,10 +30,10 @@ const LayoutContainer = () => {
     updateCart({ ...cart, open: false });
   }
 
-  function addToCart(product) {
+  function addToCart(variantIds) {
     updateCart({
       ...cart,
-      items: [...cart.items, createNewCartItem(product)],
+      items: [...cart.items, getNewCartItem(variantIds)],
     });
   }
 

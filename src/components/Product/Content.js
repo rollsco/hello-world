@@ -1,6 +1,6 @@
 import React from "react";
 import { currency, multiline } from "../../services/formatter/formatter";
-import { AddToCart } from "./AddToCart";
+import { AddToCartButton } from "./AddToCart";
 import {
   StyledCardContent,
   StyledCardActions,
@@ -26,7 +26,7 @@ const Content = ({ product, handleAddToCart }) => (
     </Info>
 
     <StyledCardActions>
-      <AddToCart handleAddToCart={handleAddToCart} />
+      <AddToCartButton handleAddToCart={handleAddToCart} />
     </StyledCardActions>
   </StyledCardContent>
 );

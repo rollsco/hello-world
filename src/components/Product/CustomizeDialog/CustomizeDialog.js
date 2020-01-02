@@ -32,57 +32,59 @@ const getProductImagePathname = ({ product, variantId }) => {
   }
 };
 
-const CustomizeDialog = ({ open, handleClose, product, handleAddToCart }) => {
-  const [variantId, setVariantId] = useState(product.variants[0]);
+const CustomizeDialog = ({
+  open,
+  handleClose,
+  product,
+  variantIds,
+  handleAddToCart,
+  handleChangeMain,
+}) => (
+  <Dialog fullScreen open={open} TransitionComponent={DialogTransition}>
+    <Header
+      title={`Agregar ${product.name.toUpperCase()}`}
+      onCloseButtonClick={handleClose}
+    />
 
-  const handleChangeVariant = event => {
-    setVariantId(event.target.value);
-  };
+    <Content maxWidth="xs">
+      <Card>
+        <VariantMedia
+          component="img"
+          image={getProductImagePathname({
+            product,
+            variantId: variantIds.main,
+          })}
+        />
 
-  return (
-    <Dialog fullScreen open={open} TransitionComponent={DialogTransition}>
-      <Header
-        title={`Agregar ${product.name.toUpperCase()}`}
-        onCloseButtonClick={handleClose}
-      />
+        <CardContent>
+          <Typography variant="h6" color="secondary">
+            {currency(variants[variantIds.main].price)}
+          </Typography>
 
-      <Content maxWidth="xs">
-        <Card>
-          <VariantMedia
-            component="img"
-            image={getProductImagePathname({ product, variantId })}
-          />
+          {multiline(variants[variantIds.main].description)}
+        </CardContent>
+      </Card>
 
-          <CardContent>
-            <Typography variant="h6" color="secondary">
-              {currency(variants[variantId].price)}
-            </Typography>
+      <Sections>
+        <SectionName color="secondary" variant="h6">
+          Tamaño
+        </SectionName>
 
-            {multiline(variants[variantId].description)}
-          </CardContent>
-        </Card>
+        <SelectSize
+          value={variantIds.main}
+          variantIds={product.variants}
+          handleChange={handleChangeMain}
+        />
+      </Sections>
 
-        <Sections>
-          <SectionName color="secondary" variant="h6">
-            Tamaño
-          </SectionName>
-
-          <SelectSize
-            value={variantId}
-            variantIds={product.variants}
-            handleChange={handleChangeVariant}
-          />
-        </Sections>
-
-        <Actions>
-          <Button color="secondary" onClick={handleAddToCart}>
-            Agregar &nbsp;
-            <ShoppingCart />
-          </Button>
-        </Actions>
-      </Content>
-    </Dialog>
-  );
-};
+      <Actions>
+        <Button color="secondary" onClick={handleAddToCart}>
+          Agregar &nbsp;
+          <ShoppingCart />
+        </Button>
+      </Actions>
+    </Content>
+  </Dialog>
+);
 
 export default CustomizeDialog;
