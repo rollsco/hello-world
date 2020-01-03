@@ -10,7 +10,7 @@ import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
 import { getNewCart } from "../../entities/Cart";
 
-const CartContainer = ({ cart, updateCart, firebase }) => {
+const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
   const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
@@ -138,6 +138,7 @@ const CartContainer = ({ cart, updateCart, firebase }) => {
       scheduleOpen={scheduleOpen}
       commentOrder={commentOrder}
       requestOrder={requestOrder}
+      setVariantIds={setVariantIds}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
       deliveryNoticeOpen={deliveryNoticeOpen}

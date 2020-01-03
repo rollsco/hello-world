@@ -18,13 +18,19 @@ const LayoutPage = ({
       <Fragment>
         <Header openCart={openCart} productsNumber={cart.items.length} />
 
-        <Sections variantIds={variantIds} setVariantIds={setVariantIds} />
+        <Sections setVariantIds={setVariantIds} />
 
         {cart.items.length > 0 && <Footer openCart={openCart} />}
       </Fragment>
     )}
 
-    {cart.open && <CartContainer cart={cart} updateCart={updateCart} />}
+    {cart.open && (
+      <CartContainer
+        cart={cart}
+        updateCart={updateCart}
+        setVariantIds={setVariantIds}
+      />
+    )}
 
     {variantIds && (
       <CustomizeDialog

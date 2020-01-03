@@ -23,6 +23,7 @@ const Cart = ({
   scheduleOpen,
   commentOrder,
   requestOrder,
+  setVariantIds,
   placeNewOrder,
   updateUserInfo,
   deliveryNoticeOpen,
@@ -49,6 +50,7 @@ const Cart = ({
         items={cart.items}
         cart={cart}
         updateCart={updateCart}
+        setVariantIds={setVariantIds}
       />
 
       <Feedback

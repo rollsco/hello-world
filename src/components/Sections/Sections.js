@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
-import { LinearProgress, Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab } from "@material-ui/core";
 import { sections } from "../../data/sections";
 import Section from "../Section/Section";
 
@@ -9,7 +9,7 @@ const StyledSections = styled.div`
   padding-top: 60px;
 `;
 
-const Sections = ({ loading, variantIds, setVariantIds }) => {
+const Sections = ({ setVariantIds }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, value) => {
@@ -22,8 +22,6 @@ const Sections = ({ loading, variantIds, setVariantIds }) => {
 
   return (
     <StyledSections>
-      {loading && <LinearProgress variant="query" color="secondary" />}
-
       <Tabs
         value={value}
         variant="scrollable"

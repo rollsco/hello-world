@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../../UI/FullscreenDialog/Header";
 import {
   Dialog,
@@ -7,27 +7,16 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import { DialogTransition } from "../../components";
 import Content from "../../UI/FullscreenDialog/Content";
-import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import SelectSize from "./SelectSize";
 import { variants } from "../../../data/variants";
 import { multiline, currency } from "../../../services/formatter/formatter";
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
-import { setLocalStorageItem } from "../../../services/localStorage/localStorage";
 import { getNewCartItem } from "../../../entities/CartItem";
 import { products } from "../../../data/products";
-
-const getProductImagePathname = ({ product, variantId }) => {
-  const imagesPath = "img/data";
-  const variant = variants[variantId];
-
-  if (variant && variant.image) {
-    return `${imagesPath}/${variant.image[0].filename}`;
-  } else if (product.image) {
-    return `${imagesPath}/${product.image[0].filename}`;
-  }
-};
+import { DialogTransition } from "../../components";
+import { VariantMedia, Sections, SectionName, Actions } from "./components";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import { getVariantImagePathname } from "../../../entities/Variant";
 
 const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;
@@ -42,10 +31,18 @@ const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
   };
 
   const handleAddToCart = () => {
-    updateCart({
-      ...cart,
-      items: [...cart.items, getNewCartItem(variantIds)],
-    });
+    if (!variantIds.itemId) {
+      updateCart({
+        ...cart,
+        items: [...cart.items, getNewCartItem(variantIds)],
+      });
+    } else {
+      const newItems = cart.items.filter(item => item.id !== variantIds.itemId);
+      updateCart({
+        ...cart,
+        items: [...newItems, getNewCartItem(variantIds)],
+      });
+    }
     setVariantIds(null);
   };
 
@@ -60,10 +57,7 @@ const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
         <Card>
           <VariantMedia
             component="img"
-            image={getProductImagePathname({
-              product,
-              variantId: variantIds.main,
-            })}
+            image={getVariantImagePathname({ variantId: variantIds.main })}
           />
 
           <CardContent>

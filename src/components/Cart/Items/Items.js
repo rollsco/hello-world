@@ -44,7 +44,7 @@ const Discount = ({ totalCost }) => {
   );
 };
 
-const Items = ({ order, items, cart, updateCart }) => (
+const Items = ({ order, items, cart, updateCart, setVariantIds }) => (
   <Fragment>
     {items.map((item, index) => (
       <Item
@@ -53,6 +53,7 @@ const Items = ({ order, items, cart, updateCart }) => (
         cart={cart}
         order={order}
         updateCart={updateCart}
+        setVariantIds={setVariantIds}
       />
     ))}
 

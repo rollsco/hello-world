@@ -11,12 +11,10 @@ import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import { currency } from "../../../services/formatter/formatter";
 import { Image, BasicInfo, CartName } from "./components";
-import { variants } from "../../../data/variants";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
+import { getVariantImagePathname } from "../../../entities/Variant";
 
-const imgDirectory = `img/data`;
-
-const Item = ({ order, item, cart, updateCart }) => {
+const Item = ({ order, item, cart, updateCart, setVariantIds }) => {
   const removeFromCart = itemToRemove => {
     const items = cart.items.filter(item => item.id !== itemToRemove.id);
 
@@ -41,7 +39,7 @@ const Item = ({ order, item, cart, updateCart }) => {
                 <TableCell>
                   <BasicInfo>
                     <Image
-                      src={`${imgDirectory}/${variants[variant.id].image[0].filename}`}
+                      src={getVariantImagePathname({ variantId: variant.id })}
                     />
                     <CartName>{variant.name}</CartName>
                   </BasicInfo>
@@ -59,10 +57,13 @@ const Item = ({ order, item, cart, updateCart }) => {
             <TableCell colSpan={99} align="right">
               {!order.status && (
                 <Fragment>
-                  <IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => setVariantIds(item.variantIds)}
+                  >
                     <Edit />
                   </IconButton>
-                  <IconButton onClick={() => removeFromCart(item)}>
+                  <IconButton size="small" onClick={() => removeFromCart(item)}>
                     <Delete />
                   </IconButton>
                 </Fragment>
