@@ -11,14 +11,13 @@ import Content from "../../UI/FullscreenDialog/Content";
 import SelectSize from "./SelectSize";
 import { variants } from "../../../data/variants";
 import { multiline, currency } from "../../../services/formatter/formatter";
-import { getNewCartItem } from "../../../entities/CartItem";
 import { products } from "../../../data/products";
 import { DialogTransition } from "../../components";
 import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../entities/Variant";
 
-const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
+const CustomizeDialog = ({ cartAndActions, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;
   const product = products[productId];
   const buttonText = variantIds.itemId ? "Guardar cambios" : "Agregar";
@@ -32,18 +31,8 @@ const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
   };
 
   const handleAddToCart = () => {
-    if (!variantIds.itemId) {
-      updateCart({
-        ...cart,
-        items: [...cart.items, getNewCartItem(variantIds)],
-      });
-    } else {
-      const newItems = cart.items.filter(item => item.id !== variantIds.itemId);
-      updateCart({
-        ...cart,
-        items: [...newItems, getNewCartItem(variantIds)],
-      });
-    }
+    cartAndActions.upsertItem(variantIds);
+
     setVariantIds(null);
   };
 

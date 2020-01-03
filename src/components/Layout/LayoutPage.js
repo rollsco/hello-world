@@ -6,38 +6,32 @@ import Sections from "../Sections/Sections";
 import { CssBaseline } from "@material-ui/core";
 import CustomizeDialog from "../Product/CustomizeDialog/CustomizeDialog";
 
-const LayoutPage = ({
-  cart,
-  openCart,
-  variantIds,
-  updateCart,
-  setVariantIds,
-}) => (
+const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
   <CssBaseline>
-    {!cart.open && (
+    {!cartAndActions.cart.open && (
       <Fragment>
-        <Header openCart={openCart} productsNumber={cart.items.length} />
+        <Header cartAndActions={cartAndActions} />
 
         <Sections setVariantIds={setVariantIds} />
 
-        {cart.items.length > 0 && <Footer openCart={openCart} />}
+        {cartAndActions.cart.items.length > 0 && (
+          <Footer cartAndActions={cartAndActions} />
+        )}
       </Fragment>
     )}
 
-    {cart.open && (
+    {cartAndActions.cart.open && (
       <CartContainer
-        cart={cart}
-        updateCart={updateCart}
         setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
       />
     )}
 
     {variantIds && (
       <CustomizeDialog
-        cart={cart}
-        updateCart={updateCart}
         variantIds={variantIds}
         setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
       />
     )}
   </CssBaseline>

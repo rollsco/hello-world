@@ -8,9 +8,8 @@ import { withFirebase } from "../FirebaseContext";
 import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
-import { getNewCart } from "../../entities/Cart";
 
-const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
+const CartContainer = ({ cartAndActions, setVariantIds, firebase }) => {
   const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
@@ -21,14 +20,6 @@ const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
   const [currentDate, setCurrentDate] = useState(null);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
-
-  const closeCart = () => {
-    updateCart({ ...cart, open: false });
-  };
-
-  const clearCart = () => {
-    updateCart(getNewCart());
-  };
 
   const makeOrder = async () => {
     if (isStoreOpen(currentDate)) {
@@ -86,10 +77,10 @@ const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
         document: order.idempotencyToken,
         data: {
           ...order,
-          cart,
           number,
           userInfo,
           status: "requested",
+          cart: cartAndActions.cart,
         },
       });
     }, 3000);
@@ -98,7 +89,7 @@ const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
   }
 
   function placeNewOrder() {
-    clearCart();
+    cartAndActions.clear();
     updateOrder(getInitialStateOrder());
 
     firebase.setAnalyticsEvent("back-to-menu");
@@ -128,19 +119,17 @@ const CartContainer = ({ cart, updateCart, setVariantIds, firebase }) => {
 
   return (
     <Cart
-      cart={cart}
       order={order}
       userInfo={userInfo}
       rateOrder={rateOrder}
-      closeCart={closeCart}
       makeOrder={makeOrder}
-      updateCart={updateCart}
       scheduleOpen={scheduleOpen}
       commentOrder={commentOrder}
       requestOrder={requestOrder}
       setVariantIds={setVariantIds}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
+      cartAndActions={cartAndActions}
       deliveryNoticeOpen={deliveryNoticeOpen}
     />
   );

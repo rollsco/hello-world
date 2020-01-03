@@ -13,31 +13,28 @@ import ClosedNotice from "./ClosedNotice/ClosedNotice";
 import { DialogTransition } from "../components";
 
 const Cart = ({
-  cart,
   order,
   userInfo,
   rateOrder,
-  closeCart,
   makeOrder,
-  updateCart,
   scheduleOpen,
   commentOrder,
   requestOrder,
   setVariantIds,
   placeNewOrder,
   updateUserInfo,
+  cartAndActions,
   deliveryNoticeOpen,
 }) => (
   <Dialog
     fullScreen
-    open={cart.open}
+    open={cartAndActions.open}
     TransitionComponent={DialogTransition}
-    onClose={(!order.status && closeCart) || null}
   >
     <Header
       title="Tu Pedido"
       hideCloseButton={order.status}
-      onCloseButtonClick={closeCart}
+      onCloseButtonClick={cartAndActions.close}
     />
 
     <Content>
@@ -47,10 +44,8 @@ const Cart = ({
 
       <Items
         order={order}
-        items={cart.items}
-        cart={cart}
-        updateCart={updateCart}
         setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
       />
 
       <Feedback
@@ -73,7 +68,10 @@ const Cart = ({
             isOpenDeliveryNotice={deliveryNoticeOpen}
           />
 
-          <ClosedNotice scheduleOpen={scheduleOpen} closeCart={closeCart} />
+          <ClosedNotice
+            scheduleOpen={scheduleOpen}
+            closeCart={cartAndActions.closeCart}
+          />
 
           <ConfirmationButton
             order={order}

@@ -44,16 +44,15 @@ const Discount = ({ totalCost }) => {
   );
 };
 
-const Items = ({ order, items, cart, updateCart, setVariantIds }) => (
+const Items = ({ order, cartAndActions, setVariantIds }) => (
   <Fragment>
-    {items.map((item, index) => (
+    {cartAndActions.cart.items.map((item, index) => (
       <Item
         item={item}
         key={index}
-        cart={cart}
         order={order}
-        updateCart={updateCart}
         setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
       />
     ))}
 
@@ -67,14 +66,14 @@ const Items = ({ order, items, cart, updateCart, setVariantIds }) => (
 
             <TableCell align="right">
               <Typography variant="h6">
-                {currency(calculateTotalCost(items))}
+                {currency(calculateTotalCost(cartAndActions.cart.items))}
               </Typography>
             </TableCell>
 
             <TableCell />
           </TableRow>
 
-          <Discount totalCost={calculateTotalCost(items)} />
+          <Discount totalCost={calculateTotalCost(cartAndActions.cart.items)} />
         </TableBody>
       </Table>
     </DialogPaper>
