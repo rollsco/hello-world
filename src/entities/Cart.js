@@ -1,5 +1,4 @@
 import { setLocalStorageItem } from "../services/localStorage/localStorage";
-import { variants } from "../data/variants";
 import { getNewCartItem } from "./CartItem";
 
 export const initialStateCart = {
