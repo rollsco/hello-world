@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import { currency } from "../../../services/formatter/formatter";
-import { applyDiscountPercentage } from "../../../transformer";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
+import { applyDiscountPercentage } from "../../../services/transformer/transformer";
 
 const discountPercentage = process.env.REACT_APP_DISCOUNT_PERCENTAGE;
 

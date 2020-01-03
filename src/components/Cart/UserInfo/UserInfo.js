@@ -8,6 +8,7 @@ import {
   Typography,
   TextField,
   Switch,
+  TableHead,
 } from "@material-ui/core";
 import Home from "@material-ui/icons/Home";
 import Mail from "@material-ui/icons/Mail";
@@ -66,6 +67,14 @@ const UserInfo = ({ userInfo, handleChange }) => (
   <Fragment>
     <DialogPaper>
       <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell colSpan={99}>
+              <Typography>Datos para el envío</Typography>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+
         <TableBody>
           <TextFieldRows
             userInfo={userInfo}

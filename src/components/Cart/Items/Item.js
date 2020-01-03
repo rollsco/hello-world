@@ -47,7 +47,7 @@ const Item = ({ order, item, cart, updateCart, setVariantIds }) => {
 
                 <TableCell align="right">
                   <OverflowWrapTypography variant="subtitle1">
-                    <pre>{currency(item.main.price)}</pre>
+                    {currency(item.main.price)}
                   </OverflowWrapTypography>
                 </TableCell>
               </TableRow>

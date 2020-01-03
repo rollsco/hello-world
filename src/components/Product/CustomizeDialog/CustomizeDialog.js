@@ -21,6 +21,7 @@ import { getVariantImagePathname } from "../../../entities/Variant";
 const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;
   const product = products[productId];
+  const buttonText = variantIds.itemId ? "Guardar cambios" : "Agregar";
 
   const handleClose = () => {
     setVariantIds(null);
@@ -83,7 +84,7 @@ const CustomizeDialog = ({ cart, updateCart, variantIds, setVariantIds }) => {
 
         <Actions>
           <Button color="secondary" onClick={handleAddToCart}>
-            Agregar &nbsp;
+            {buttonText} &nbsp;
             <ShoppingCart />
           </Button>
         </Actions>
