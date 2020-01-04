@@ -1,33 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
-import { LinearProgress, Tabs, Tab } from "@material-ui/core";
-import SectionContainer from "../Section/SectionContainer";
+import { Tabs, Tab } from "@material-ui/core";
+import { sections } from "../../data/sections";
+import Section from "../Section/Section";
 
 const StyledSections = styled.div`
   padding-top: 60px;
 `;
 
-const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
-  const [value, setValue] = React.useState(0);
+const Sections = ({ setVariantIds }) => {
+  const [value, setValue] = useState(0);
 
-  const handleChange = (event, value) => {
+  const handleChangeTab = (event, value) => {
     setValue(value);
   };
 
-  const handleChangeIndex = index => {
-    setValue(index);
+  const handleChangeSwipableView = value => {
+    setValue(value);
   };
 
   return (
     <StyledSections>
-      {loading && <LinearProgress variant="query" color="secondary" />}
-
       <Tabs
         value={value}
         variant="scrollable"
         scrollButtons="auto"
-        onChange={handleChange}
+        onChange={handleChangeTab}
         indicatorColor="secondary"
       >
         {sections.map(section => (
@@ -35,16 +34,18 @@ const Sections = ({ sections, loading, cart, addToCart, removeFromCart }) => {
         ))}
       </Tabs>
 
-      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeSwipableView}
+      >
         {sections.map((section, i) => (
-          <SectionContainer
+          <Section
             key={i}
             index={i}
-            cart={cart}
             value={value}
             section={section}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
+            setVariantIds={setVariantIds}
           />
         ))}
       </SwipeableViews>

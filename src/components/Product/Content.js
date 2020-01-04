@@ -1,40 +1,34 @@
 import React from "react";
-import styled from "styled-components";
-import { CardContent, Typography } from "@material-ui/core";
-import { OverflowWrapTypography } from "../components";
-import { currency } from "../../services/formatter/formatter";
+import { currency, multiline } from "../../services/formatter/formatter";
+import { AddToCartButton } from "./AddToCart";
+import {
+  StyledCardContent,
+  StyledCardActions,
+  Info,
+  Name,
+  Price,
+  Description,
+} from "./components";
+import { variants } from "../../data/variants";
 
-const Name = styled(OverflowWrapTypography)`
-  && {
-    line-height: 1.1em;
-    margin-bottom: 3px;
-  }
-  text-transform: capitalize;
-`;
+const VariantPrice = ({ variantId }) => (
+  <Price color="secondary">{currency(variants[variantId].price)}</Price>
+);
 
-const PriceAndUnits = styled(Typography)`
-  && {
-    line-height: 1.2em;
-  }
-`;
+const Content = ({ product, handleAddToCart }) => (
+  <StyledCardContent>
+    <Info>
+      <Name>{product.name}</Name>
+      {product.description && (
+        <Description>{multiline(product.description)}</Description>
+      )}
+      <VariantPrice variantId={product.variants[0]} />
+    </Info>
 
-const Units = styled(Typography)`
-  && {
-    x-line-height: 0em;
-  }
-  white-space: nowrap;
-`;
-
-const Content = ({ product }) => (
-  <CardContent>
-    <Name variant="subtitle2">{product.name}</Name>
-    <PriceAndUnits variant="subtitle1" color="secondary">
-      {currency(product.price)} ·{" "}
-      <Units variant="caption" color="textPrimary">
-        {product.pieces} piezas
-      </Units>
-    </PriceAndUnits>
-  </CardContent>
+    <StyledCardActions>
+      <AddToCartButton handleAddToCart={handleAddToCart} />
+    </StyledCardActions>
+  </StyledCardContent>
 );
 
 export default Content;

@@ -2,38 +2,36 @@ import React, { Fragment } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CartContainer from "../Cart";
-import SectionsContainer from "../Sections";
+import Sections from "../Sections/Sections";
 import { CssBaseline } from "@material-ui/core";
+import CustomizeDialog from "../Product/CustomizeDialog/CustomizeDialog";
 
-const LayoutPage = ({
-  cart,
-  openCart,
-  closeCart,
-  addToCart,
-  clearCart,
-  removeFromCart,
-}) => (
+const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
   <CssBaseline>
-    {!cart.open && (
+    {!cartAndActions.cart.open && (
       <Fragment>
-        <Header openCart={openCart} productsNumber={cart.items.length} />
+        <Header cartAndActions={cartAndActions} />
 
-        <SectionsContainer
-          cart={cart}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
+        <Sections setVariantIds={setVariantIds} />
 
-        {cart.items.length > 0 && <Footer openCart={openCart} />}
+        {cartAndActions.cart.items.length > 0 && (
+          <Footer cartAndActions={cartAndActions} />
+        )}
       </Fragment>
     )}
 
-    {cart.open && (
+    {cartAndActions.cart.open && (
       <CartContainer
-        cart={cart}
-        closeCart={closeCart}
-        clearCart={clearCart}
-        removeFromCart={removeFromCart}
+        setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
+      />
+    )}
+
+    {variantIds && (
+      <CustomizeDialog
+        variantIds={variantIds}
+        setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
       />
     )}
   </CssBaseline>

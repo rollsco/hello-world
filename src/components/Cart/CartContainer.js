@@ -9,13 +9,7 @@ import { initialStateUserInfo, getInitialStateOrder } from "./initialState";
 import { utcDate } from "../../services/formatter/formatter";
 import { isStoreOpen } from "./utils";
 
-const CartContainer = ({
-  cart,
-  firebase,
-  closeCart,
-  clearCart,
-  removeFromCart,
-}) => {
+const CartContainer = ({ cartAndActions, setVariantIds, firebase }) => {
   const [userInfo, setUserInfo] = useState(
     getLocalStorageItem("userInfo", initialStateUserInfo),
   );
@@ -23,25 +17,24 @@ const CartContainer = ({
   const [order, setOrder] = useState(
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
-
+  const [currentDate, setCurrentDate] = useState(null);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [deliveryNoticeOpen, setDeliveryNoticeOpen] = useState(false);
 
-  const getCurrentDate = async () => {
-    return await firebase.getCurrentDate();
-  };
-
   const makeOrder = async () => {
-    if (isStoreOpen(await getCurrentDate())) {
+    if (isStoreOpen(currentDate)) {
       setDeliveryNoticeOpen(true);
     } else {
       setScheduleOpen(true);
     }
   };
 
-  // onMount
+  const setCurrentDateAsync = async () => {
+    setCurrentDate(await firebase.getCurrentDate());
+  };
+
   useEffect(() => {
-    // listen for Order on Firebase
+    // Listen for Order on Firebase
     const unsubscribeToListener = firebase.onDocument(
       "orders",
       order.idempotencyToken,
@@ -49,6 +42,7 @@ const CartContainer = ({
         onSnapshot: processOrderEditedOnFirebase,
       },
     );
+    setCurrentDateAsync();
 
     return () => unsubscribeToListener();
   }, []);
@@ -71,7 +65,7 @@ const CartContainer = ({
   }
 
   async function requestOrder() {
-    const number = `${utcDate(await getCurrentDate(), true, false)}-${parseInt(
+    const number = `${utcDate(currentDate, true, false)}-${parseInt(
       Math.random() * 10000,
     ) + 1000}`;
 
@@ -83,10 +77,10 @@ const CartContainer = ({
         document: order.idempotencyToken,
         data: {
           ...order,
-          cart,
           number,
           userInfo,
           status: "requested",
+          cart: cartAndActions.cart,
         },
       });
     }, 3000);
@@ -95,7 +89,7 @@ const CartContainer = ({
   }
 
   function placeNewOrder() {
-    clearCart();
+    cartAndActions.clear();
     updateOrder(getInitialStateOrder());
 
     firebase.setAnalyticsEvent("back-to-menu");
@@ -125,18 +119,17 @@ const CartContainer = ({
 
   return (
     <Cart
-      cart={cart}
       order={order}
       userInfo={userInfo}
       rateOrder={rateOrder}
-      closeCart={closeCart}
       makeOrder={makeOrder}
       scheduleOpen={scheduleOpen}
       commentOrder={commentOrder}
       requestOrder={requestOrder}
+      setVariantIds={setVariantIds}
       placeNewOrder={placeNewOrder}
       updateUserInfo={updateUserInfo}
-      removeFromCart={removeFromCart}
+      cartAndActions={cartAndActions}
       deliveryNoticeOpen={deliveryNoticeOpen}
     />
   );

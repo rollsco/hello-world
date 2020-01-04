@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { TextField, Typography } from "@material-ui/core";
-import {
-  CartPaper,
-  DialogTitleCenter,
-  DialogContentCenter,
-} from "../components";
+import { DialogTitleCenter, DialogContentCenter } from "../components";
 import Star from "@material-ui/icons/Star";
 import StarBorder from "@material-ui/icons/StarBorder";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
 const StyledStar = styled(Star)`
   cursor: pointer;
@@ -40,7 +37,7 @@ const Feedback = ({ order, rateOrder, commentOrder }) => {
   };
 
   return (
-    <CartPaper>
+    <DialogPaper>
       <DialogTitleCenter>¿Cómo te pareció nuestra App?</DialogTitleCenter>
 
       <DialogContentCenter>
@@ -74,7 +71,7 @@ const Feedback = ({ order, rateOrder, commentOrder }) => {
           />
         </DialogContentCenter>
       )}
-    </CartPaper>
+    </DialogPaper>
   );
 };
 

@@ -1,53 +1,52 @@
 import React, { Fragment } from "react";
-import styled from "styled-components";
-import { Dialog, Slide, Container } from "@material-ui/core";
-import Header from "./Header";
+import { Dialog } from "@material-ui/core";
 import Items from "./Items/Items";
 import Feedback from "./Feedback/Feedback";
-import ConfirmationNotice from "./Order/ConfirmationNotice";
+import Header from "../UI/FullscreenDialog/Header";
+import Content from "../UI/FullscreenDialog/Content";
 import ConfirmationButton from "./ConfirmationButton";
-import PlaceNewOrderButton from "./Order/PlaceNewOrderButton";
+import ConfirmationNotice from "./Order/ConfirmationNotice";
 import UserInfoContainer from "./UserInfo/UserInfoContainer";
+import PlaceNewOrderButton from "./Order/PlaceNewOrderButton";
 import DeliveryNotices from "./DeliveryNotices/DeliveryNotices";
 import ClosedNotice from "./ClosedNotice/ClosedNotice";
-
-const StyledContainer = styled(Container)`
-  margin-top: 56px;
-`;
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { DialogTransition } from "../components";
 
 const Cart = ({
-  cart,
   order,
   userInfo,
   rateOrder,
-  closeCart,
   makeOrder,
   scheduleOpen,
   commentOrder,
   requestOrder,
+  setVariantIds,
   placeNewOrder,
   updateUserInfo,
-  removeFromCart,
+  cartAndActions,
   deliveryNoticeOpen,
 }) => (
   <Dialog
     fullScreen
-    open={cart.open}
-    TransitionComponent={Transition}
-    onClose={(!order.status && closeCart) || null}
+    open={cartAndActions.open}
+    TransitionComponent={DialogTransition}
   >
-    <Header order={order} closeCart={closeCart} />
+    <Header
+      title="Tu Pedido"
+      hideCloseButton={order.status}
+      onCloseButtonClick={cartAndActions.close}
+    />
 
-    <StyledContainer maxWidth="sm">
+    <Content>
       <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
 
       <ConfirmationNotice order={order} />
 
-      <Items order={order} items={cart.items} removeFromCart={removeFromCart} />
+      <Items
+        order={order}
+        setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
+      />
 
       <Feedback
         order={order}
@@ -69,7 +68,10 @@ const Cart = ({
             isOpenDeliveryNotice={deliveryNoticeOpen}
           />
 
-          <ClosedNotice scheduleOpen={scheduleOpen} closeCart={closeCart} />
+          <ClosedNotice
+            scheduleOpen={scheduleOpen}
+            closeCart={cartAndActions.closeCart}
+          />
 
           <ConfirmationButton
             order={order}
@@ -78,7 +80,7 @@ const Cart = ({
           />
         </Fragment>
       )}
-    </StyledContainer>
+    </Content>
   </Dialog>
 );
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Item from "./Item";
 import {
   Table,
@@ -8,13 +8,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { currency } from "../../../services/formatter/formatter";
-import { CartPaper } from "../components";
-import { applyDiscountPercentage } from "../../../transformer";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
+import { applyDiscountPercentage } from "../../../services/transformer/transformer";
 
 const discountPercentage = process.env.REACT_APP_DISCOUNT_PERCENTAGE;
 
 const calculateTotalCost = items =>
-  items.reduce((priceSum, item) => priceSum + item.product.price, 0);
+  items.reduce((priceSum, item) => priceSum + item.totalPrice, 0);
 
 const Discount = ({ totalCost }) => {
   if (!discountPercentage) {
@@ -44,34 +44,40 @@ const Discount = ({ totalCost }) => {
   );
 };
 
-const Items = ({ order, items, removeFromCart }) => (
-  <CartPaper>
-    <Table size="small">
-      <TableBody>
-        {items.map((item, index) => (
-          <Item
-            order={order}
-            item={item}
-            key={index}
-            removeFromCart={removeFromCart}
-          />
-        ))}
-        <TableRow>
-          <TableCell>
-            <Typography variant="h6">Subtotal</Typography>
-          </TableCell>
-          <TableCell align="right">
-            <Typography variant="h6">
-              {currency(calculateTotalCost(items))}
-            </Typography>
-          </TableCell>
-          <TableCell />
-        </TableRow>
+const Items = ({ order, cartAndActions, setVariantIds }) => (
+  <Fragment>
+    {cartAndActions.cart.items.map((item, index) => (
+      <Item
+        item={item}
+        key={index}
+        order={order}
+        setVariantIds={setVariantIds}
+        cartAndActions={cartAndActions}
+      />
+    ))}
 
-        <Discount totalCost={calculateTotalCost(items)} />
-      </TableBody>
-    </Table>
-  </CartPaper>
+    <DialogPaper>
+      <Table size="small">
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <Typography variant="h6">Total pedido</Typography>
+            </TableCell>
+
+            <TableCell align="right">
+              <Typography variant="h6">
+                {currency(calculateTotalCost(cartAndActions.cart.items))}
+              </Typography>
+            </TableCell>
+
+            <TableCell />
+          </TableRow>
+
+          <Discount totalCost={calculateTotalCost(cartAndActions.cart.items)} />
+        </TableBody>
+      </Table>
+    </DialogPaper>
+  </Fragment>
 );
 
 export default Items;

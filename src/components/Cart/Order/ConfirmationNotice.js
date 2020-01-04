@@ -1,10 +1,6 @@
 import React from "react";
 import { DialogContentText } from "@material-ui/core";
-import {
-  CartPaper,
-  DialogTitleCenter,
-  DialogContentCenter,
-} from "../components";
+import { DialogTitleCenter, DialogContentCenter } from "../components";
 import {
   orderStatusMap,
   ORDER_STATUS_PENDING,
@@ -13,6 +9,7 @@ import {
   ORDER_STATUS_DISPATCHED,
 } from "./orderStatusMap";
 import { StepsProgress } from "../../UI/StepsProgress";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
 const steps = [
   orderStatusMap[ORDER_STATUS_PENDING].value,
@@ -31,7 +28,7 @@ const ConfirmationNotice = ({ order }) => {
   const Icon = orderStatusMap[status].icon;
 
   return (
-    <CartPaper>
+    <DialogPaper>
       <StepsProgress steps={steps} current={orderStatusMap[status].value} />
       <DialogTitleCenter>{`${orderStatusMap[status].title}`}</DialogTitleCenter>
 
@@ -41,7 +38,7 @@ const ConfirmationNotice = ({ order }) => {
           {`${orderStatusMap[status].content}`}
         </DialogContentText>
       </DialogContentCenter>
-    </CartPaper>
+    </DialogPaper>
   );
 };
 

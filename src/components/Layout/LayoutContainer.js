@@ -1,79 +1,18 @@
 import React, { useState } from "react";
 import LayoutPage from "./LayoutPage";
-import {
-  getLocalStorageItem,
-  setLocalStorageItem,
-} from "../../services/localStorage/localStorage";
-
-const createNewCartItem = product => {
-  const randomId = Math.floor(Math.random() * 1000000);
-  const newProduct = { ...product };
-
-  delete newProduct.img;
-  delete newProduct.order;
-  delete newProduct.description;
-
-  return {
-    id: randomId,
-    product: newProduct,
-  };
-};
-
-const initialStateCart = {
-  items: [],
-  open: false,
-};
+import { getLocalStorageItem } from "../../services/localStorage/localStorage";
+import { getCartAndActions, initialStateCart } from "../../entities/Cart";
 
 const LayoutContainer = () => {
-  const [cart, setCart] = useState(
-    getLocalStorageItem("cart", initialStateCart),
-  );
-
-  function updateCart(cart) {
-    setCart(cart);
-    setLocalStorageItem("cart", cart);
-  }
-
-  function openCart() {
-    updateCart({ ...cart, open: cart.items.length > 0 });
-  }
-
-  function closeCart() {
-    updateCart({ ...cart, open: false });
-  }
-
-  function addToCart(product) {
-    updateCart({
-      ...cart,
-      items: [...cart.items, createNewCartItem(product)],
-    });
-  }
-
-  function removeFromCart(itemToRemove) {
-    const items = cart.items.filter(item => item.id !== itemToRemove.id);
-
-    if (items.length === 0) {
-      cart.open = false;
-    }
-
-    updateCart({
-      ...cart,
-      items,
-    });
-  }
-
-  function clearCart() {
-    updateCart(initialStateCart);
-  }
+  const cartAndSet = useState(getLocalStorageItem("cart", initialStateCart));
+  const cartAndActions = getCartAndActions(cartAndSet);
+  const [variantIds, setVariantIds] = useState(null);
 
   return (
     <LayoutPage
-      cart={cart}
-      openCart={openCart}
-      closeCart={closeCart}
-      addToCart={addToCart}
-      clearCart={clearCart}
-      removeFromCart={removeFromCart}
+      variantIds={variantIds}
+      setVariantIds={setVariantIds}
+      cartAndActions={cartAndActions}
     />
   );
 };

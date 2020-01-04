@@ -1,29 +1,31 @@
 import React from "react";
-import styled from "styled-components";
-import { AppBar, Toolbar, Badge, IconButton } from "@material-ui/core";
+import { AppBar, Badge, IconButton } from "@material-ui/core";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import { StyledToolbar, ImageLink, ImageInLink } from "./components";
 
-const StyledToolbar = styled(Toolbar)`
-  justify-content: space-between;
-`;
-
-const Header = ({ productsNumber, openCart }) => (
+const Header = ({ cartAndActions }) => (
   <AppBar position="fixed">
     <StyledToolbar>
       <img src="img/logo-rolls-small.png" alt="Rolls.co logo" />
 
-      <IconButton onClick={openCart}>
-        <Badge badgeContent={productsNumber} color="secondary">
+      <IconButton onClick={cartAndActions.open}>
+        <Badge
+          badgeContent={cartAndActions.cart.items.length}
+          color="secondary"
+        >
           <ShoppingCart />
         </Badge>
       </IconButton>
 
-      <a
+      <ImageLink
         href="http://api.whatsapp.com/send?phone=573174122919"
         target="__blank"
       >
-        <img src="img/contacto-whatsapp-small.png" alt="Contacto whatsapp" />
-      </a>
+        <ImageInLink
+          src="img/contacto-whatsapp-small.png"
+          alt="Contacto whatsapp"
+        />
+      </ImageLink>
     </StyledToolbar>
   </AppBar>
 );

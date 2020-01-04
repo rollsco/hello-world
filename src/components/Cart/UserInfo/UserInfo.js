@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { CartPaper, InputIconBox } from "../components";
+import { InputIconBox } from "../components";
 import {
   Table,
   TableBody,
@@ -8,6 +8,7 @@ import {
   Typography,
   TextField,
   Switch,
+  TableHead,
 } from "@material-ui/core";
 import Home from "@material-ui/icons/Home";
 import Mail from "@material-ui/icons/Mail";
@@ -15,6 +16,7 @@ import Phone from "@material-ui/icons/Phone";
 import Person from "@material-ui/icons/Person";
 import Explore from "@material-ui/icons/Explore";
 import ChatBubble from "@material-ui/icons/ChatBubble";
+import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
 const TextFieldRows = ({ userInfo, handleChange, inputs }) =>
   inputs.map(({ icon, label, name, note }) => (
@@ -63,8 +65,16 @@ const SwitchRows = ({ userInfo, handleChange, inputs }) =>
 
 const UserInfo = ({ userInfo, handleChange }) => (
   <Fragment>
-    <CartPaper>
+    <DialogPaper>
       <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell colSpan={99}>
+              <Typography>Datos para el envío</Typography>
+            </TableCell>
+          </TableRow>
+        </TableHead>
+
         <TableBody>
           <TextFieldRows
             userInfo={userInfo}
@@ -99,9 +109,9 @@ const UserInfo = ({ userInfo, handleChange }) => (
           />
         </TableBody>
       </Table>
-    </CartPaper>
+    </DialogPaper>
 
-    <CartPaper>
+    <DialogPaper>
       <Table size="small">
         <TableBody>
           <SwitchRows
@@ -117,7 +127,7 @@ const UserInfo = ({ userInfo, handleChange }) => (
           />
         </TableBody>
       </Table>
-    </CartPaper>
+    </DialogPaper>
   </Fragment>
 );
 
