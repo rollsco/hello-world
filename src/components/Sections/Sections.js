@@ -12,12 +12,12 @@ const StyledSections = styled.div`
 const Sections = ({ setVariantIds }) => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, value) => {
+  const handleChangeTab = (event, value) => {
     setValue(value);
   };
 
-  const handleChangeIndex = index => {
-    setValue(index);
+  const handleChangeSwipableView = value => {
+    setValue(value);
   };
 
   return (
@@ -26,7 +26,7 @@ const Sections = ({ setVariantIds }) => {
         value={value}
         variant="scrollable"
         scrollButtons="auto"
-        onChange={handleChange}
+        onChange={handleChangeTab}
         indicatorColor="secondary"
       >
         {sections.map(section => (
@@ -34,9 +34,19 @@ const Sections = ({ setVariantIds }) => {
         ))}
       </Tabs>
 
-      <SwipeableViews axis="x" index={value} onChangeIndex={handleChangeIndex}>
+      <SwipeableViews
+        axis="x"
+        index={value}
+        onChangeIndex={handleChangeSwipableView}
+      >
         {sections.map((section, i) => (
-          <Section key={i} section={section} setVariantIds={setVariantIds} />
+          <Section
+            key={i}
+            index={i}
+            value={value}
+            section={section}
+            setVariantIds={setVariantIds}
+          />
         ))}
       </SwipeableViews>
     </StyledSections>
