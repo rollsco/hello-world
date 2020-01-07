@@ -5,6 +5,7 @@ import {
   ORDER_STATUS_PENDING,
   ORDER_STATUS_REQUESTED,
 } from "../components/Cart/Order/orderStatusMap";
+import { getTotalPoints } from "../services/calculations/cart";
 
 export const getInitialStateOrder = () => ({
   status: null,
@@ -40,16 +41,29 @@ export const getOrderAndActions = ({
 
     updateOrder({ ...order, status: ORDER_STATUS_PENDING });
 
+    // Don't save Cart itself on Firestore but a copy with less data
+    const cart = { ...cartAndActions.cart };
+    cart.items.map(item => delete item.variantIds);
+    delete cart.open;
+
+    const pointEntries = [
+      {
+        points: getTotalPoints(cart.items),
+        created: firebase.getServerTimestamp(),
+      },
+    ];
+
     setTimeout(() => {
       firebase.set({
         path: "orders",
         document: order.idempotencyToken,
         data: {
           ...order,
+          pointEntries,
+          cart,
           number,
           userInfo,
           status: ORDER_STATUS_REQUESTED,
-          cart: cartAndActions.cart,
         },
       });
     }, 3000);

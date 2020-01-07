@@ -37,7 +37,11 @@ const CustomizeDialog = ({ cartAndActions, variantIds, setVariantIds }) => {
   };
 
   return (
-    <Dialog fullScreen open={variantIds} TransitionComponent={DialogTransition}>
+    <Dialog
+      fullScreen
+      open={variantIds ? true : false}
+      TransitionComponent={DialogTransition}
+    >
       <Header
         title={`Agregar ${product.name.toUpperCase()}`}
         onCloseButtonClick={handleClose}

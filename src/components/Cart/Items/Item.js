@@ -39,9 +39,9 @@ const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
             </TableRow>
           ))}
 
-        <TableRow>
-          <TableCell colSpan={99} align="right">
-            {!orderAndActions.order.status && (
+        {!orderAndActions.order.status && (
+          <TableRow>
+            <TableCell colSpan={99} align="right">
               <Fragment>
                 <IconButton
                   size="small"
@@ -56,9 +56,9 @@ const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
                   <Delete />
                 </IconButton>
               </Fragment>
-            )}
-          </TableCell>
-        </TableRow>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   </DialogPaper>
