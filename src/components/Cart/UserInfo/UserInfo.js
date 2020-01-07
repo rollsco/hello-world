@@ -48,7 +48,7 @@ const TextFieldRows = ({ userInfo, handleChange, inputs }) =>
 
 const SwitchRows = ({ userInfo, handleChange, inputs }) =>
   inputs.map(({ label, name }) => (
-    <TableRow key={name}>
+    <TableRow key={name} hover>
       <TableCell padding="default">
         <Typography variant="body2">{label}</Typography>
       </TableCell>

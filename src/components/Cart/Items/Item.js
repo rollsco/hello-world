@@ -12,13 +12,13 @@ import Delete from "@material-ui/icons/Delete";
 import { currency } from "../../../services/formatter/formatter";
 import { Image, BasicInfo, CartName } from "./components";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
-import { getVariantImagePathname } from "../../../entities/Variant";
+import { getVariantImagePathname } from "../../../state/Variant";
 
-const Item = ({ order, item, cartAndActions, setVariantIds }) => (
+const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
   <DialogPaper>
     <Table size="small">
       <TableBody>
-        {[item.main, item.drink, ...item.extras]
+        {[item.main, ...item.extras]
           .filter(variant => variant)
           .map(variant => (
             <TableRow key={variant.id}>
@@ -41,7 +41,7 @@ const Item = ({ order, item, cartAndActions, setVariantIds }) => (
 
         <TableRow>
           <TableCell colSpan={99} align="right">
-            {!order.status && (
+            {!orderAndActions.order.status && (
               <Fragment>
                 <IconButton
                   size="small"

@@ -13,50 +13,43 @@ import ClosedNotice from "./ClosedNotice/ClosedNotice";
 import { DialogTransition } from "../components";
 
 const Cart = ({
-  order,
   userInfo,
-  rateOrder,
   makeOrder,
   scheduleOpen,
-  commentOrder,
-  requestOrder,
   setVariantIds,
-  placeNewOrder,
   updateUserInfo,
   cartAndActions,
+  orderAndActions,
   deliveryNoticeOpen,
 }) => (
   <Dialog
     fullScreen
-    open={cartAndActions.open}
+    open={cartAndActions.cart.open}
     TransitionComponent={DialogTransition}
   >
     <Header
       title="Tu Pedido"
-      hideCloseButton={order.status}
       onCloseButtonClick={cartAndActions.close}
+      hideCloseButton={orderAndActions.order.status}
     />
 
     <Content>
-      <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
+      <PlaceNewOrderButton orderAndActions={orderAndActions} />
 
-      <ConfirmationNotice order={order} />
+      <ConfirmationNotice orderAndActions={orderAndActions} />
 
       <Items
-        order={order}
+        userInfo={userInfo}
         setVariantIds={setVariantIds}
         cartAndActions={cartAndActions}
+        orderAndActions={orderAndActions}
       />
 
-      <Feedback
-        order={order}
-        rateOrder={rateOrder}
-        commentOrder={commentOrder}
-      />
+      <Feedback orderAndActions={orderAndActions} />
 
-      <PlaceNewOrderButton order={order} placeNewOrder={placeNewOrder} />
+      <PlaceNewOrderButton orderAndActions={orderAndActions} />
 
-      {!order.status && (
+      {!orderAndActions.order.status && (
         <Fragment>
           <UserInfoContainer
             userInfo={userInfo}
@@ -64,20 +57,16 @@ const Cart = ({
           />
 
           <DeliveryNotices
-            requestOrder={requestOrder}
+            orderAndActions={orderAndActions}
             isOpenDeliveryNotice={deliveryNoticeOpen}
           />
 
           <ClosedNotice
             scheduleOpen={scheduleOpen}
-            closeCart={cartAndActions.closeCart}
+            cartAndActions={cartAndActions}
           />
 
-          <ConfirmationButton
-            order={order}
-            userInfo={userInfo}
-            makeOrder={makeOrder}
-          />
+          <ConfirmationButton userInfo={userInfo} makeOrder={makeOrder} />
         </Fragment>
       )}
     </Content>

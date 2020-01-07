@@ -15,7 +15,7 @@ import { products } from "../../../data/products";
 import { DialogTransition } from "../../components";
 import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
-import { getVariantImagePathname } from "../../../entities/Variant";
+import { getVariantImagePathname } from "../../../state/Variant";
 
 const CustomizeDialog = ({ cartAndActions, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;

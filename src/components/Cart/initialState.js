@@ -21,9 +21,3 @@ export const requiredUserInfoFields = [
   "email",
   "phone",
 ];
-
-export const getInitialStateOrder = () => ({
-  status: null,
-  errors: null,
-  idempotencyToken: createToken(),
-});

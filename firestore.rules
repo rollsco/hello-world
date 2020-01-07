@@ -5,6 +5,9 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == 'jxt3hdw';
     }
+    match /emails/{document=**} {
+      allow read, write;
+    }
     match /reports/{document=**} {
       allow read, write;
     }
