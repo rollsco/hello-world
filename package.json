@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run compress-images; react-scripts build",
+    "build": "npm run fetch-params; npm run compress-images; react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "copy-services": "mv src/services /tmp/services; cp -r ../services/src/services src",
