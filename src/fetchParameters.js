@@ -5,6 +5,7 @@ const {
 const baseId = "appklYU85cJ9DTTD9";
 
 writeToFileAsList({ baseId, table: "sections", view: "grid" });
+
 writeToFileAsObject({
   baseId,
   table: "products",
@@ -12,6 +13,7 @@ writeToFileAsObject({
   key: "id",
   downloads: ["image"],
 });
+
 writeToFileAsObject({
   baseId,
   table: "variants",
