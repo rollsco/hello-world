@@ -5,6 +5,7 @@ import {
   TableCell,
   Table,
   TableBody,
+  Typography,
 } from "@material-ui/core";
 import { OverflowWrapTypography } from "../../components";
 import Edit from "@material-ui/icons/Edit";
@@ -32,9 +33,9 @@ const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
               </TableCell>
 
               <TableCell align="right">
-                <OverflowWrapTypography variant="subtitle1">
+                <Typography variant="subtitle1">
                   {currency(item.main.price)}
-                </OverflowWrapTypography>
+                </Typography>
               </TableCell>
             </TableRow>
           ))}
