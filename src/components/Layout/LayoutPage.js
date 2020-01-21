@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import CartContainer from "../Cart";
 import Sections from "../Sections/Sections";
 import { CssBaseline } from "@material-ui/core";
-import CustomizeDialog from "../Product/CustomizeDialog/CustomizeDialog";
+import CustomizeItem from "../Cart/CustomizeItem/CustomizeItem";
 
 const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
   <CssBaseline>
@@ -28,7 +28,7 @@ const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
     )}
 
     {variantIds && (
-      <CustomizeDialog
+      <CustomizeItem
         variantIds={variantIds}
         setVariantIds={setVariantIds}
         cartAndActions={cartAndActions}
