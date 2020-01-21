@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LayoutPage from "./LayoutPage";
 import { getLocalStorageItem } from "../../services/localStorage/localStorage";
-import { getCartAndActions, initialStateCart } from "../../entities/Cart";
+import { getCartAndActions, initialStateCart } from "../../state/Cart";
 
 const LayoutContainer = () => {
   const cartAndSet = useState(getLocalStorageItem("cart", initialStateCart));

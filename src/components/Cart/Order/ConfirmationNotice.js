@@ -18,8 +18,8 @@ const steps = [
   orderStatusMap[ORDER_STATUS_DISPATCHED].value,
 ];
 
-const ConfirmationNotice = ({ order }) => {
-  const { status } = order;
+const ConfirmationNotice = ({ orderAndActions }) => {
+  const { status } = orderAndActions.order;
 
   if (!orderStatusMap[status]) {
     return null;

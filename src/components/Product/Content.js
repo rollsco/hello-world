@@ -19,9 +19,13 @@ const Content = ({ product, handleAddToCart }) => (
   <StyledCardContent>
     <Info>
       <Name>{product.name}</Name>
-      {product.description && (
-        <Description>{multiline(product.description)}</Description>
-      )}
+      <Description>
+        {multiline(
+          product.description
+            ? product.description
+            : variants[product.variants[0]].description,
+        )}
+      </Description>
       <VariantPrice variantId={product.variants[0]} />
     </Info>
 

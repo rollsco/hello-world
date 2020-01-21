@@ -17,7 +17,7 @@ import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../state/Variant";
 
-const CustomizeDialog = ({ cartAndActions, variantIds, setVariantIds }) => {
+const CustomizeItem = ({ cartAndActions, variantIds, setVariantIds }) => {
   const productId = variants[variantIds.main].product;
   const product = products[productId];
   const buttonText = variantIds.itemId ? "Guardar cambios" : "Agregar";
@@ -86,4 +86,4 @@ const CustomizeDialog = ({ cartAndActions, variantIds, setVariantIds }) => {
   );
 };
 
-export default CustomizeDialog;
+export default CustomizeItem;

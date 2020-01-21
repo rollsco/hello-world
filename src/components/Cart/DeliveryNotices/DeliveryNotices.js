@@ -4,7 +4,7 @@ import DeliveryNotice from "./DeliveryNotice";
 import { Dialog, Button, DialogActions } from "@material-ui/core";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
 
-const DeliveryNotices = ({ requestOrder, isOpenDeliveryNotice }) => (
+const DeliveryNotices = ({ orderAndActions, isOpenDeliveryNotice }) => (
   <Fragment>
     <DialogPaper>
       <DeliveryNotice />
@@ -15,7 +15,7 @@ const DeliveryNotices = ({ requestOrder, isOpenDeliveryNotice }) => (
 
       <DeliveryNotice />
       <DialogActions>
-        <Button variant="contained" onClick={requestOrder}>
+        <Button variant="contained" onClick={orderAndActions.request}>
           OK
         </Button>
       </DialogActions>

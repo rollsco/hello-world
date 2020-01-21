@@ -5,6 +5,7 @@ import {
   TableCell,
   Table,
   TableBody,
+  Typography,
 } from "@material-ui/core";
 import { OverflowWrapTypography } from "../../components";
 import Edit from "@material-ui/icons/Edit";
@@ -12,13 +13,13 @@ import Delete from "@material-ui/icons/Delete";
 import { currency } from "../../../services/formatter/formatter";
 import { Image, BasicInfo, CartName } from "./components";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
-import { getVariantImagePathname } from "../../../entities/Variant";
+import { getVariantImagePathname } from "../../../state/Variant";
 
-const Item = ({ order, item, cartAndActions, setVariantIds }) => (
+const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
   <DialogPaper>
     <Table size="small">
       <TableBody>
-        {[item.main, item.drink, ...item.extras]
+        {[item.main, ...item.extras]
           .filter(variant => variant)
           .map(variant => (
             <TableRow key={variant.id}>
@@ -32,16 +33,16 @@ const Item = ({ order, item, cartAndActions, setVariantIds }) => (
               </TableCell>
 
               <TableCell align="right">
-                <OverflowWrapTypography variant="subtitle1">
+                <Typography variant="subtitle1">
                   {currency(item.main.price)}
-                </OverflowWrapTypography>
+                </Typography>
               </TableCell>
             </TableRow>
           ))}
 
-        <TableRow>
-          <TableCell colSpan={99} align="right">
-            {!order.status && (
+        {!orderAndActions.order.status && (
+          <TableRow>
+            <TableCell colSpan={99} align="right">
               <Fragment>
                 <IconButton
                   size="small"
@@ -56,9 +57,9 @@ const Item = ({ order, item, cartAndActions, setVariantIds }) => (
                   <Delete />
                 </IconButton>
               </Fragment>
-            )}
-          </TableCell>
-        </TableRow>
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   </DialogPaper>

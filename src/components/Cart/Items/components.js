@@ -7,8 +7,9 @@ export const BasicInfo = styled.div`
 
 export const CartName = styled(Name)`
   && {
+    margin-top: 0.8em;
     font-size: 14px;
-    line-height: 2.4em;
+    line-height: 1em;
   }
 `;
 

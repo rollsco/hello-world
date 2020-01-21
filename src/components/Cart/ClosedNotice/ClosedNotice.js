@@ -23,7 +23,7 @@ const Row = ({ location, from, until }) => (
   </TableRow>
 );
 
-const ClosedNotice = ({ scheduleOpen, closeCart }) => (
+const ClosedNotice = ({ scheduleOpen, cartAndActions }) => (
   <Dialog open={scheduleOpen}>
     <Table size="small">
       <TableHead>
@@ -45,7 +45,7 @@ const ClosedNotice = ({ scheduleOpen, closeCart }) => (
     </Table>
 
     <DialogActions>
-      <Button variant="contained" onClick={closeCart}>
+      <Button variant="contained" onClick={cartAndActions.close}>
         OK
       </Button>
     </DialogActions>

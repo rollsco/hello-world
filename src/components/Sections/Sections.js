@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SwipeableViews from "react-swipeable-views";
 import { Tabs, Tab } from "@material-ui/core";
-import { sections } from "../../data/sections";
 import Section from "../Section/Section";
+import { menuSections } from "../../services/parameters/sectionViews";
 
 const StyledSections = styled.div`
   padding-top: 60px;
@@ -29,8 +29,8 @@ const Sections = ({ setVariantIds }) => {
         onChange={handleChangeTab}
         indicatorColor="secondary"
       >
-        {sections.map(section => (
-          <Tab label={section.menuName} key={section.menuName} />
+        {menuSections.map(({ menuName }) => (
+          <Tab key={menuName} label={menuName} />
         ))}
       </Tabs>
 
@@ -39,7 +39,7 @@ const Sections = ({ setVariantIds }) => {
         index={value}
         onChangeIndex={handleChangeSwipableView}
       >
-        {sections.map((section, i) => (
+        {menuSections.map((section, i) => (
           <Section
             key={i}
             index={i}
