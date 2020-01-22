@@ -8,7 +8,7 @@ const MuiContainer = styled(Container)`
   padding: 16px 0 80px;
 `;
 
-const Section = ({ index, value, section, setVariantIds }) => {
+const Section = ({ index, value, section, cartAndActions }) => {
   if (index !== value) {
     return null;
   }
@@ -21,7 +21,7 @@ const Section = ({ index, value, section, setVariantIds }) => {
             <Product
               key={i}
               product={products[productId]}
-              setVariantIds={setVariantIds}
+              cartAndActions={cartAndActions}
             />
           ))}
       </Grid>

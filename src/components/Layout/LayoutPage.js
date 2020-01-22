@@ -6,13 +6,13 @@ import Sections from "../Sections/Sections";
 import { CssBaseline } from "@material-ui/core";
 import CustomizeItem from "../Cart/CustomizeItem/CustomizeItem";
 
-const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
+const LayoutPage = ({ cartAndActions }) => (
   <CssBaseline>
     {!cartAndActions.cart.open && (
       <Fragment>
         <Header cartAndActions={cartAndActions} />
 
-        <Sections setVariantIds={setVariantIds} />
+        <Sections cartAndActions={cartAndActions} />
 
         {cartAndActions.cart.items.length > 0 && (
           <Footer cartAndActions={cartAndActions} />
@@ -21,18 +21,11 @@ const LayoutPage = ({ variantIds, setVariantIds, cartAndActions }) => (
     )}
 
     {cartAndActions.cart.open && (
-      <CartContainer
-        setVariantIds={setVariantIds}
-        cartAndActions={cartAndActions}
-      />
+      <CartContainer cartAndActions={cartAndActions} />
     )}
 
-    {variantIds && (
-      <CustomizeItem
-        variantIds={variantIds}
-        setVariantIds={setVariantIds}
-        cartAndActions={cartAndActions}
-      />
+    {cartAndActions.cart.customizingItem && (
+      <CustomizeItem cartAndActions={cartAndActions} />
     )}
   </CssBaseline>
 );

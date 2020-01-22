@@ -7,7 +7,6 @@ import {
   TableBody,
   Typography,
 } from "@material-ui/core";
-import { OverflowWrapTypography } from "../../components";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 import { currency } from "../../../services/formatter/formatter";
@@ -15,7 +14,7 @@ import { Image, BasicInfo, CartName } from "./components";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
 import { getVariantImagePathname } from "../../../state/Variant";
 
-const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
+const Item = ({ orderAndActions, item, cartAndActions }) => (
   <DialogPaper>
     <Table size="small">
       <TableBody>
@@ -46,7 +45,7 @@ const Item = ({ orderAndActions, item, cartAndActions, setVariantIds }) => (
               <Fragment>
                 <IconButton
                   size="small"
-                  onClick={() => setVariantIds(item.variantIds)}
+                  onClick={() => cartAndActions.setCustomizingItem(item)}
                 >
                   <Edit />
                 </IconButton>

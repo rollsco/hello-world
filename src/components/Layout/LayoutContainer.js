@@ -6,15 +6,8 @@ import { getCartAndActions, initialStateCart } from "../../state/Cart";
 const LayoutContainer = () => {
   const cartAndSet = useState(getLocalStorageItem("cart", initialStateCart));
   const cartAndActions = getCartAndActions(cartAndSet);
-  const [variantIds, setVariantIds] = useState(null);
 
-  return (
-    <LayoutPage
-      variantIds={variantIds}
-      setVariantIds={setVariantIds}
-      cartAndActions={cartAndActions}
-    />
-  );
+  return <LayoutPage cartAndActions={cartAndActions} />;
 };
 
 export default LayoutContainer;

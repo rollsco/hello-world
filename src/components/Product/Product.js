@@ -2,11 +2,12 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import Content from "./Content";
 import { ProductCard, Media } from "./components";
-import { getInitialStateVariantIds } from "../../state/CartItem";
+import { getNewCartItem } from "../../state/CartItem";
 
-const Product = ({ product, setVariantIds }) => {
+const Product = ({ product, cartAndActions }) => {
   const handleOpenCustomizeDialog = () => {
-    setVariantIds(getInitialStateVariantIds(product));
+    const cartItem = getNewCartItem({ mainVariantId: product.variants[0] });
+    cartAndActions.setCustomizingItem(cartItem);
   };
 
   return (
