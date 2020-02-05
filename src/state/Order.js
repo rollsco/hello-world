@@ -43,7 +43,6 @@ export const getOrderAndActions = ({
 
     // Don't save Cart itself on Firestore but a copy with less data
     const cart = { ...cartAndActions.cart };
-    cart.items.map(item => delete item.variantIds);
     delete cart.open;
 
     const pointEntries = [

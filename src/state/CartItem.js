@@ -1,28 +1,20 @@
 import { getNewCartVariant } from "./CartVariant";
 
-export const getInitialStateVariantIds = product => ({
-  itemId: null,
-  main: product.variants[0],
-  extras: [],
-});
-
-export const getNewCartItem = variantIds => {
-  const randomId = Math.floor(Math.random() * 1000000);
-  const { main, extras } = variantIds;
-  const mainVariant = getNewCartVariant(main);
-  const extraVariants = [];
+export const getNewCartItem = ({ mainVariantId, extras = [] }) => {
+  const mainVariant = getNewCartVariant(mainVariantId);
+  const extraVariants = extras.map(extraVariantId =>
+    getNewCartVariant(extraVariantId),
+  );
 
   return {
-    id: randomId,
-    variantIds: { ...variantIds, itemId: randomId }, // Needed to Edit the item
+    id: null,
     main: mainVariant,
     extras: extraVariants,
-    totalPrice: getCartTotalPrice([
-      mainVariant,
-      ...extraVariants,
-    ]),
+    totalPrice: getCartItemTotalPrice([mainVariant, ...extraVariants]),
   };
 };
 
-const getCartTotalPrice = variants =>
+export const getCartItemId = () => Math.floor(Math.random() * 1000000);
+
+const getCartItemTotalPrice = variants =>
   variants.reduce((sum, variant) => (variant ? sum + variant.price : sum), 0);

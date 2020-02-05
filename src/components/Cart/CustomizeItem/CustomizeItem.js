@@ -16,30 +16,34 @@ import { DialogTransition } from "../../components";
 import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../state/Variant";
+import { getNewCartItem } from "../../../state/CartItem";
 
-const CustomizeItem = ({ cartAndActions, variantIds, setVariantIds }) => {
-  const productId = variants[variantIds.main].product;
+const CustomizeItem = ({ cartAndActions }) => {
+  const { customizingItem } = cartAndActions.cart;
+  const mainId = customizingItem.main.id;
+  const productId = variants[mainId].product;
   const product = products[productId];
-  const buttonText = variantIds.itemId ? "Guardar cambios" : "Agregar";
 
   const handleClose = () => {
-    setVariantIds(null);
+    cartAndActions.setCustomizingItem(null);
   };
 
   const handleChangeMain = event => {
-    setVariantIds({ ...variantIds, main: event.target.value });
+    const cartItem = {
+      ...getNewCartItem({ mainVariantId: event.target.value }),
+      id: customizingItem.id,
+    };
+    cartAndActions.setCustomizingItem(cartItem);
   };
 
   const handleAddToCart = () => {
-    cartAndActions.upsertItem(variantIds);
-
-    setVariantIds(null);
+    cartAndActions.upsertItem(customizingItem);
   };
 
   return (
     <Dialog
       fullScreen
-      open={variantIds ? true : false}
+      open={cartAndActions.cart.customizingItem ? true : false}
       TransitionComponent={DialogTransition}
     >
       <Header
@@ -51,15 +55,15 @@ const CustomizeItem = ({ cartAndActions, variantIds, setVariantIds }) => {
         <Card>
           <VariantMedia
             component="img"
-            image={getVariantImagePathname({ variantId: variantIds.main })}
+            image={getVariantImagePathname({ variantId: mainId })}
           />
 
           <CardContent>
             <Typography variant="h6" color="secondary">
-              {currency(variants[variantIds.main].price)}
+              {currency(variants[mainId].price)}
             </Typography>
 
-            {multiline(variants[variantIds.main].description)}
+            {multiline(variants[mainId].description)}
           </CardContent>
         </Card>
 
@@ -69,15 +73,15 @@ const CustomizeItem = ({ cartAndActions, variantIds, setVariantIds }) => {
           </SectionName>
 
           <SelectSize
-            value={variantIds.main}
-            variantIds={product.variants}
+            value={mainId}
+            product={product}
             handleChange={handleChangeMain}
           />
         </Sections>
 
         <Actions>
           <Button color="secondary" onClick={handleAddToCart}>
-            {buttonText} &nbsp;
+            {customizingItem.id ? "Guardar cambios" : "Agregar"} &nbsp;
             <ShoppingCart />
           </Button>
         </Actions>

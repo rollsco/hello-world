@@ -1,9 +1,10 @@
 import { setLocalStorageItem } from "../services/localStorage/localStorage";
-import { getNewCartItem } from "./CartItem";
+import { getCartItemId } from "./CartItem";
 
 export const initialStateCart = {
   items: [],
   open: false,
+  customizingItem: null,
 };
 
 export const getCartAndActions = cartAndSet => {
@@ -39,17 +40,31 @@ export const getCartAndActions = cartAndSet => {
     });
   };
 
-  const upsertItem = variantIds => {
-    if (!variantIds.itemId) {
+  const setCustomizingItem = cartItem => {
+    updateCart({
+      ...cart,
+      customizingItem: cartItem,
+    });
+  };
+
+  const upsertItem = cartItem => {
+    if (!cartItem.id) {
+      const newCartItem = { ...cartItem, id: getCartItemId() };
+
       updateCart({
         ...cart,
-        items: [...cart.items, getNewCartItem(variantIds)],
+        items: [...cart.items, newCartItem],
+        customizingItem: null,
       });
     } else {
-      const newItems = cart.items.filter(item => item.id !== variantIds.itemId);
+      const itemsExceptUpdated = cart.items.filter(
+        item => item.id !== cartItem.id,
+      );
+
       updateCart({
         ...cart,
-        items: [...newItems, getNewCartItem(variantIds)],
+        items: [...itemsExceptUpdated, cartItem],
+        customizingItem: null,
       });
     }
   };
@@ -61,5 +76,6 @@ export const getCartAndActions = cartAndSet => {
     clear,
     upsertItem,
     removeItem,
+    setCustomizingItem,
   };
 };

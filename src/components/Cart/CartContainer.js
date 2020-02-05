@@ -9,7 +9,7 @@ import { initialStateUserInfo } from "./initialState";
 import { getOrderAndActions, getInitialStateOrder } from "../../state/Order";
 import { isStoreOpen } from "./utils";
 
-const CartContainer = ({ cartAndActions, setVariantIds, firebase }) => {
+const CartContainer = ({ cartAndActions, firebase }) => {
   const orderAndSet = useState(
     getLocalStorageItem("order", { ...getInitialStateOrder() }),
   );
@@ -64,7 +64,6 @@ const CartContainer = ({ cartAndActions, setVariantIds, firebase }) => {
       userInfo={userInfo}
       makeOrder={makeOrder}
       scheduleOpen={scheduleOpen}
-      setVariantIds={setVariantIds}
       updateUserInfo={updateUserInfo}
       cartAndActions={cartAndActions}
       orderAndActions={orderAndActions}

@@ -9,7 +9,7 @@ const StyledSections = styled.div`
   padding-top: 60px;
 `;
 
-const Sections = ({ setVariantIds }) => {
+const Sections = ({ cartAndActions }) => {
   const [value, setValue] = useState(0);
 
   const handleChangeTab = (event, value) => {
@@ -45,7 +45,7 @@ const Sections = ({ setVariantIds }) => {
             index={i}
             value={value}
             section={section}
-            setVariantIds={setVariantIds}
+            cartAndActions={cartAndActions}
           />
         ))}
       </SwipeableViews>

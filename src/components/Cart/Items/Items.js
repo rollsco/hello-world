@@ -3,18 +3,12 @@ import Item from "./Item";
 import Totals from "./Totals";
 import TotalsContainer from "./TotalsContainer";
 
-const Items = ({
-  orderAndActions,
-  userInfo,
-  cartAndActions,
-  setVariantIds,
-}) => (
+const Items = ({ orderAndActions, userInfo, cartAndActions }) => (
   <Fragment>
     {cartAndActions.cart.items.map((item, index) => (
       <Item
         item={item}
         key={index}
-        setVariantIds={setVariantIds}
         cartAndActions={cartAndActions}
         orderAndActions={orderAndActions}
       />

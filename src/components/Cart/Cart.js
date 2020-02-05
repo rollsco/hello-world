@@ -16,7 +16,6 @@ const Cart = ({
   userInfo,
   makeOrder,
   scheduleOpen,
-  setVariantIds,
   updateUserInfo,
   cartAndActions,
   orderAndActions,
@@ -40,7 +39,6 @@ const Cart = ({
 
       <Items
         userInfo={userInfo}
-        setVariantIds={setVariantIds}
         cartAndActions={cartAndActions}
         orderAndActions={orderAndActions}
       />
