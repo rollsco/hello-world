@@ -7,7 +7,7 @@ export const getNewCartVariant = variantId => {
   }
 
   const variant = variants[variantId];
-  const product = products[variant.product];
+  const product = products[variant.product[0]];
   const name = variant.name ? `${product.name}, ${variant.name}` : product.name;
 
   return {

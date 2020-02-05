@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Header from "../../UI/FullscreenDialog/Header";
 import {
   Dialog,
@@ -17,11 +17,12 @@ import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../state/Variant";
 import { getNewCartItem } from "../../../state/CartItem";
+import { applyDiscountPercentage } from "../../../services/transformer/transformer";
 
 const CustomizeItem = ({ cartAndActions }) => {
   const { customizingItem } = cartAndActions.cart;
   const mainId = customizingItem.main.id;
-  const productId = variants[mainId].product;
+  const productId = variants[mainId].product[0];
   const product = products[productId];
 
   const handleClose = () => {
@@ -59,9 +60,25 @@ const CustomizeItem = ({ cartAndActions }) => {
           />
 
           <CardContent>
-            <Typography variant="h6" color="secondary">
-              {currency(variants[mainId].price)}
-            </Typography>
+            {variants[mainId].discountPercentage ? (
+              <Fragment>
+                <Typography variant="h6" color="error">
+                  <strike>{currency(variants[mainId].price)}</strike>
+                </Typography>
+                <Typography variant="h6" color="secondary">
+                  {currency(
+                    applyDiscountPercentage(
+                      variants[mainId].price,
+                      variants[mainId].discountPercentage,
+                    ),
+                  )}
+                </Typography>
+              </Fragment>
+            ) : (
+              <Typography variant="h6" color="secondary">
+                {currency(variants[mainId].price)}
+              </Typography>
+            )}
 
             {multiline(variants[mainId].description)}
           </CardContent>
