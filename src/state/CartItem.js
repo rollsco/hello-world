@@ -17,4 +17,7 @@ export const getNewCartItem = ({ mainVariantId, extras = [] }) => {
 export const getCartItemId = () => Math.floor(Math.random() * 1000000);
 
 const getCartItemTotalPrice = variants =>
-  variants.reduce((sum, variant) => (variant ? sum + variant.price : sum), 0);
+  variants.reduce(
+    (sum, variant) => (variant ? sum + variant.priceWithDiscount : sum),
+    0,
+  );

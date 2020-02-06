@@ -18,6 +18,7 @@ import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../state/Variant";
 import { getNewCartItem } from "../../../state/CartItem";
 import { applyDiscountPercentage } from "../../../services/transformer/transformer";
+import VariantPrice from "../../Layout/VariantPrice";
 
 const CustomizeItem = ({ cartAndActions }) => {
   const { customizingItem } = cartAndActions.cart;
@@ -60,25 +61,7 @@ const CustomizeItem = ({ cartAndActions }) => {
           />
 
           <CardContent>
-            {variants[mainId].discountPercentage ? (
-              <Fragment>
-                <Typography variant="h6" color="error">
-                  <strike>{currency(variants[mainId].price)}</strike>
-                </Typography>
-                <Typography variant="h6" color="secondary">
-                  {currency(
-                    applyDiscountPercentage(
-                      variants[mainId].price,
-                      variants[mainId].discountPercentage,
-                    ),
-                  )}
-                </Typography>
-              </Fragment>
-            ) : (
-              <Typography variant="h6" color="secondary">
-                {currency(variants[mainId].price)}
-              </Typography>
-            )}
+            <VariantPrice variant={variants[mainId]} />
 
             {multiline(variants[mainId].description)}
           </CardContent>
