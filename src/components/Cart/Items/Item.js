@@ -5,14 +5,13 @@ import {
   TableCell,
   Table,
   TableBody,
-  Typography,
 } from "@material-ui/core";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
-import { currency } from "../../../services/formatter/formatter";
 import { Image, BasicInfo, CartName } from "./components";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
 import { getVariantImagePathname } from "../../../state/Variant";
+import VariantPrice from "../../Layout/VariantPrice";
 
 const Item = ({ orderAndActions, item, cartAndActions }) => (
   <DialogPaper>
@@ -32,9 +31,7 @@ const Item = ({ orderAndActions, item, cartAndActions }) => (
               </TableCell>
 
               <TableCell align="right">
-                <Typography variant="subtitle1">
-                  {currency(item.main.price)}
-                </Typography>
+                <VariantPrice variant={variant} />
               </TableCell>
             </TableRow>
           ))}
