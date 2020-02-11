@@ -1,23 +1,16 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Header from "../../UI/FullscreenDialog/Header";
-import {
-  Dialog,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
+import { Dialog, Button, Card, CardContent } from "@material-ui/core";
 import Content from "../../UI/FullscreenDialog/Content";
 import SelectSize from "./SelectSize";
 import { variants } from "../../../data/variants";
-import { multiline, currency } from "../../../services/formatter/formatter";
+import { multiline } from "../../../services/formatter/formatter";
 import { products } from "../../../data/products";
 import { DialogTransition } from "../../components";
 import { VariantMedia, Sections, SectionName, Actions } from "./components";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import { getVariantImagePathname } from "../../../state/Variant";
 import { getNewCartItem } from "../../../state/CartItem";
-import { applyDiscountPercentage } from "../../../services/transformer/transformer";
 import VariantPrice from "../../Layout/VariantPrice";
 
 const CustomizeItem = ({ cartAndActions }) => {

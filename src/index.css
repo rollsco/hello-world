@@ -28,6 +28,17 @@ summary {
   }
 }
 
+@keyframes tempRemovePromo {
+  0% {
+    opacity: 0;
+    transform: rotate(-16deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(16deg);
+  }
+}
+
 @keyframes motoOut {
   0% {
     margin-left: -85%;

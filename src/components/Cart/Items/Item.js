@@ -12,7 +12,6 @@ import { Image, BasicInfo, CartName } from "./components";
 import { DialogPaper } from "../../UI/FullscreenDialog/components";
 import { getVariantImagePathname } from "../../../state/Variant";
 import VariantPrice from "../../Layout/VariantPrice";
-import { variants } from "../../../data/variants";
 
 const Item = ({ orderAndActions, item, cartAndActions }) => (
   <DialogPaper>

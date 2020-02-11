@@ -1,5 +1,3 @@
-import { createToken } from "../../services/tokenGenerator/tokenGenerator";
-
 export const initialStateUserInfo = {
   name: "",
   address: "",

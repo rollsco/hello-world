@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import Item from "./Item";
-import Totals from "./Totals";
 import TotalsContainer from "./TotalsContainer";
 
 const Items = ({ orderAndActions, userInfo, cartAndActions }) => (
