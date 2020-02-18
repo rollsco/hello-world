@@ -4,8 +4,12 @@ import { parameters } from "../../data/parameters";
 import { Card, CardMedia, Button } from "@material-ui/core";
 
 const promoImages = parameters["promo"].images;
-const randomImage = Math.floor(Math.random() * promoImages.length);
-const promoImageFilename = promoImages[randomImage].filename;
+const randomImage = promoImages
+  ? Math.floor(Math.random() * promoImages.length)
+  : null;
+const promoImageFilename = randomImage
+  ? promoImages[randomImage].filename
+  : null;
 
 const PromoSpace = styled.div`
   display: flex;
@@ -21,8 +25,8 @@ const PromoCard = styled(Card)`
 `;
 
 const PromoMedia = styled(CardMedia)`
+  max-height: 180px;
   && {
-    max-height: 180px;
   }
 `;
 
@@ -36,15 +40,21 @@ const PromoButton = styled(Button)`
   }
 `;
 
-const Promo = () => (
-  <PromoSpace>
-    <PromoButton color="secondary" variant="contained">
-      APROVECHA
-    </PromoButton>
-    <PromoCard>
-      <PromoMedia component="img" image={`img/data/${promoImageFilename}`} />
-    </PromoCard>
-  </PromoSpace>
-);
+const Promo = () => {
+  if (!promoImageFilename) {
+    return null;
+  }
+
+  return (
+    <PromoSpace>
+      <PromoButton color="secondary" variant="contained">
+        APROVECHA
+      </PromoButton>
+      <PromoCard>
+        <PromoMedia component="img" image={`img/data/${promoImageFilename}`} />
+      </PromoCard>
+    </PromoSpace>
+  );
+};
 
 export default Promo;

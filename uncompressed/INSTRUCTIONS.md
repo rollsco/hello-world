@@ -10,7 +10,7 @@
 
 Node and this App expect to find images in the `public/img` directory. In order to have compressed images there, you must
 
-1. Place them here in `assets/img`
+1. Place them in this directory inside `img`
 1. Open the console and run
 1. `node src/services/compressImages.js`
 1. Check the output and ensure the compressed files are now on `public/img`
