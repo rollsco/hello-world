@@ -10,7 +10,7 @@ const StyledSections = styled.div`
 `;
 
 const Sections = ({ cartAndActions }) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleChangeTab = (event, value) => {
     setValue(value);

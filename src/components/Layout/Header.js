@@ -6,7 +6,11 @@ import { StyledToolbar, ImageLink, ImageInLink } from "./components";
 const Header = ({ cartAndActions }) => (
   <AppBar position="fixed">
     <StyledToolbar>
-      <img src="img/logo-rolls-small.png" alt="Rolls.co logo" />
+      <img
+        height="32px"
+        src="img/generic-logo-dark-270-51.png"
+        alt="Rolls.co logo"
+      />
 
       <IconButton onClick={cartAndActions.open}>
         <Badge
@@ -17,7 +21,7 @@ const Header = ({ cartAndActions }) => (
         </Badge>
       </IconButton>
 
-      <ImageLink
+      {/* <ImageLink
         href="http://api.whatsapp.com/send?phone=573174122919"
         target="__blank"
       >
@@ -25,7 +29,7 @@ const Header = ({ cartAndActions }) => (
           src="img/contacto-whatsapp-small.png"
           alt="Contacto whatsapp"
         />
-      </ImageLink>
+      </ImageLink> */}
     </StyledToolbar>
   </AppBar>
 );

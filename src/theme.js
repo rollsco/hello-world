@@ -9,9 +9,21 @@ export default createMuiTheme({
   palette: {
     type: "dark",
     primary: {
+      main: "#fbc02d",
+      main: "#303f9f",
+      main: "#9c27b0",
+      main: "#009688",
+      main: "#2196f3",
+      main: "#673ab7",
       main: "#212121",
     },
     secondary: {
+      main: "#e64a19",
+      main: "#2196f3",
+      main: "#7b1fa2",
+      main: "#dd2c00",
+      main: "#ab003c",
+      main: "#ff9100",
       main: "#f9a825",
     },
   },

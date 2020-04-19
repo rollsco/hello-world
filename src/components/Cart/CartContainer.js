@@ -29,7 +29,7 @@ const CartContainer = ({ cartAndActions, firebase }) => {
   });
 
   const makeOrder = async () => {
-    if (isStoreOpen(currentDate)) {
+    if (true || isStoreOpen(currentDate)) {
       setDeliveryNoticeOpen(true);
     } else {
       setScheduleOpen(true);
